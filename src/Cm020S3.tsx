@@ -1,39 +1,28 @@
-import React, { useState } from 'react';
-import { DatePicker, version, Flex } from 'antd';
-import { Typography } from 'antd';
-import { Input } from 'antd';
-import { getDefaultFormatCodeSettings } from 'typescript';
+import React, { } from 'react';
+import { Flex } from 'antd';
+
 import { message, Popconfirm } from 'antd';
 import type { PopconfirmProps } from 'antd';
 import Menu from './Menu';
 import { useNavigate } from 'react-router-dom';
 import {
   Button,
-  Checkbox,
+
   Col,
-  ColorPicker,
+
   Form,
-  InputNumber,
-  Radio,
-  Rate,
+
   Row,
-  Select,
-  Slider,
-  Space,
-  Switch,
-  Upload,
+
 } from 'antd';
 import { Divider, Table } from 'antd';
-import type { TableColumnsType, TableProps } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
-import type { UploadProps } from 'antd';
+import type { TableColumnsType } from 'antd';
+
 import { useEffect } from "react";
 
-const { Title } = Typography
-const { TextArea } = Input
 
 const attrRow = (field1: String, value1: String, field2?: String, value2?: String) => {
-  if (value1 == "undefined") return <Row gutter={16}>
+  if (value1 === "undefined") return <Row gutter={16}>
     <Col span={6} className='field'>{field1}</Col>
     <Col span={6} className='value'>{value1}</Col>
   </Row>
@@ -45,29 +34,11 @@ const attrRow = (field1: String, value1: String, field2?: String, value2?: Strin
   </Row>
 }
 
-const attrField = (field1: String, value1: String, field2?: String, value2?: String) => {
-  if (value1 == "radio") return
-  else return <Form.Item label={field1} name={field1 + ""} rules={[{ required: true }]}>
-    <Input placeholder={field1 + ""} />
-  </Form.Item>
-}
-const layout = {
-  labelCol: { span: 0 },
-  wrapperCol: { span: 24 },
-};
+
 const onFinish = (values: any) => {
   message.success('The Outstanding Manifest Advice is saved.');
 };
-const validateMessages = {
-  required: '${label} is required!',
-  types: {
-    email: '${label} is not a valid email!',
-    number: '${label} is not a valid number!',
-  },
-  number: {
-    range: '${label} must be between ${min} and ${max}',
-  },
-};
+
 const confirm: PopconfirmProps['onConfirm'] = (e) => {
   onFinish("");
   console.log(e);
@@ -81,7 +52,6 @@ const cancel: PopconfirmProps['onCancel'] = (e) => {
 const App: React.FC = () => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
-  const [dataSource, setDataSource] = useState<Array<DataType> | null>(null);
 
   form.setFieldsValue({ remark: `` });
 
@@ -90,17 +60,8 @@ const App: React.FC = () => {
   const onClickPrint = () => {
     window.print();
   }
-  const onClickConvert = () => {
-    message.error('Not Support');
-  }
-  const handleChange = (value: string) => {
-    console.log(`selected ${value}`);
-  };
-  type LayoutType = Parameters<typeof Form>[0]['layout'];
-  const [formLayout, setFormLayout] = useState<LayoutType>('horizontal');
-  const onFormLayoutChange = ({ layout }: { layout: LayoutType }) => {
-    setFormLayout(layout);
-  };
+
+
 
 
   /**Table Function */
@@ -120,19 +81,20 @@ const App: React.FC = () => {
     {
       title: 'OMA Refer No.',
       dataIndex: 'omaRefNo',
-      render: (text: string) => <a>{text}</a>,
+      // render: (text: string) => <a>{text}</a>,
     },
     {
       title: 'Transport Mode',
-      dataIndex: 'tranMode',
+      dataIndex: 'tranMode',sorter: true,
     },
     {
       title: 'Voyage / Flight / Train / Vehicle No.',
-      dataIndex: 'vid',
+      dataIndex: 'vid',sorter: true,
     },
     {
       title: 'Shipment Date',
       dataIndex: 'shipmentDt',
+      sorter: true,
     },
     {
       title: 'OMA Type',
@@ -141,37 +103,36 @@ const App: React.FC = () => {
     {
       title: 'OMA Status',
       dataIndex: 'omaStatus',
-  
+
     },
   ];
-
-
-  const rowSelection: TableProps<DataType>['rowSelection'] = {
-    onChange: (selectedRowKeys: React.Key[], selectedRows: DataType[]) => {
-      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-    },
-    getCheckboxProps: (record: DataType) => ({
-      //disabled: record.name === 'Disabled User', // Column configuration not to be checked
-      //name: record.name,
-    }),
-  };
-  const [selectionType, setSelectionType] = useState<'checkbox' | 'radio'>('checkbox');
 
   /**End Table */
 
   useEffect(() => {
-    const data = Array.from({ length: 3 }).map<DataType>((_, i) => ({
-      key: i,
+
+  })
+  const data = [
+    {
+      key: 1,
       omaRefNo: `OMA-12345678`,
       tranMode: "Air ",
       vid: "UX001",
-      shipmentDt: '15/05/2009',
+      shipmentDt: '15/05/2024',
       omaType: "OS1",
-      omaStatus:"New"
-    }));
-    setDataSource(data);
-  })
-
+      omaStatus: "New"
+    },
+    {
+      key: 2,
+      omaRefNo: `OMA-12345303`,
+      tranMode: "Ocean ",
+      vid: "V776653-093",
+      shipmentDt: '13/05/2024',
+      omaType: "OS2",
+      omaStatus: "Response Submitted"
+    },
+ 
+  ]
   return (
 
     <div style={{ padding: '0 24px', maxWidth: 1200 }}>
@@ -188,11 +149,11 @@ const App: React.FC = () => {
       <Divider />
 
       <Table<DataType>
-        rowSelection={{ type: selectionType, ...rowSelection }}
         columns={columns}
-        dataSource={dataSource != null ? dataSource : []}
-        pagination={{ pageSize: 10 }}
-        scroll={{ y: 100 * 5 }}
+        dataSource={data != null ? data : []}
+       // pagination={{ pageSize: 10 }}
+        pagination={{ position: [] }}
+
       />
       <Divider />
       <Row gutter={16}>

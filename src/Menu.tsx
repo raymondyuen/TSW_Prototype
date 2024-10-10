@@ -1,15 +1,12 @@
-import React, { useState } from 'react';
-import { Row,Col, Select, Button, Space, DatePicker, version, Flex } from 'antd';
+import React from 'react';
+import { Row,Col, Select } from 'antd';
 
-import { useNavigate ,matchRoutes, useLocation} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 const App: React.FC = () => {
   const navigate = useNavigate();
   
-  const useCurrentPath = () => {
-    return window.location.pathname;
-    }
   const handleChange = (value: string) => {
     console.log(`selected ${value}`);
     navigate(`/${value}`, { replace: true });

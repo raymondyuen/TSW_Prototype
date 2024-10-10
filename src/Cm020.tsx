@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import { DatePicker, version, Flex } from 'antd';
-import { Typography } from 'antd';
+import { Flex } from 'antd';
 import { Input } from 'antd';
-import { getDefaultFormatCodeSettings } from 'typescript';
 import { message, Popconfirm } from 'antd';
 import type { PopconfirmProps } from 'antd';
 import Menu from './Menu';
@@ -11,16 +9,10 @@ import {
   Button,
   Checkbox,
   Col,
-  ColorPicker,
   Form,
-  InputNumber,
   Radio,
-  Rate,
   Row,
-  Select,
-  Slider,
-  Space,
-  Switch,
+
   Upload,
 } from 'antd';
 import { Divider, Table } from 'antd';
@@ -28,32 +20,15 @@ import type { TableColumnsType, TableProps } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import type { UploadProps } from 'antd';
 
-const { Title } = Typography
-const { TextArea } = Input
 
-const attrRow = (field1: String, value1: String, field2?: String, value2?: String) => {
-  if (value1 == "undefined") return <Row gutter={16}>
-    <Col span={6} className='field'>{field1}</Col>
-    <Col span={6} className='value'>{value1}</Col>
-  </Row>
-  else return <Row gutter={16}>
-    <Col span={6} className='field'>{field1}</Col>
-    <Col span={6} className='value'>{value1}</Col>
-    <Col span={6} className='field'>{field2}</Col>
-    <Col span={6} className='value'>{value2}</Col>
-  </Row>
-}
 
 const attrField = (field1: String, value1: String, field2?: String, value2?: String) => {
   if (value1 == "radio") return
-  else return <Form.Item label={field1} name={field1 + ""} rules={[{ required: true }]}>
+  else return <Form.Item label={field1} name={field1 + ""} >
     <Input placeholder={field1 + ""} />
   </Form.Item>
 }
-const layout = {
-  labelCol: { span: 0 },
-  wrapperCol: { span: 24 },
-};
+
 const onFinish = (values: any) => {
   message.success('The Outstanding Manifest Advice is saved.');
 };
@@ -79,30 +54,45 @@ const cancel: PopconfirmProps['onCancel'] = (e) => {
 
 const App: React.FC = () => {
   const [form] = Form.useForm();
+  
   const navigate = useNavigate();
   const [dataSource, setDataSource] = useState<Array<DataType> | null>(null);
+  const [dateFrom, setDateFrom] = useState("May 2024");
+  const [dateTo, setDateTo] = useState("Jun 2024");
+  form.setFieldsValue({ remark: `` });
 
-  form.setFieldsValue({remark: `` });
-
-  const onClickSearch = ()=>{
+  const onClickSearch = async() => {
+    try {
+      const values = await form.validateFields();
+      console.log('Success:', values);
+    } catch (errorInfo) {
+      console.log('Failed:', errorInfo);
+      return;
+    }   
+    
+    if (form.getFieldValue("period") == '1'){
+      setDateFrom("May 2024")
+    }else{
+      setDateFrom("June 2023")
+    }
     const data = Array.from({ length: 100 }).map<DataType>((_, i) => ({
       key: i,
-      carrierID:`000-8765457-`+i,
-      companyName: "Chu Kong Agency Ltd"+i,
-      idType:  "BR",
+      carrierID: `000-8765457-` + i,
+      companyName: "Chu Kong Agency Ltd" + i,
+      idType: "BR",
       companyPhoneNo: '1234 5678',
-      noOfCase:2
+      noOfCase: 2 + parseInt(i+"")
     }));
     setDataSource(data);
   }
-  const onClickUpload = ()=>{
+  const onClickUpload = () => {
     const data = Array.from({ length: 3 }).map<DataType>((_, i) => ({
       key: i,
-      carrierID:`000-8765457-`+i,
-      companyName: "Chu Kong Agency From Upload Ltd "+i,
-      idType:  "BR",
+      carrierID: `000-8765457-` + i,
+      companyName: "Chu Kong Agency From Upload Ltd " + i,
+      idType: "BR",
       companyPhoneNo: '9876 6655',
-      noOfCase:2
+      noOfCase: 2 + parseInt(i+"")
     }));
     setDataSource(data);
   }
@@ -110,15 +100,10 @@ const App: React.FC = () => {
   const onClickPrint = () => {
     window.print();
   }
-  const onClickSend = () =>{
+  const onClickSend = () => {
     navigate("/CM020S3");
   }
-  const onClickConvert = () => {
-    message.error('Not Support');
-  }
-  const handleChange = (value: string) => {
-    console.log(`selected ${value}`);
-  };
+
   type LayoutType = Parameters<typeof Form>[0]['layout'];
   const [formLayout, setFormLayout] = useState<LayoutType>('horizontal');
   const onFormLayoutChange = ({ layout }: { layout: LayoutType }) => {
@@ -129,20 +114,33 @@ const App: React.FC = () => {
   /**Table Function */
   interface DataType {
     key: React.Key;
-    carrierID:string;
+    carrierID: string;
     companyName: string;
     idType: string;
     companyPhoneNo: string;
     noOfCase: number;
 
   }
-    //Carrier ID	Company Name	ID Type	Company Phone No	No. of Cases	Action
+  //Carrier ID	Company Name	ID Type	Company Phone No	No. of Cases	Action
+  type OnChange = NonNullable<TableProps<DataType>['onChange']>;
+type Filters = Parameters<OnChange>[1];
+
+type GetSingle<T> = T extends (infer U)[] ? U : never;
+type Sorts = GetSingle<Parameters<OnChange>[2]>;
+  const [filteredInfo, setFilteredInfo] = useState<Filters>({});
+  const [sortedInfo, setSortedInfo] = useState<Sorts>({});
+  const handleChange: OnChange = (pagination, filters, sorter) => {
+    console.log('Various parameters', pagination, filters, sorter);
+    setFilteredInfo(filters);
+    setSortedInfo(sorter as Sorts);
+  };
 
   const columns: TableColumnsType<DataType> = [
     {
       title: 'Carrier ID',
       dataIndex: 'carrierID',
-      render: (text: string) => <a>{text}</a>,
+      sorter: (a, b) => a.carrierID.localeCompare(b.carrierID),
+      // render: (text: string) => <a>{text}</a>,
     },
     {
       title: 'Company Name',
@@ -159,6 +157,7 @@ const App: React.FC = () => {
     {
       title: 'No. of Cases',
       dataIndex: 'noOfCase',
+      sorter: (a, b) => a.noOfCase - b.noOfCase,
     },
     {
       title: 'Action',
@@ -168,16 +167,7 @@ const App: React.FC = () => {
     },
   ];
 
-  // let data = Array.from({ length: 100 }).map<DataType>((_, i) => ({
-  //   key: i,
-  //   carrierID:`000-8765457-`+i,
-  //   companyName: "Chu Kong Agency Ltd"+i,
-  //   idType:  "BR",
-  //   companyPhoneNo: '1234 5678',
-  //   noOfCase:2
-  // }));
-  //setDataSource(data);
-  // rowSelection object indicates the need for row selection
+
   const rowSelection: TableProps<DataType>['rowSelection'] = {
     onChange: (selectedRowKeys: React.Key[], selectedRows: DataType[]) => {
       console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
@@ -187,7 +177,6 @@ const App: React.FC = () => {
       //name: record.name,
     }),
   };
-  const [selectionType, setSelectionType] = useState<'checkbox' | 'radio'>('checkbox');
 
   /**End Table */
 
@@ -230,7 +219,7 @@ const App: React.FC = () => {
             validateMessages={validateMessages}
           >
             {attrField('Carrier ID', 'text')}
-            <Form.Item name="checkbox-group" label="OMA Status" rules={[{ required: true }]}>
+            <Form.Item name="checkbox-group" label="OMA Status">
               <Checkbox.Group>
                 <Row>
                   <Col span={8}>
@@ -252,10 +241,10 @@ const App: React.FC = () => {
                 </Row>
               </Checkbox.Group>
             </Form.Item>
-            <Form.Item label="Period" rules={[{ required: true }]}>
+            <Form.Item name="period" label="Period" rules={[{ required: true }]}>
               <Radio.Group>
-                <Radio value="apple"> Monthly </Radio>
-                <Radio value="pear"> Annually </Radio>
+                <Radio value="1"> Monthly </Radio>
+                <Radio value="2"> Annually </Radio>
               </Radio.Group>
             </Form.Item>
             <Col span={24}>
@@ -269,13 +258,13 @@ const App: React.FC = () => {
         <Col span={8}>
           <Row> Upload File : </Row>
           <Upload {...props}>
-    <Button icon={<UploadOutlined />}>Choose File</Button>
-  </Upload>
+            <Button icon={<UploadOutlined />}>Choose File</Button>
+          </Upload>
           <Col span={24}>
-              <Flex gap="small" justify='flex-end'>
-                <Button type="primary" htmlType="submit" onClick={onClickUpload}>        Upload      </Button>
-              </Flex>
-            </Col>
+            <Flex gap="small" justify='flex-end'>
+              <Button type="primary" htmlType="submit" onClick={onClickUpload}>        Upload      </Button>
+            </Flex>
+          </Col>
         </Col>
 
 
@@ -283,22 +272,23 @@ const App: React.FC = () => {
 
       <Divider />
       <h3 style={{ color: '#1677ff' }}>List of Companies With Critical Outstanding Manifest Advice Cases</h3>
-      <h5>Period: From May 2009 To Jun 2009</h5>
-    
+      <h5>Period: From {dateFrom} To {dateTo}</h5>
+
       <Table<DataType>
-        rowSelection={{ type: selectionType, ...rowSelection }}
-        columns={columns} 
-        dataSource={dataSource != null ? dataSource:[]}
+        rowSelection={{ ...rowSelection }}
+        columns={columns}
+        dataSource={dataSource != null ? dataSource : []}
         pagination={{ pageSize: 10 }}
         scroll={{ y: 100 * 5 }}
+        onChange={handleChange} 
       />
       <Divider />
       <Row gutter={16}>
         <Col span={12}></Col>
         <Col span={12}><Flex gap="small" justify='flex-end'>
-        <Popconfirm
+          <Popconfirm
             title="Select As Target "
-            description="Are you sure to Select As Target ?"
+            description="Are you sure to select As Target ?"
             onConfirm={confirm}
             onCancel={cancel}
             okText="Yes"
@@ -308,7 +298,7 @@ const App: React.FC = () => {
           </Popconfirm>
           <Button color="primary" variant="outlined" onClick={onClickPrint}>Download Selected Companies List</Button>
 
-         
+
         </Flex></Col>
       </Row>
 
