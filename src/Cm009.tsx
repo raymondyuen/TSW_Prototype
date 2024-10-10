@@ -116,7 +116,7 @@ Interpretation and General Clauses Ordinance (Cap.1).
           <Input.TextArea autoSize={{ minRows: 8 }} />
         </Form.Item>
         <Row gutter={16}>
-          <Col span={12}><Flex gap="small" justify='flex-start'><Button color="primary" variant="outlined" onClick={() => navigate(-1)}>Cancel</Button></Flex></Col>
+          <Col span={12}><Flex gap="small" justify='flex-start'><Button color="primary" variant="outlined" onClick={() => navigate(-1)}>Back</Button></Flex></Col>
           <Col span={12}><Flex gap="small" justify='flex-end'>
             <Button color="primary" variant="outlined" disabled>Convent to Simplified Chinese</Button>
             <Button color="primary" variant="outlined" onClick={onClickPrint}>Print</Button>

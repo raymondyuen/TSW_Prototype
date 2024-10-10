@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import CM009 from './Cm009';
 import CM020 from './Cm020';
+import CM020S3 from './Cm020S3';
 import Menu from './Menu';
 import reportWebVitals from './reportWebVitals';
 import {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
   {
     path: "/CM020",
     element: <CM020 />,
+  },
+  {
+    path: "/CM020S3",
+    element: <CM020S3 />,
   }
 ]);
 const root = createRoot(

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {  DatePicker, version, Flex } from 'antd';
+import { DatePicker, version, Flex } from 'antd';
 import { Typography } from 'antd';
 import { Input } from 'antd';
 import { getDefaultFormatCodeSettings } from 'typescript';
@@ -23,6 +23,11 @@ import {
   Switch,
   Upload,
 } from 'antd';
+import { Divider, Table } from 'antd';
+import type { TableColumnsType, TableProps } from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
+import type { UploadProps } from 'antd';
+
 const { Title } = Typography
 const { TextArea } = Input
 
@@ -41,7 +46,7 @@ const attrRow = (field1: String, value1: String, field2?: String, value2?: Strin
 
 const attrField = (field1: String, value1: String, field2?: String, value2?: String) => {
   if (value1 == "radio") return
-  else return <Form.Item label={field1} name={field1 + ""}>
+  else return <Form.Item label={field1} name={field1 + ""} rules={[{ required: true }]}>
     <Input placeholder={field1 + ""} />
   </Form.Item>
 }
@@ -75,34 +80,38 @@ const cancel: PopconfirmProps['onCancel'] = (e) => {
 const App: React.FC = () => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
+  const [dataSource, setDataSource] = useState<Array<DataType> | null>(null);
 
-  form.setFieldsValue({
-    remark: `According to Regulations 11 12 of the Import and Export			
-Under the Import and Export (Registration) Regulations, Chapter 60E, 			
-of the Laws of Hong Kong, every person who imports or exports/ re-exports 			
-any article other than an exempted article is required to lodge with the Commissioner			
-of Customs and Excise an accurate and complete import/export declaration within 			
-14 days after the importation or exportation of the article.			
-			
-According to regulations 11 and 12 of the Import and Export			
-(Registration) Regulations, Chapter 60, Laws of Hong Kong, the owner			
-of master  of the vessel, or the owner of commander of the aircraft or			
-the person acting as the agent for the owner of goods carried by			
-train shall lodge with the Commissioner of Customs and Excise a			
-			
-The powers and duties exercised by the issuing officer under the 			
-Import and Export (Registation) Regulations are authorized by the			
-Commissioner of Custom and Excise in accordance with Section 4 of 			
-the Import and Export Ordinance (Cap.60) and Section 43(1) of the 			
-Interpretation and General Clauses Ordinance (Cap.1).			
-			
-"本條例旨在對在香港輸入和輸出物品，對已經輸入香港或可能輸出香港的物品在香港境內的處理及運載，以及對任何附帶引起或與前述事項相關的事宜，作出規 ...根據本條例發出的牌照或許可證的持有人及其受僱人或代理人，
-須提供香港海關人員所要求的必需途徑，
-以使香港海關人員能夠就該持牌人或持證人現時或曾經管有…."			
-` });
+  form.setFieldsValue({remark: `` });
+
+  const onClickSearch = ()=>{
+    const data = Array.from({ length: 100 }).map<DataType>((_, i) => ({
+      key: i,
+      carrierID:`000-8765457-`+i,
+      companyName: "Chu Kong Agency Ltd"+i,
+      idType:  "BR",
+      companyPhoneNo: '1234 5678',
+      noOfCase:2
+    }));
+    setDataSource(data);
+  }
+  const onClickUpload = ()=>{
+    const data = Array.from({ length: 3 }).map<DataType>((_, i) => ({
+      key: i,
+      carrierID:`000-8765457-`+i,
+      companyName: "Chu Kong Agency From Upload Ltd "+i,
+      idType:  "BR",
+      companyPhoneNo: '9876 6655',
+      noOfCase:2
+    }));
+    setDataSource(data);
+  }
 
   const onClickPrint = () => {
     window.print();
+  }
+  const onClickSend = () =>{
+    navigate("/CM020S3");
   }
   const onClickConvert = () => {
     message.error('Not Support');
@@ -115,76 +124,195 @@ Interpretation and General Clauses Ordinance (Cap.1).
   const onFormLayoutChange = ({ layout }: { layout: LayoutType }) => {
     setFormLayout(layout);
   };
+
+
+  /**Table Function */
+  interface DataType {
+    key: React.Key;
+    carrierID:string;
+    companyName: string;
+    idType: string;
+    companyPhoneNo: string;
+    noOfCase: number;
+
+  }
+    //Carrier ID	Company Name	ID Type	Company Phone No	No. of Cases	Action
+
+  const columns: TableColumnsType<DataType> = [
+    {
+      title: 'Carrier ID',
+      dataIndex: 'carrierID',
+      render: (text: string) => <a>{text}</a>,
+    },
+    {
+      title: 'Company Name',
+      dataIndex: 'companyName',
+    },
+    {
+      title: 'ID Type',
+      dataIndex: 'idType',
+    },
+    {
+      title: 'Company Phone No.',
+      dataIndex: 'companyPhoneNo',
+    },
+    {
+      title: 'No. of Cases',
+      dataIndex: 'noOfCase',
+    },
+    {
+      title: 'Action',
+      dataIndex: '',
+      key: 'x',
+      render: () => <Button onClick={onClickSend}>Send</Button>,
+    },
+  ];
+
+  // let data = Array.from({ length: 100 }).map<DataType>((_, i) => ({
+  //   key: i,
+  //   carrierID:`000-8765457-`+i,
+  //   companyName: "Chu Kong Agency Ltd"+i,
+  //   idType:  "BR",
+  //   companyPhoneNo: '1234 5678',
+  //   noOfCase:2
+  // }));
+  //setDataSource(data);
+  // rowSelection object indicates the need for row selection
+  const rowSelection: TableProps<DataType>['rowSelection'] = {
+    onChange: (selectedRowKeys: React.Key[], selectedRows: DataType[]) => {
+      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+    },
+    getCheckboxProps: (record: DataType) => ({
+      //disabled: record.name === 'Disabled User', // Column configuration not to be checked
+      //name: record.name,
+    }),
+  };
+  const [selectionType, setSelectionType] = useState<'checkbox' | 'radio'>('checkbox');
+
+  /**End Table */
+
+  const props: UploadProps = {
+    name: 'file',
+    action: 'https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload',
+    headers: {
+      authorization: 'authorization-text',
+    },
+    onChange(info) {
+      if (info.file.status !== 'uploading') {
+        console.log(info.file, info.fileList);
+      }
+      if (info.file.status === 'done') {
+        message.success(`${info.file.name} file uploaded successfully`);
+      } else if (info.file.status === 'error') {
+        message.error(`${info.file.name} file upload failed.`);
+      }
+    },
+  };
+
   return (
 
     <div style={{ padding: '0 24px' }}>
       <Menu />
-      <Form
-        form={form}
-        labelCol={{ flex: '110px' }}
-        labelAlign="left"
-        labelWrap
-        wrapperCol={{ flex: 1 }}
-        colon={false}
-        onValuesChange={onFormLayoutChange}
-        style={{ maxWidth: formLayout === 'inline' ? 'none' : 1200 }}
-        validateMessages={validateMessages}
-      >
-        <h1 style={{ color: '#1677ff' }}>Create Highlighting Critical Outstanding Manifest Cases</h1>
-        {attrField('Carrier ID', 'text')}
-  
-        <Form.Item name="checkbox-group" label="Checkbox.Group">
-      <Checkbox.Group>
-        <Row>
-          <Col span={8}>
-            <Checkbox value="A" style={{ lineHeight: '32px' }}>
-              OMA
-            </Checkbox>
-          </Col>
-          <Col span={8}>
-            <Checkbox value="B" style={{ lineHeight: '32px' }} disabled>
-              OS1
-            </Checkbox>
-          </Col>
-          <Col span={8}>
-            <Checkbox value="C" style={{ lineHeight: '32px' }}>
-              OS2
-            </Checkbox>
-          </Col>
+
+      <h1 style={{ color: '#1677ff' }}>Create Highlighting Critical Outstanding Manifest Cases</h1>
+
+      <Row>
+        <Col span={8}>
+          <Form
+            form={form}
+            labelCol={{ flex: '110px' }}
+            labelAlign="left"
+            labelWrap
+            wrapperCol={{ flex: 1 }}
+            colon={false}
+            onValuesChange={onFormLayoutChange}
+            style={{ maxWidth: formLayout === 'inline' ? 'none' : 1200 }}
+            validateMessages={validateMessages}
+          >
+            {attrField('Carrier ID', 'text')}
+            <Form.Item name="checkbox-group" label="OMA Status" rules={[{ required: true }]}>
+              <Checkbox.Group>
+                <Row>
+                  <Col span={8}>
+                    <Checkbox value="A" style={{ lineHeight: '32px' }}>
+                      OMA
+                    </Checkbox>
+                  </Col>
+                  <Col span={8}>
+                    <Checkbox value="B" style={{ lineHeight: '32px' }}>
+                      OS1
+                    </Checkbox>
+                  </Col>
+                  <Col span={8}>
+                    <Checkbox value="C" style={{ lineHeight: '32px' }}>
+                      OS2
+                    </Checkbox>
+                  </Col>
+
+                </Row>
+              </Checkbox.Group>
+            </Form.Item>
+            <Form.Item label="Period" rules={[{ required: true }]}>
+              <Radio.Group>
+                <Radio value="apple"> Monthly </Radio>
+                <Radio value="pear"> Annually </Radio>
+              </Radio.Group>
+            </Form.Item>
+            <Col span={24}>
+              <Flex gap="small" justify='flex-end'>
+                <Button type="primary" htmlType="submit" onClick={onClickSearch}>        Search      </Button>
+              </Flex>
+            </Col>
+          </Form>
+        </Col>
+        <Col span={2}></Col>
+        <Col span={8}>
+          <Row> Upload File : </Row>
+          <Upload {...props}>
+    <Button icon={<UploadOutlined />}>Choose File</Button>
+  </Upload>
+          <Col span={24}>
+              <Flex gap="small" justify='flex-end'>
+                <Button type="primary" htmlType="submit" onClick={onClickUpload}>        Upload      </Button>
+              </Flex>
+            </Col>
+        </Col>
+
+
+      </Row>
+
+      <Divider />
+      <h3 style={{ color: '#1677ff' }}>List of Companies With Critical Outstanding Manifest Advice Cases</h3>
+      <h5>Period: From May 2009 To Jun 2009</h5>
+    
+      <Table<DataType>
+        rowSelection={{ type: selectionType, ...rowSelection }}
+        columns={columns} 
+        dataSource={dataSource != null ? dataSource:[]}
+        pagination={{ pageSize: 10 }}
+        scroll={{ y: 100 * 5 }}
+      />
+      <Divider />
+      <Row gutter={16}>
+        <Col span={12}></Col>
+        <Col span={12}><Flex gap="small" justify='flex-end'>
+        <Popconfirm
+            title="Select As Target "
+            description="Are you sure to Select As Target ?"
+            onConfirm={confirm}
+            onCancel={cancel}
+            okText="Yes"
+            cancelText="No"
+          >
+            <Button type="primary" htmlType="submit">        Select As Target      </Button>
+          </Popconfirm>
+          <Button color="primary" variant="outlined" onClick={onClickPrint}>Download Selected Companies List</Button>
+
          
-        </Row>
-      </Checkbox.Group>
-    </Form.Item>
+        </Flex></Col>
+      </Row>
 
 
-
-
-        <h3 style={{ color: '#1677ff' }}>Remarks</h3>
-        <Form.Item name="remark" label="Remarks" rules={[{ required: true }]}>
-          <Input.TextArea autoSize={{ minRows: 8 }} />
-        </Form.Item>
-        <Row gutter={16}>
-          <Col span={12}><Flex gap="small" justify='flex-start'><Button color="primary" variant="outlined" onClick={() => navigate(-1)}>Cancel</Button></Flex></Col>
-          <Col span={12}><Flex gap="small" justify='flex-end'>
-            <Button color="primary" variant="outlined" disabled>Convent to Simplified Chinese</Button>
-            <Button color="primary" variant="outlined" onClick={onClickPrint}>Print</Button>
-            <Button color="primary" variant="outlined" onClick={onClickPrint}>Reset</Button>
-
-            <Popconfirm
-              title="Outstanding Manifest Advice"
-              description="Are you sure to save the Outstanding Manifest Advice?"
-              onConfirm={confirm}
-              onCancel={cancel}
-              okText="Yes"
-              cancelText="No"
-            >
-
-              <Button type="primary" htmlType="submit">        Save      </Button>
-            </Popconfirm>
-          </Flex></Col>
-        </Row>
-
-      </Form>
     </div>
   );
 }
