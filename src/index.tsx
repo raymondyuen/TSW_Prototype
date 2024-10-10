@@ -1,6 +1,4 @@
-import React from 'react';
-import Root from 'react';
-import ReactDOM from 'react-dom/client';
+
 import './index.css';
 import CM009 from './Cm009';
 import CM020 from './Cm020';
@@ -13,9 +11,6 @@ import {
 } from "react-router-dom";
 
 import { createRoot } from 'react-dom/client';
-
-
-const container = document.getElementById('app');
 
 const router = createBrowserRouter([
   {
