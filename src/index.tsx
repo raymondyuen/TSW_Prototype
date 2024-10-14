@@ -12,6 +12,7 @@ import {
 } from "react-router-dom";
 
 import { createRoot } from 'react-dom/client';
+import Cm003Amend from "./Cm003Amend";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
   {
     path: "/CM020S3",
     element: <CM020S3 />,
+  },
+  {
+    path: "/CM003Amend",
+    element: <Cm003Amend />,
   }
 ]);
 const root = createRoot(

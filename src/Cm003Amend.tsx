@@ -57,7 +57,7 @@ const sharedProps: SelectProps = {
     maxTagCount: 'responsive',
 };
 
-const Cm003Amend: React.FC = () => {
+const App: React.FC = () => {
     const [airMode, setAirMode] = useState<boolean>(false)
     const [OceanAndRiverMode, setOceanAndRiverMode] = useState<boolean>(false)
     const [railMode, setRailMode] = useState<boolean>(false)
@@ -322,4 +322,4 @@ const Cm003Amend: React.FC = () => {
     );
 };
 
-export default Cm003Amend;
+export default App;
