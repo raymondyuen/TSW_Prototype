@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row,Col, Select } from 'antd';
+import { Row,Col, Select, Image } from 'antd';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -15,7 +15,12 @@ const App: React.FC = () => {
 
   return (
     <div>
+      <Col><Image
+          width={300}
+          src="./tsw_logo.png"
+        /></Col>
       <Row>
+        
         <Col>Select Function ID : </Col>
         <Col><Select
       style={{ width: 600 }}

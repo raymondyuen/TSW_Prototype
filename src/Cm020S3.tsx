@@ -35,12 +35,12 @@ const attrRow = (field1: String, value1: String, field2?: String, value2?: Strin
 }
 
 
-const onFinish = (values: any) => {
-  message.success('The Outstanding Manifest Advice is saved.');
+const onClickPreview = (values: any) => {
+  window.open("./Sample of OMA by Fax.pdf")
+  //message.success('The Outstanding Manifest Advice is saved.');
 };
 
 const confirm: PopconfirmProps['onConfirm'] = (e) => {
-  onFinish("");
   console.log(e);
 };
 
@@ -57,12 +57,14 @@ const App: React.FC = () => {
 
 
 
-  const onClickPrint = () => {
-    window.print();
+  const onClickIssueEmail = () => {
+    message.success("Issue successful")
+    //window.print();
   }
-
-
-
+  const onClickIssueFax = () => {
+    message.success("Issue successful")
+    //window.print();
+  }
 
   /**Table Function */
   interface DataType {
@@ -85,11 +87,11 @@ const App: React.FC = () => {
     },
     {
       title: 'Transport Mode',
-      dataIndex: 'tranMode',sorter: true,
+      dataIndex: 'tranMode', sorter: true,
     },
     {
       title: 'Voyage / Flight / Train / Vehicle No.',
-      dataIndex: 'vid',sorter: true,
+      dataIndex: 'vid', sorter: true,
     },
     {
       title: 'Shipment Date',
@@ -115,23 +117,23 @@ const App: React.FC = () => {
   const data = [
     {
       key: 1,
-      omaRefNo: `OMA-12345678`,
-      tranMode: "Air ",
-      vid: "UX001",
+      omaRefNo: `S-A0-401-018112`,
+      tranMode: "River",
+      vid: "20231233897 (HEI BANG EA 776/98443)",
       shipmentDt: '15/05/2024',
       omaType: "OS1",
       omaStatus: "New"
     },
     {
       key: 2,
-      omaRefNo: `OMA-12345303`,
-      tranMode: "Ocean ",
-      vid: "V776653-093",
+      omaRefNo: `S-A0-401-018278`,
+      tranMode: "River",
+      vid: "20231233896 (HEI BANG EA 776/98776)",
       shipmentDt: '13/05/2024',
       omaType: "OS2",
       omaStatus: "Response Submitted"
     },
- 
+
   ]
   return (
 
@@ -151,7 +153,7 @@ const App: React.FC = () => {
       <Table<DataType>
         columns={columns}
         dataSource={data != null ? data : []}
-       // pagination={{ pageSize: 10 }}
+        // pagination={{ pageSize: 10 }}
         pagination={{ position: [] }}
 
       />
@@ -161,16 +163,16 @@ const App: React.FC = () => {
         <Col span={12}><Flex gap="small" justify='flex-end'>
           <Popconfirm
             title="Select As Target "
-            description="Are you sure to Select As Target ?"
+            description="Are you sure?"
             onConfirm={confirm}
             onCancel={cancel}
             okText="Yes"
             cancelText="No"
           >
-            <Button type="primary" htmlType="submit">        Preview Notice     </Button>
           </Popconfirm>
-          <Button color="primary" variant="outlined" onClick={onClickPrint}>Issue via Email</Button>
-          <Button color="primary" variant="outlined" onClick={onClickPrint}>Issue via Fax</Button>
+          <Button type="primary" htmlType="submit" onClick={onClickPreview}>Preview Notice</Button>
+          <Button color="primary" variant="outlined" onClick={onClickIssueEmail}>Issue via Email</Button>
+          <Button color="primary" variant="outlined" onClick={onClickIssueFax}>Issue via Fax</Button>
 
 
         </Flex></Col>

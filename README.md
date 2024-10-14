@@ -1,6 +1,8 @@
-# Getting Started with Create React App
+# Getting Started
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Run your project locally, they will have to 
+###run npm i 
+before ng serve
 
 ## Available Scripts
 

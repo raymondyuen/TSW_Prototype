@@ -3,6 +3,7 @@ import './index.css';
 import CM009 from './Cm009';
 import CM020 from './Cm020';
 import CM020S3 from './Cm020S3';
+import Login from './Login';
 import Menu from './Menu';
 import reportWebVitals from './reportWebVitals';
 import {
@@ -15,7 +16,7 @@ import { createRoot } from 'react-dom/client';
 const router = createBrowserRouter([
   {
     path:"/",
-    element: <Menu />,
+    element: <Login />,
   },
   {
     path: "/CM009",
