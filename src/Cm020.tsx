@@ -57,6 +57,7 @@ const App: React.FC = () => {
   
   const navigate = useNavigate();
   const [dataSource, setDataSource] = useState<Array<DataType> | null>(null);
+  const [targetDataSource, setTargetDataSource] = useState<Array<DataType> | null>(null);
   const [dateFrom, setDateFrom] = useState("May 2024");
   const [dateTo, setDateTo] = useState("Jun 2024");
   form.setFieldsValue({ remark: `` });
@@ -84,6 +85,24 @@ const App: React.FC = () => {
       noOfCase: 2 + parseInt(i+"")
     }));
     setDataSource(data);
+  }
+  const onClickSelectTarget = ()=>{
+    const data = Array.from({ length: 3 }).map<DataType>((_, i) => ({
+      key: i,
+      carrierID: `000-8765457-` + i,
+      companyName: "Chu Kong Agency Ltd" + i,
+      idType: "BR",
+      companyPhoneNo: '1234 5678',
+      noOfCase: 2 + parseInt(i+"")
+    }));
+    setTargetDataSource(data);
+  }
+
+  const onClickDownload = ()=>{
+    window.open("./download.csv")
+  }
+  const onClickUnSelect = ()=>{
+    setTargetDataSource([]);
   }
   const onClickUpload = () => {
     const data = Array.from({ length: 3 }).map<DataType>((_, i) => ({
@@ -163,9 +182,10 @@ type Sorts = GetSingle<Parameters<OnChange>[2]>;
       title: 'Action',
       dataIndex: '',
       key: 'x',
-      render: () => <Button onClick={onClickSend}>Send</Button>,
+      render: () => <Button onClick={onClickSend} type="primary" htmlType="submit">Send</Button>,
     },
   ];
+  
 
 
   const rowSelection: TableProps<DataType>['rowSelection'] = {
@@ -289,19 +309,49 @@ type Sorts = GetSingle<Parameters<OnChange>[2]>;
           <Popconfirm
             title="Select As Target "
             description="Are you sure to select As Target ?"
-            onConfirm={confirm}
+            onConfirm={onClickSelectTarget}
             onCancel={cancel}
             okText="Yes"
             cancelText="No"
           >
             <Button type="primary" htmlType="submit">        Select As Target      </Button>
           </Popconfirm>
-          <Button color="primary" variant="outlined" onClick={onClickPrint}>Download Selected Companies List</Button>
+          <Button color="primary" variant="outlined" onClick={onClickDownload}>Download Selected Companies List</Button>
 
 
         </Flex></Col>
       </Row>
 
+
+      <h3 style={{ color: '#1677ff' }}>List of Targeted Companies</h3>
+      <Table<DataType>
+        rowSelection={{ ...rowSelection }}
+        columns={columns.slice(0,-1)}
+        dataSource={targetDataSource != null ? targetDataSource : []}
+        pagination={{ pageSize: 10 }}
+        scroll={{ y: 100 * 5 }}
+        onChange={handleChange} 
+      />
+      <Divider />
+      <Row gutter={16}>
+        <Col span={12}></Col>
+        <Col span={12}><Flex gap="small" justify='flex-end'>
+        <Button type="primary" htmlType="submit" onClick={onClickUnSelect}> Un-select As Target   </Button>
+          <Popconfirm
+            title="Select As Target "
+            description="Are you sure to select As Target ?"
+            onConfirm={confirm}
+            onCancel={cancel}
+            okText="Yes"
+            cancelText="No"
+          >
+           
+            <Button type="primary" htmlType="submit"> Save   </Button>
+          </Popconfirm>
+
+
+        </Flex></Col>
+      </Row>
 
     </div>
   );
