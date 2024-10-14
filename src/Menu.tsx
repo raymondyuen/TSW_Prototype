@@ -34,6 +34,7 @@ aria-label='function ID'
             options: [
               { label: <span>UF-EM-CM-009 Issue Query for Outstanding Manifest Advice</span>, value: 'Cm009' },
               { label: <span>UF-EM-CM-020 Create Highlighting Critical Outstanding Manifest Cases</span>, value: 'Cm020' },
+              { label: <span>UF-EM-CM-003 AMEND</span>, value: 'Cm003Amend'},
             ],
           },
           {
