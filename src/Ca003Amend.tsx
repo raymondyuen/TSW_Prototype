@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { replace, useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import {
@@ -33,6 +34,8 @@ dayjs.extend(customParseFormat);
 const onChangeTime: TimePickerProps['onChange'] = (time, timeString) => {
     console.log(time, timeString);
 };
+
+
 
 // select input field
 interface ItemProps {
@@ -71,6 +74,10 @@ const App: React.FC = () => {
     // remarks value
 
     // button
+    const navigate = useNavigate()
+    const toPreviousPage = ()=>{ 
+        navigate('/Ca003Enquiry',{replace: true})
+    }
 
     return (
       <div style={{padding: '0 24px', maxWidth: 1200}}>
@@ -313,8 +320,8 @@ const App: React.FC = () => {
                       <ConfigProvider componentSize={'middle'}>
                           <Flex vertical gap='middle'>
                               <Flex gap="middle" wrap>
-                                  <Button color="primary" variant="outlined">
-                                      Cancel
+                                  <Button color="primary" variant="outlined" onClick={toPreviousPage}>
+                                      Back
                                   </Button>
                                   <Button color="primary" variant="outlined">
                                       Reset

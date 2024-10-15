@@ -34,14 +34,14 @@ aria-label='function ID'
             options: [
               { label: <span>UF-EM-CM-009 Issue Query for Outstanding Manifest Advice</span>, value: 'Cm009' },
               { label: <span>UF-EM-CM-020 Create Highlighting Critical Outstanding Manifest Cases</span>, value: 'Cm020' },
-              { label: <span>UF-EM-CM-003 AMEND</span>, value: 'Cm003Amend'},
+              
             ],
           },
           {
             label: <span>CA Function</span>,
             title: 'CA Function',
             options: [
-              { label: <span>UF-EM-CA-003 Maintenance of Arrival/ Departure Information for Probable Matching</span>, value: 'Ca003' }
+              { label: <span>UF-EM-CA-003 Enquiry of Schedules and Manifest for Probable Matching</span>, value: 'Ca003Enquiry' },
             ],
           },
         ]}

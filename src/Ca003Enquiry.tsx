@@ -60,7 +60,7 @@ const scheduleColumns: TableColumnsType = [
   {
     title: 'Details',
     dataIndex: 'details',
-    render: (text: String) => <a>{text}</a>
+    render: (text: String) => <a href='/Ca003Amend'>{text}</a>
   }, {
     title: 'Actual Arrival Date',
     dataIndex: 'actualArrivalDate'
