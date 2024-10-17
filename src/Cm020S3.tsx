@@ -3,7 +3,6 @@ import { Flex } from 'antd';
 
 import { message, Popconfirm } from 'antd';
 import type { PopconfirmProps } from 'antd';
-import Menu from './Menu';
 import { useNavigate } from 'react-router-dom';
 import {
   Button,
@@ -138,8 +137,6 @@ const App: React.FC = () => {
   return (
 
     <div style={{ padding: '0 24px', maxWidth: 1200 }}>
-      <Menu />
-
       <h1 style={{ color: '#1677ff' }}>Send Notice To Company With Critical Outstanding Manifest Advice</h1>
       {attrRow('Carrier ID', '000-8765457')}
       {attrRow('Company Name', 'Chu Kong Agency Ltd')}

@@ -3,7 +3,6 @@ import { Flex } from 'antd';
 import { Input } from 'antd';
 import { message, Popconfirm } from 'antd';
 import type { PopconfirmProps } from 'antd';
-import Menu from './Menu';
 import { useNavigate } from 'react-router-dom';
 import {
   Button,
@@ -221,8 +220,6 @@ type Sorts = GetSingle<Parameters<OnChange>[2]>;
   return (
 
     <div style={{ padding: '0 24px' }}>
-      <Menu />
-
       <h1 style={{ color: '#1677ff' }}>Create Highlighting Critical Outstanding Manifest Cases</h1>
 
       <Row>
@@ -340,7 +337,7 @@ type Sorts = GetSingle<Parameters<OnChange>[2]>;
           <Popconfirm
             title="Select As Target "
             description="Are you sure to select As Target ?"
-            onConfirm={confirm}
+            onConfirm={()=>{  message.success('The companied you selected have been successfully saved into thetargeted list');            }}
             onCancel={cancel}
             okText="Yes"
             cancelText="No"

@@ -1,3 +1,4 @@
+import { Route, BrowserRouter as Routers, Routes } from 'react-router-dom';
 
 import './index.css';
 import CM009 from './Cm009';
@@ -8,12 +9,13 @@ import Menu from './Menu';
 import reportWebVitals from './reportWebVitals';
 import {
   createBrowserRouter,
+  Router,
   RouterProvider,
 } from "react-router-dom";
 
 import { createRoot } from 'react-dom/client';
 import Ca003Enquiry from './Ca003Enquiry';
-import Ca003Amend from './Ca003Amend';
+import CA003Amend from './Ca003Amend';
 
 
 const router = createBrowserRouter([
@@ -35,7 +37,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/CA003Amend",
-    element: <Ca003Amend />,
+    element: <CA003Amend />,
   },
   {
     path: "/CA003Enquiry",
@@ -46,7 +48,18 @@ const root = createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-    <RouterProvider router={router} />
+  <Routers>
+  <Menu />
+  <Routes>
+    <Route path="/" element={<Login />} />
+    <Route path="/CM009" element={<CM009 />} />
+    <Route path="/CM020" element={<CM020 />} />
+    <Route path="/CM020S3" element={<CM020S3 />} />
+    <Route path="/CA003Amend" element={<CA003Amend />} />
+    <Route path="/Ca003Enquiry" element={<Ca003Enquiry />} />
+    <Route path="*" element={<Login />} />
+  </Routes>
+</Routers>
 );
 
 

@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import './App.css';
 import {
   Button,
+  Col,
   DatePicker,
+  Divider,
   Flex,
   Form,
   Input,
@@ -12,11 +12,14 @@ import {
   Select,
   Table,
   TableColumnsType,
-  Col
+  TimePicker
 } from 'antd';
-import Title from 'antd/es/typography/Title';
 import { TableRowSelection } from 'antd/es/table/interface';
-
+import Title from 'antd/es/typography/Title';
+import React, { useState, MouseEvent } from 'react';
+import './App.css';
+import { Card, Space } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
 
 type DisplayTitle = "Schedule" | "Manifest"
@@ -56,31 +59,7 @@ const scheduleData: ScheduleDataType[] = [
   }
 ]
 
-const scheduleColumns: TableColumnsType = [
-  {
-    title: 'Details',
-    dataIndex: 'details',
-    render: (text: String) => <a href='/Ca003Amend'>{text}</a>
-  }, {
-    title: 'Actual Arrival Date',
-    dataIndex: 'actualArrivalDate'
-  }, {
-    title: 'Vessel Name, Vessel Chinese Name (Vessel ID:Call Sign)',
-    dataIndex: 'vessel'
-  }, {
-    title: 'Carrier Name (Carrier ID:ID Type)',
-    dataIndex: 'carrier'
-  }, {
-    title: 'MS',
-    dataIndex: 'ms'
-  }, {
-    title: 'Schd',
-    dataIndex: 'schd'
-  }, {
-    title: 'Matched UMR',
-    dataIndex: 'matchedUMR'
-  }
-]
+
 
 
 
@@ -95,80 +74,48 @@ interface ManifestDataType {
   umrVer: String
 }
 
-const manifestData: ManifestDataType[] = [
-  {
-    key: '1',
-    actualArrivalDate: '20/05/2024',
-    vessel: 'Vessel E3 , - (VE3 :VE3)',
-    carrier: 'CRT - Carrier (20000000 : BR)',
-    telNo: '2258 2258',
-    ms: 'UM',
-    mfest: 'QI',
-    umrVer: '2M0CGDR100A1 (2)'
-  }, {
-    key: '2',
-    actualArrivalDate: '20/05/2024',
-    vessel: 'Vessel E3 , - (VE3 :VE3)',
-    carrier: 'CRT - Carrier (20000000 : BR)',
-    telNo: '2258 2258',
-    ms: 'UM',
-    mfest: 'QI',
-    umrVer: '2M0CGDR100A3 (1)'
-  }
-]
 
-const manifestColumns: TableColumnsType = [
-  {
-    title: 'Actual Arrival Date',
-    dataIndex: 'actualArrivalDate'
-  }, {
-    title: 'Vessel Name, Vessel Chinese Name (Vessel ID:Call Sign)',
-    dataIndex: 'vessel'
-  }, {
-    title: 'Carrier Name (Carrier ID:ID Type)',
-    dataIndex: 'carrier'
-  }, {
-    title: 'Tel No.',
-    dataIndex: 'telNo'
-  }, {
-    title: 'MS',
-    dataIndex: 'ms'
-  }, {
-    title: 'Mfest',
-    dataIndex: 'mfest'
-  }, {
-    title: 'UMR (Version No.)',
-    dataIndex: 'umrVer',
-    render: (text: String) => <a>{text}</a>
-  }
-]
+
+
 
 
 function retrievalKeysFor(title: DisplayTitle, followSchedule: String, currentMode: String) {
-  var disable = title == 'Manifest' && followSchedule == 'Y'
+  var disable = title === 'Manifest' && followSchedule === 'Y'
   return (
-    <div>
-      <Title level={2} style={{ color: '#1677ff' }}>Retrieval keys for {title}</Title>
-      <Form.Item label="Arrival / Departure" labelCol={{ span: 4 }}>
-        <RangePicker showTime disabled={disable} />
-      </Form.Item>
-
-      {currentMode == 'air' ?
+    <div style={{ minWidth: '900px' }}>
+      <Title level={3} style={{ color: '#1677ff' }}>Retrieval keys for {title}</Title>
+      <Space wrap>
+        <Space.Compact block >
+          <Form.Item label="Arrival / Departure Date" labelCol={{ span: 10 }}>
+            <RangePicker disabled={disable} />
+          </Form.Item>
+        </Space.Compact>
+        <Space.Compact block >
+          {title === 'Schedule' ?
+            <Form.Item label="Arrival / Departure Time" labelCol={{ span: 10 }} >
+              <TimePicker.RangePicker allowClear format={'HH:mm'} />
+            </Form.Item>
+            : ''}
+        </Space.Compact>
+      </Space>
+      {currentMode === 'air' ?
         <Row gutter={24}>
           <Col span={12}>
             <Form.Item label="Flight ID" labelCol={{ span: 8 }}>
               <Input disabled={disable} />
             </Form.Item>
           </Col>
+          {title === 'Schedule' ?
           <Col span={12}>
             <Form.Item label="Flight ID (Matching)" labelCol={{ span: 8 }}>
               <Input disabled={disable} />
             </Form.Item>
           </Col>
+          :''}
         </Row>
         : ''}
 
-      {currentMode == 'water' ?
+      {currentMode === 'water' ?
         <div>
           <Row gutter={24}>
             <Col span={12}>
@@ -198,7 +145,7 @@ function retrievalKeysFor(title: DisplayTitle, followSchedule: String, currentMo
         : ''}
 
 
-      {currentMode == 'rail' ?
+      {currentMode === 'rail' ?
         <Row gutter={24}>
           <Col span={12}>
             <Form.Item label="Train No." labelCol={{ span: 8 }}>
@@ -240,8 +187,14 @@ function retrievalKeysFor(title: DisplayTitle, followSchedule: String, currentMo
           </Form.Item>
         </Col>
         <Col span={12}>
+        {title === 'Manifest' ?
+            <Form.Item label="UMR" labelCol={{ span: 8 }}>
+              <Input disabled={disable} />
+            </Form.Item>
+          :''}
         </Col>
       </Row>
+
     </div>
   )
 }
@@ -251,6 +204,7 @@ function retrievalKeysFor(title: DisplayTitle, followSchedule: String, currentMo
 
 
 function App() {
+  const navigate = useNavigate();
 
   const [currentMode, setCurrentMode] = useState("air")
 
@@ -258,6 +212,82 @@ function App() {
   const onFollowScheduleChange = (e: RadioChangeEvent) => {
     setFollowSchedule(e.target.value)
   }
+  const scheduleColumns: TableColumnsType = [
+    {
+      title: 'Details',
+      dataIndex: 'details',
+      render: (text: String) => <a href='/Ca003Amend'>{text}</a>
+    }, {
+      title: 'Actual Arrival Date',
+      dataIndex: 'actualArrivalDate'
+    }, {
+      title: currentMode==='water'?'Vessel Name, Vessel Chinese Name (Vessel ID:Call Sign)':currentMode==='air'?'Flight ID (Matching)':'Train No.',
+      dataIndex: 'vessel',
+      width: 300
+    }, {
+      title: 'Carrier Name (Carrier ID:ID Type)',
+      dataIndex: 'carrier'
+    }, {
+      title: 'MS',
+      dataIndex: 'ms'
+    }, {
+      title: 'Schd',
+      dataIndex: 'schd'
+    }, {
+      title: 'Matched UMR',
+      dataIndex: 'matchedUMR'
+    }
+  ]
+
+  const manifestColumns: TableColumnsType = [
+    {
+      title: 'Actual Arrival Date',
+      dataIndex: 'actualArrivalDate'
+    }, {
+      title: currentMode==='water'?'Vessel Name (Vessel ID:Call Sign)':currentMode==='air'?'Flight ID':'Train No.',
+      dataIndex: 'vessel',
+      width: 300
+    }, {
+      title: 'Carrier Name (Carrier ID:ID Type)',
+      dataIndex: 'carrier'
+    }, {
+      title: 'Tel No.',
+      dataIndex: 'telNo'
+    }, {
+      title: 'MS',
+      dataIndex: 'ms'
+    }, {
+      title: 'Mfest',
+      dataIndex: 'mfest'
+    }, {
+      title: 'UMR (Version No.)',
+      dataIndex: 'umrVer',
+      render: (text: String) => <a>{text}</a>
+    }
+  ]
+
+  const manifestData: ManifestDataType[] = [
+    {
+      key: '1',
+      actualArrivalDate: '20/05/2024',
+      //vessel: 'Vessel E3 , - (VE3 :VE3)',
+      vessel: currentMode==='water'?'Vessel E3 , - (VE3 :VE3)':currentMode==='air'?'AE886':'T123456',
+      carrier: 'CRT - Carrier (20000000 : BR)',
+      telNo: '2258 2258',
+      ms: 'UM',
+      mfest: 'QI',
+      umrVer: '2M0CGDR100A1 (2)'
+    }, {
+      key: '2',
+      actualArrivalDate: '20/05/2024',
+      vessel: 'Vessel E3 , - (VE3 :VE3)',
+      carrier: 'CRT - Carrier (20000000 : BR)',
+      telNo: '2258 2258',
+      ms: 'UM',
+      mfest: 'QI',
+      umrVer: '2M0CGDR100A3 (1)'
+    }
+  ]
 
   const [selectedScheduleKeys, setSelectedScheduleKeys] = useState<React.Key[]>([])
   const onScheduleSelectedChange = (newKeys: React.Key[]) => {
@@ -279,66 +309,63 @@ function App() {
 
   const [mainForm] = Form.useForm()
 
+  function clickAmend(): void {
+    navigate("/Ca003Amend");
+  }
+
+  function clickIssueOMA(event: React.MouseEvent<HTMLElement>): void {
+    navigate("/CM009");
+  }
+
   return (
-    <div className="App" style={{ padding: '0 36px' }}>
+    <div style={{ padding: '0 36px' }}>
       <Title style={{ color: '#1677ff' }}>Enquiry of Schedules and Manifest for Probable Matching</Title>
       <Form
         form={mainForm}
-        labelCol={{ span: 8 }}
         labelAlign='left'
-        wrapperCol={{ span: 16 }}
         layout="horizontal"
-        labelWrap
-      // style={{ maxWidth: 600 }}
       >
-        <Row>
-          <Col span={12}>
-            <Form.Item label="Transport Mode" labelCol={{ span: 4 }} wrapperCol={{ span: 8 }}>
+        <Space wrap>
+          <Space.Compact block>
+
+            <Form.Item label="Transport Mode" labelCol={{ span: 12 }} style={{ width: '250px' }}  >
               <Select onChange={setCurrentMode} defaultValue={"air"}>
                 <Select.Option value="air">Air</Select.Option>
                 <Select.Option value="water">Ocean/River</Select.Option>
                 <Select.Option value="rail">Rail</Select.Option>
               </Select>
             </Form.Item>
-          </Col>
-        </Row>
-        <Row>
-          <Col span={12}>
-            <Form.Item label="Shipment Type" labelCol={{ span: 4 }} wrapperCol={{ span: 8 }}>
+          </Space.Compact>
+          <Space.Compact block >
+            <Form.Item label="Shipment Type" labelCol={{ span: 12 }} style={{ width: '250px' }} >
               <Select defaultValue={"inbound"}>
                 <Select.Option value="inbound">Inbound</Select.Option>
                 <Select.Option value="outbound">Outbound</Select.Option>
               </Select>
             </Form.Item>
-          </Col>
-        </Row>
-        <Row>
-          <Col span={12}>
-            <Form.Item label="Manifest retrieval to follow that of schedule? " labelCol={{ span: 4 }} wrapperCol={{ span: 8 }}>
+          </Space.Compact>
+          <Space.Compact block >
+
+            <Form.Item label="Manifest retrieval to follow that of schedule? " labelCol={{ span: 16 }} style={{ width: '500px' }} >
               <Radio.Group onChange={onFollowScheduleChange} value={followSchedule}>
                 <Radio value="Y">Yes</Radio>
                 <Radio value="N">No</Radio>
               </Radio.Group>
             </Form.Item>
-          </Col>
-        </Row>
-
-
-
-        <Row gutter={24}>
-          <Col span={12}>
+          </Space.Compact>
+        </Space>
+        <Space >
+          <Space.Compact  >
             {retrievalKeysFor('Schedule', followSchedule, currentMode)}
-          </Col>
-          <Col span={12}>
+          </Space.Compact>
+
+          <Space.Compact>
             {retrievalKeysFor('Manifest', followSchedule, currentMode)}
-          </Col>
-
-        </Row>
-
-
-        <Row>
-          <Col span={12}>
-            <Form.Item label="Schedule Match Status" labelCol={{ span: 4 }} wrapperCol={{ span: 20 }}>
+          </Space.Compact>
+        </Space>
+        <Row style={{width:1600}}>
+          <Col span={24}>
+            <Form.Item label="Schedule Match Status" labelCol={{ span: 3 }} wrapperCol={{ span: 20 }}>
               <Radio.Group defaultValue={"all"}>
                 <Radio value="all"> All </Radio>
                 <Radio value="matched"> Matched </Radio>
@@ -350,9 +377,9 @@ function App() {
             </Form.Item>
           </Col>
         </Row>
-        <Row>
-          <Col span={12}>
-            <Form.Item label="Manifest Match Status" labelCol={{ span: 4 }} wrapperCol={{ span: 20 }}>
+        <Row style={{width:1600}}>
+        <Col span={24}>
+            <Form.Item label="Manifest Match Status" labelCol={{ span: 3 }} wrapperCol={{ span: 20 }}>
               <Radio.Group defaultValue={"all"}>
                 <Radio value="all"> All </Radio>
                 <Radio value="matched"> Matched </Radio>
@@ -361,9 +388,9 @@ function App() {
             </Form.Item>
           </Col>
         </Row>
-        <Row>
-          <Col span={12}>
-            <Form.Item label="Schedule Status" labelCol={{ span: 4 }} wrapperCol={{ span: 20 }}>
+        <Row style={{width:1600}}>
+          <Col span={24}>
+            <Form.Item label="Schedule Status" labelCol={{ span: 3 }} wrapperCol={{ span: 21 }}>
               <Radio.Group defaultValue={"all"}>
                 <Radio value="all"> All </Radio>
                 <Radio value="oma"> OMA issued </Radio>
@@ -379,9 +406,9 @@ function App() {
             </Form.Item>
           </Col>
         </Row>
-        <Row>
-          <Col span={12}>
-            <Form.Item label="Manifest Status" labelCol={{ span: 4 }} wrapperCol={{ span: 20 }}>
+        <Row style={{width:1600}}>
+          <Col span={24}>
+            <Form.Item label="Manifest Status" labelCol={{ span: 3 }} wrapperCol={{ span: 20 }}>
               <Radio.Group defaultValue={"all"}>
                 <Radio value="all"> All </Radio>
                 <Radio value="pending"> Pending </Radio>
@@ -392,45 +419,83 @@ function App() {
             </Form.Item>
           </Col>
         </Row>
-
-
-
-
-
         <Flex justify='right' gap='small'>
           <Button color='primary' variant='outlined'>Reset</Button>
           <Button color='primary' variant='solid'>Search</Button>
         </Flex>
-
+        <Divider></Divider>
       </Form>
+      <Title level={3} style={{ color: '#1677ff' }}>Probable Matching Result</Title>
 
-      <Title level={2} style={{ color: '#1677ff' }}>Probable Matching Result</Title>
+      <Space >
+        <Space.Compact  >
+          <SearchResult displayTitle='Schedule' columns={scheduleColumns} data={scheduleData} rowSelection={scheduleSelection} />
+        </Space.Compact>
+        <Space.Compact>
+          <SearchResult displayTitle='Manifest' columns={manifestColumns} data={manifestData} rowSelection={manifestSelection} />
+        </Space.Compact>
+      </Space>
+
+      <Divider />
       <Row>
         <Col span={12}>
-          <SearchResult displayTitle='Schedule' columns={scheduleColumns} data={scheduleData} rowSelection={scheduleSelection} />
+          <Row>OS : Outstanding Manifest Advice Issued, O1 : O/S 1st reminder, O2 : O/S 2nd reminder, CL : Closed by TCB, NE : Non-exist, SE : Exist, RF : Referred to TCB, UI : Under Legal Action</Row>
+          <Row>NC : Nil Cargo, CS : Cancel Shipment, OH : Off-hired, AM : Auto-matched, PM : Probable Matched, UM, Umatch, QI Query Issued, VD : Void, PD : Pending, NV : Not Voided</Row>
         </Col>
         <Col span={12}>
-          <SearchResult displayTitle='Manifest' columns={manifestColumns} data={manifestData} rowSelection={manifestSelection} />
+          <Row justify='end' style={{marginBottom:10}}>
+            <Space>
+              <Button color="primary" variant="outlined" >Revert Dummy Schedule</Button>
+              <Button color="primary" variant="outlined">Nil Cargo</Button>
+              <Button color="primary" variant="outlined">Off Hired</Button>
+              <Button color="primary" variant="outlined">Cancel Shipment</Button>
+              <Button color="primary" variant="outlined">Non Exist</Button>
+              <Button color="primary" variant="outlined">Match</Button>
+              <Button color="primary" variant="outlined" onClick={clickIssueOMA}>Issue OS Manifest Advice</Button>
+            </Space>
+          </Row>
+          <Row justify='end' style={{marginBottom:10}}>
+            <Flex gap="small" justify='flex-end'>
+              <Button color="primary" variant="outlined">Mark off Dummy Schedule</Button>
+              <Button color="primary" variant="outlined">Revert Pending</Button>
+              <Button color="primary" variant="outlined">Pending</Button>
+              <Button color="primary" variant="outlined">Unmatch</Button>
+              <Button color="primary" variant="outlined">New Sch</Button>
+              <Button color="primary" variant="outlined" onClick={clickAmend}>Amend</Button>
+              <Button color="primary" variant="outlined">Void Manifest</Button>
+            </Flex>
+          </Row>
+          <Flex gap="small" justify='flex-end'>
+            <Button color="primary" variant="solid">Print Details</Button>
+            <Button color="primary" variant="solid">Print Summary</Button>
+          </Flex>
+
         </Col>
       </Row>
 
+
+
     </div>
+
+
+
   );
 }
 
 
-const SearchResult = ({ displayTitle, columns, data, rowSelection }: { displayTitle: DisplayTitle, columns:TableColumnsType, data:object[], rowSelection: TableRowSelection }) => (
-  <Table
-    title={() => <Title level={3} style={{ color: '#1677ff' }}>{displayTitle}</Title>}
-    columns={columns}
-    dataSource={data}
-    rowSelection={rowSelection}
-    pagination={
-      {
-        showSizeChanger: true,
-        showTotal: (total, range) => `Total No. of Records = ${total}, displaying ${range[0]} to ${range[1]}`
-      }
-    } />
+const SearchResult = ({ displayTitle, columns, data, rowSelection }: { displayTitle: DisplayTitle, columns: TableColumnsType, data: object[], rowSelection: TableRowSelection }) => (
+  <Card title={displayTitle}>
+    <Table
+      columns={columns}
+      dataSource={data}
+      rowSelection={rowSelection}
+      pagination={
+        {
+          showSizeChanger: true,
+          // showTotal: (total, range) => `Total No. of Records = ${total}, displaying ${range[0]} to ${range[1]}`
+        }
+      } />
+  </Card>
 )
 
 

@@ -7,7 +7,6 @@ import { getDefaultFormatCodeSettings } from 'typescript';
 import { message, Popconfirm } from 'antd';
 import type { PopconfirmProps } from 'antd';
 import {  useNavigate } from 'react-router-dom';
-import Menu from './Menu';
 const { Title } = Typography
 const { TextArea } = Input
 
@@ -85,7 +84,6 @@ Interpretation and General Clauses Ordinance (Cap.1).
   return (
 
     <div style={{ padding: '0 24px' }}>
-      <Menu />
       <Form
         {...layout}
         form={form}

@@ -16,7 +16,6 @@ import {
     DatePickerProps,
     TimePickerProps, TimePicker, SelectProps, Tooltip, ConfigProvider, Flex,
 } from 'antd';
-import Menu from "./Menu";
 
 type RangePickerProps = GetProps<typeof DatePicker.RangePicker>;
 const {Title} = Typography
@@ -80,8 +79,7 @@ const App: React.FC = () => {
     }
 
     return (
-      <div style={{padding: '0 24px', maxWidth: 1200}}>
-          <Menu/>
+      <div style={{padding: '0 24px', maxWidth: 1800}}>
           <Form
             labelCol={{flex: '110px'}}
             wrapperCol={{flex: 1}}
@@ -90,13 +88,17 @@ const App: React.FC = () => {
             layout="horizontal"
             colon={false}
             style={{
-                maxWidth: 8000,
+                width:1600,
+                maxWidth: 1800,
             }}
           >
-              <h1 style={{color: '#1677ff'}}>Create / Amend Schedule</h1>
-              <Row gutter={[16, 16]}>
-                  <Col span={12}>
-                      <Form.Item label="Transport Mode:">
+           
+              <Title level={1}  style={{color: '#1677ff'}}>
+              Create / Amend Schedule
+              </Title>
+              <Row>
+                  <Col span={8}>
+                      <Form.Item label="Transport Mode:" labelCol={{ span: 12 }}  style={{ width: '500px' }} >
                           <Select>
                               <Select.Option value="Air">Air</Select.Option>
                               <Select.Option value="Ocean">Ocean</Select.Option>
@@ -104,8 +106,8 @@ const App: React.FC = () => {
                           </Select>
                       </Form.Item>
                   </Col>
-                  <Col span={12}>
-                      <Form.Item label="Shipment Type:">
+                  <Col span={9}>
+                      <Form.Item label="Shipment Type:" labelCol={{ span: 8 }}  style={{ width: '500px' }}>
                           <Select>
                               <Select.Option value="Inbound">Inbound</Select.Option>
                               <Select.Option value="Outbound">Outbound</Select.Option>
@@ -113,70 +115,70 @@ const App: React.FC = () => {
                       </Form.Item>
                   </Col>
 
-                  <Col span={12}>
-                      <Form.Item label="Estimated Date of Arrival / Departure">
+                  <Col span={8}>
+                      <Form.Item label="Estimated Date of Arrival / Departure" labelCol={{ span: 12 }}  style={{ width: '500px' }}>
                           <Space direction="vertical">
                               <DatePicker onChange={onChangeDate}/>
                           </Space>
                       </Form.Item>
                   </Col>
-                  <Col span={12}>
-                      <Form.Item label="Matching Status">
+                  <Col span={8}>
+                      <Form.Item label="Matching Status" labelCol={{ span: 8 }}  style={{ width: '500px' }}>
                           <Input value="Schedule Probable-Match" disabled={true}></Input>
                       </Form.Item>
                   </Col>
                   <Col span={17}>
-                      <Form.Item label="Estimated time of Arrival / Departure">
+                      <Form.Item label="Estimated time of Arrival / Departure" labelCol={{ span: 12 }}  style={{ width: '500px' }}>
                           <Space direction="vertical">
                               <TimePicker onChange={onChangeTime} defaultOpenValue={dayjs('00:00:00', 'HH:mm:ss')}/>
                           </Space>
                       </Form.Item>
                   </Col>
-                  <Col span={12}>
-                      <Form.Item label="Actual Date of Arrival / Departure">
+                  <Col span={8}>
+                      <Form.Item label="Actual Date of Arrival / Departure" labelCol={{ span: 12 }}  style={{ width: '500px' }}>
                           <Space direction="vertical">
                               <DatePicker onChange={onChangeDate}/>
                           </Space>
                       </Form.Item>
                   </Col>
-                  <Col span={12}>
-                      <Form.Item label="Matched UMR">
+                  <Col span={8}>
+                      <Form.Item label="Matched UMR" labelCol={{ span: 8 }}  style={{ width: '500px' }}>
                           <Input disabled={true}/>
                       </Form.Item>
                   </Col>
                   <Col span={17}>
-                      <Form.Item label="Actual Time of Arrival / Departure">
+                      <Form.Item label="Actual Time of Arrival / Departure" labelCol={{ span: 12 }}  style={{ width: '500px' }}>
                           <Space direction="vertical">
                               <TimePicker onChange={onChangeTime} defaultOpenValue={dayjs('00:00:00', 'HH:mm:ss')}/>
                           </Space>
                       </Form.Item>
                   </Col>
-                  <Col span={12}>
-                      <Form.Item label="Scheduled Date of Arrival / Departure">
+                  <Col span={8}>
+                      <Form.Item label="Scheduled Date of Arrival / Departure" labelCol={{ span: 12 }}  style={{ width: '500px' }}>
                           <Space direction="vertical">
                               <DatePicker onChange={onChangeDate}/>
                           </Space>
                       </Form.Item>
                   </Col>
-                  <Col span={12}>
-                      <Form.Item label="Mark Deny By">
+                  <Col span={8}>
+                      <Form.Item label="Mark Deny By" labelCol={{ span: 8 }}  style={{ width: '500px' }}>
                           <Input disabled={true}/>
                       </Form.Item>
                   </Col>
                   <Col span={17}>
-                      <Form.Item label="Scheduled Time of Arrival / Departure">
+                      <Form.Item label="Scheduled Time of Arrival / Departure" labelCol={{ span: 12 }}  style={{ width: '500px' }}>
                           <Space direction="vertical">
                               <TimePicker onChange={onChangeTime} defaultOpenValue={dayjs('00:00:00', 'HH:mm:ss')}/>
                           </Space>
                       </Form.Item>
                   </Col>
-                  <Col span={12}>
-                      <Form.Item label="Schedule Pending">
+                  <Col span={8}>
+                      <Form.Item label="Schedule Pending" labelCol={{ span: 12 }}  style={{ width: '500px' }}>
                           <Input/>
                       </Form.Item>
                   </Col>
-                  <Col span={12}>
-                      <Form.Item label="OS Manifest Ref No.">
+                  <Col span={8}>
+                      <Form.Item label="OS Manifest Ref No." labelCol={{ span: 8 }}  style={{ width: '500px' }}>
                           <Input.TextArea allowClear/>
                       </Form.Item>
                   </Col>
@@ -184,67 +186,67 @@ const App: React.FC = () => {
 
               <h1 style={{color: '#1677ff'}}>Carrier Information</h1>
               <Row gutter={[16, 16]}>
-                  <Col span={12}>
-                      <Form.Item label="Carrier ID">
+                  <Col span={8}>
+                      <Form.Item label="Carrier ID" labelCol={{ span: 12 }}  style={{ width: '500px' }}>
                           <Input/>
                       </Form.Item>
                   </Col>
-                  <Col span={12}>
-                      <Form.Item label="Carrier ID Type">
+                  <Col span={9}>
+                      <Form.Item label="Carrier ID Type" labelCol={{ span: 8 }}  style={{ width: '500px' }}>
                           <Select options={[
                               {value: "HK Business Reg", label: "HK Business Reg"},
                           ]}/>
                       </Form.Item>
                   </Col>
-                  <Col span={12}>
-                      <Form.Item label="Carrier Number">
+                  <Col span={8}>
+                      <Form.Item label="Carrier Number" labelCol={{ span: 12 }}  style={{ width: '500px' }}>
                           <Input/>
                       </Form.Item>
                   </Col>
-                  <Col span={12}>
-                      <Form.Item label="Carrier Address">
+                  <Col span={8}>
+                      <Form.Item label="Carrier Address" labelCol={{ span: 8 }}  style={{ width: '500px' }}>
                           <Input.TextArea allowClear/>
                       </Form.Item>
                   </Col>
               </Row>
-              <Col span={12}>
-                  <Form.Item label="Carrier Phone Number">
+              <Col span={8}>
+                  <Form.Item label="Carrier Phone Number" labelCol={{ span: 12 }}  style={{ width: '500px' }}>
                       <Input></Input>
                   </Form.Item>
               </Col>
-              <Col span={12}>
-                  <Form.Item label="Carrier Code (MD)">
+              <Col span={8}>
+                  <Form.Item label="Carrier Code (MD)" labelCol={{ span: 12 }}  style={{ width: '500px' }}>
                       <Input/>
                   </Form.Item>
               </Col>
-              <Col span={12}>
-                  <Form.Item label="Carrier Code (AA)">
+              <Col span={8}>
+                  <Form.Item label="Carrier Code (AA)" labelCol={{ span: 12 }}  style={{ width: '500px' }}>
                       <Input/>
                   </Form.Item>
               </Col>
-              <Col span={12}>
-                  <Form.Item label="Carrier Code (KCRC)">
+              <Col span={8}>
+                  <Form.Item label="Carrier Code (KCRC)" labelCol={{ span: 12 }}  style={{ width: '500px' }}>
                       <Input/>
                   </Form.Item>
               </Col>
 
-              <Title style={{color: '#1677ff'}}>
+              <Title level={1}  style={{color: '#1677ff'}}>
                   Ocean / River Information
               </Title>
               <Row gutter={[16, 16]}>
-                  <Col span={12}>
-                      <Form.Item label="Vessel ID">
+                  <Col span={8}>
+                      <Form.Item label="Vessel ID" labelCol={{ span: 12 }}  style={{ width: '500px' }}>
                           <Input/>
                       </Form.Item>
                   </Col>
-                  <Col span={12}>
-                      <Form.Item label="Call Sign">
+                  <Col span={8}>
+                      <Form.Item label="Call Sign" labelCol={{ span: 8 }}  style={{ width: '500px' }}>
                           <Input disabled={true} value="CY8CS81"></Input>
                       </Form.Item>
                   </Col>
               </Row>
-              <Col span={12}>
-                  <Form.Item label="Vessel Name">
+              <Col span={8}>
+                  <Form.Item label="Vessel Name" labelCol={{ span: 12 }}  style={{ width: '500px' }}>
                       <Input disabled={true} value='UHIHIJ'></Input>
                   </Form.Item>
               </Col>
@@ -253,58 +255,62 @@ const App: React.FC = () => {
                   Flight Information
               </Title>
               <Row gutter={[16, 16]}>
-                  <Col span={12}>
-                      <Form.Item label="Flight ID">
+                  <Col span={8}>
+                      <Form.Item label="Flight ID" labelCol={{ span: 12 }}  style={{ width: '500px' }}>
                           <Input value="Flight 545" disabled={true}/>
                       </Form.Item>
                   </Col>
-                  <Col span={12}>
-                      <Form.Item label="Flight ID (Matching)">
+                  <Col span={8}>
+                      <Form.Item label="Flight ID (Matching)" labelCol={{ span: 8 }}  style={{ width: '500px' }}>
                           <Input value="Flight 545" disabled={true}></Input>
                       </Form.Item>
                   </Col>
               </Row>
-              <Col span={12}>
-                  <Form.Item label="Service Type">
+              <Col span={8}>
+                  <Form.Item label="Service Type" labelCol={{ span: 12 }}  style={{ width: '500px' }}>
                       <Select options={[
                           {value: "HK Business Reg", label: "HK Business Reg"},
                       ]}/>
                   </Form.Item>
               </Col>
 
-              <h1 style={{color: '#1677ff'}}>Rail Information</h1>
+              <Title style={{color: '#1677ff'}}>
+              Rail Information
+              </Title>
               <Row gutter={[16, 16]}>
-                  <Col span={12}>
-                      <Form.Item label="Train No.">
+                  <Col span={8}>
+                      <Form.Item label="Train No." labelCol={{ span: 12 }}  style={{ width: '500px' }}>
                           <Input value="Train No. 535" disabled={true}/>
                       </Form.Item>
                   </Col>
-                  <Col span={12}>
-                      <Form.Item label="Wagon No.">
+                  <Col span={9}>
+                      <Form.Item label="Wagon No." labelCol={{ span: 8 }}  style={{ width: '500px' }}>
                           <Select {...sharedProps} {...selectProps} />
                       </Form.Item>
                   </Col>
-                  <Col span={12}>
-                      <Form.Item label="Mainland Train No.">
+                  <Col span={8}>
+                      <Form.Item label="Mainland Train No." labelCol={{ span: 8 }}  style={{ width: '500px' }}>
                           <Input/>
                       </Form.Item>
                   </Col>
-                  <Col span={12}>
-                      <Form.Item label="New Wagon No.">
+                  <Col span={8}>
+                      <Form.Item label="New Wagon No." labelCol={{ span: 8 }}  style={{ width: '500px' }}>
                           <Select {...sharedProps} {...selectProps} />
                       </Form.Item>
                   </Col>
               </Row>
 
-              <h1 style={{color: '#1677ff'}}>Road Information</h1>
+              <Title style={{color: '#1677ff'}}>
+              Road Information
+              </Title>              
               <Row gutter={[16, 16]}>
-                  <Col span={12}>
-                      <Form.Item label="Vehicle Reference No.">
+                  <Col span={8}>
+                      <Form.Item label="Vehicle Reference No." labelCol={{ span: 12 }}  style={{ width: '500px' }}>
                           <Input value="Vehicle No. 535" disabled={true}/>
                       </Form.Item>
                   </Col>
-                  <Col span={12}>
-                      <Form.Item label="Remarks">
+                  <Col span={8}>
+                      <Form.Item label="Remarks" labelCol={{ span: 8 }}  style={{ width: '500px' }}>
                           <div style={{margin: '24px 0'}}/>
                           <TextArea
                             placeholder="Controlled autosize"
