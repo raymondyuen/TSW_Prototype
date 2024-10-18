@@ -53,7 +53,7 @@ const cancel: PopconfirmProps['onCancel'] = (e) => {
 
 const App: React.FC = () => {
   const [form] = Form.useForm();
-  
+
   const navigate = useNavigate();
   const [dataSource, setDataSource] = useState<Array<DataType> | null>(null);
   const [targetDataSource, setTargetDataSource] = useState<Array<DataType> | null>(null);
@@ -61,18 +61,18 @@ const App: React.FC = () => {
   const [dateTo, setDateTo] = useState("Jun 2024");
   form.setFieldsValue({ remark: `` });
 
-  const onClickSearch = async() => {
+  const onClickSearch = async () => {
     try {
       const values = await form.validateFields();
       console.log('Success:', values);
     } catch (errorInfo) {
       console.log('Failed:', errorInfo);
       return;
-    }   
-    
-    if (form.getFieldValue("period") == '1'){
+    }
+
+    if (form.getFieldValue("period") == '1') {
       setDateFrom("May 2024")
-    }else{
+    } else {
       setDateFrom("June 2023")
     }
     const data = Array.from({ length: 100 }).map<DataType>((_, i) => ({
@@ -81,26 +81,26 @@ const App: React.FC = () => {
       companyName: "Chu Kong Agency Ltd" + i,
       idType: "BR",
       companyPhoneNo: '1234 5678',
-      noOfCase: 2 + parseInt(i+"")
+      noOfCase: 2 + parseInt(i + "")
     }));
     setDataSource(data);
   }
-  const onClickSelectTarget = ()=>{
+  const onClickSelectTarget = () => {
     const data = Array.from({ length: 3 }).map<DataType>((_, i) => ({
       key: i,
       carrierID: `000-8765457-` + i,
       companyName: "Chu Kong Agency Ltd" + i,
       idType: "BR",
       companyPhoneNo: '1234 5678',
-      noOfCase: 2 + parseInt(i+"")
+      noOfCase: 2 + parseInt(i + "")
     }));
     setTargetDataSource(data);
   }
 
-  const onClickDownload = ()=>{
+  const onClickDownload = () => {
     window.open("./download.csv")
   }
-  const onClickUnSelect = ()=>{
+  const onClickUnSelect = () => {
     setTargetDataSource([]);
   }
   const onClickUpload = () => {
@@ -110,7 +110,7 @@ const App: React.FC = () => {
       companyName: "Chu Kong Agency From Upload Ltd " + i,
       idType: "BR",
       companyPhoneNo: '9876 6655',
-      noOfCase: 2 + parseInt(i+"")
+      noOfCase: 2 + parseInt(i + "")
     }));
     setDataSource(data);
   }
@@ -141,10 +141,10 @@ const App: React.FC = () => {
   }
   //Carrier ID	Company Name	ID Type	Company Phone No	No. of Cases	Action
   type OnChange = NonNullable<TableProps<DataType>['onChange']>;
-type Filters = Parameters<OnChange>[1];
+  type Filters = Parameters<OnChange>[1];
 
-type GetSingle<T> = T extends (infer U)[] ? U : never;
-type Sorts = GetSingle<Parameters<OnChange>[2]>;
+  type GetSingle<T> = T extends (infer U)[] ? U : never;
+  type Sorts = GetSingle<Parameters<OnChange>[2]>;
   const [filteredInfo, setFilteredInfo] = useState<Filters>({});
   const [sortedInfo, setSortedInfo] = useState<Sorts>({});
   const handleChange: OnChange = (pagination, filters, sorter) => {
@@ -184,7 +184,7 @@ type Sorts = GetSingle<Parameters<OnChange>[2]>;
       render: () => <Button onClick={onClickSend} type="primary" htmlType="submit">Send</Button>,
     },
   ];
-  
+
 
 
   const rowSelection: TableProps<DataType>['rowSelection'] = {
@@ -297,7 +297,7 @@ type Sorts = GetSingle<Parameters<OnChange>[2]>;
         dataSource={dataSource != null ? dataSource : []}
         pagination={{ pageSize: 10 }}
         scroll={{ y: 100 * 5 }}
-        onChange={handleChange} 
+        onChange={handleChange}
       />
       <Divider />
       <Row gutter={16}>
@@ -323,26 +323,26 @@ type Sorts = GetSingle<Parameters<OnChange>[2]>;
       <h3 style={{ color: '#1677ff' }}>List of Targeted Companies</h3>
       <Table<DataType>
         rowSelection={{ ...rowSelection }}
-        columns={columns.slice(0,-1)}
+        columns={columns.slice(0, -1)}
         dataSource={targetDataSource != null ? targetDataSource : []}
         pagination={{ pageSize: 10 }}
         scroll={{ y: 100 * 5 }}
-        onChange={handleChange} 
+        onChange={handleChange}
       />
       <Divider />
       <Row gutter={16}>
         <Col span={12}></Col>
         <Col span={12}><Flex gap="small" justify='flex-end'>
-        <Button type="primary" htmlType="submit" onClick={onClickUnSelect}> Un-select As Target   </Button>
+          <Button type="primary" htmlType="submit" onClick={onClickUnSelect}> Un-select As Target   </Button>
           <Popconfirm
             title="Select As Target "
             description="Are you sure to select As Target ?"
-            onConfirm={()=>{  message.success('The companied you selected have been successfully saved into thetargeted list');            }}
+            onConfirm={() => { message.success('The companied you selected have been successfully saved into thetargeted list'); }}
             onCancel={cancel}
             okText="Yes"
             cancelText="No"
           >
-           
+
             <Button type="primary" htmlType="submit"> Save   </Button>
           </Popconfirm>
 

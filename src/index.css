@@ -7,12 +7,24 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.ant-card-head {
+  border-radius:0% !important;
+  min-height: 2.5em !important;
+}
 .ant-form-item {
   margin-bottom: 5px !important;
+ 
 }
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+.ant-menu-inline.ant-menu-root .ant-menu-item > .ant-menu-title-content, .ant-menu-inline.ant-menu-root .ant-menu-submenu-title > .ant-menu-title-content {
+  flex: auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .center {
   margin: auto;
@@ -26,6 +38,21 @@ code {
   font-weight: bold;
 }
 
+.ant-layout-footer {
+  font-size: .875rem !important;
+  border-top: 3px solid #1fbdf0  !important;
+}
+
+.ant-layout-header{
+  font-size: .875rem !important;
+  border-bottom: 3px solid #1fbdf0  !important;
+}
+.ant-layout-content{
+  min-height: 600px;
+}
+.ant-layout{
+  background-color: #fff;
+}
 /* override styles when printing */
 @media print {
   button {
