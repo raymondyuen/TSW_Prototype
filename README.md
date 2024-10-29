@@ -1,8 +1,9 @@
 # Getting Started
 
-Run your project locally, they will have to 
-###run npm i 
-before ng serve
+In the project directory, you can run to install the node mudule :
+### `run npm i `
+
+
 
 ## Available Scripts
 
