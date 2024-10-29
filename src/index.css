@@ -37,7 +37,13 @@ code {
   */
   font-weight: bold;
 }
-
+.ant-btn-color-primary.ant-btn-variant-outlined{
+  border-color:#3169BE !important;
+  color: #3169BE !important;
+}
+.ant-btn-color-primary.ant-btn-variant-solid{
+  background-color: #3169BE !important;
+}
 .ant-layout-footer {
   font-size: .875rem !important;
   border-top: 3px solid #1fbdf0  !important;

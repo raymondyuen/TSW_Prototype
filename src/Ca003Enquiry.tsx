@@ -84,7 +84,7 @@ interface ManifestDataType {
 function retrievalKeysFor(title: DisplayTitle, followSchedule: String, currentMode: String) {
   var disable = title === 'Manifest' && followSchedule === 'Y'
   return (
-    <div style={{ minWidth: '800px' }}>
+    <div style={{ minWidth: '500px' }}>
       <Title level={3} style={{ color: '#1677ff' }}>Retrieval keys for {title}</Title>
       <Space wrap>
         <Form.Item label="Arrival / Departure Date" labelCol={{ span: 10 }}>
@@ -323,6 +323,9 @@ function App() {
             title: <HomeOutlined />,
           },
           {
+            title: "CA Function",
+          },
+          {
             title: <a href="/Ca003Enquiry">Enquiry of Schedules and Manifest for Probable Matching</a>,
           }
         ]}
@@ -443,14 +446,14 @@ function App() {
           <SearchResult displayTitle='Manifest' columns={manifestColumns} data={manifestData} rowSelection={manifestSelection} />
         </Space.Compact>
       </Space>
-
+      <Col span={24}>
+          <div>OS : Outstanding Manifest Advice Issued, O1 : O/S 1st reminder, O2 : O/S 2nd reminder, CL : Closed by TCB, NE : Non-exist, SE : Exist, RF : Referred to TCB, UI : Under Legal Action</div>
+          <div>NC : Nil Cargo, CS : Cancel Shipment, OH : Off-hired, AM : Auto-matched, PM : Probable Matched, UM, Umatch, QI Query Issued, VD : Void, PD : Pending, NV : Not Voided</div>
+        </Col>
       <Divider />
       <Row>
-        <Col span={12}>
-          <Row>OS : Outstanding Manifest Advice Issued, O1 : O/S 1st reminder, O2 : O/S 2nd reminder, CL : Closed by TCB, NE : Non-exist, SE : Exist, RF : Referred to TCB, UI : Under Legal Action</Row>
-          <Row>NC : Nil Cargo, CS : Cancel Shipment, OH : Off-hired, AM : Auto-matched, PM : Probable Matched, UM, Umatch, QI Query Issued, VD : Void, PD : Pending, NV : Not Voided</Row>
-        </Col>
-        <Col span={12}>
+        
+        <Col span={24}>
           <Row justify='end' style={{ marginBottom: 10 }}>
             <Space>
               <Button color="primary" variant="outlined" >Revert Dummy Schedule</Button>
@@ -479,10 +482,8 @@ function App() {
           </Flex>
 
         </Col>
+        
       </Row>
-
-
-
     </div>
 
 

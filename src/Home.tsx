@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Checkbox, Form, Input, Flex, Image, Card } from 'antd';
+import { Button, Checkbox, Form, Input, Flex, Image, Card, Breadcrumb } from 'antd';
 import Menu from './Menu';
+import { HomeOutlined } from '@ant-design/icons';
+
 const App: React.FC = () => {
   const onFinish = (values: any) => {
     console.log('Received values of form: ', values);
@@ -13,11 +15,18 @@ const App: React.FC = () => {
 
   return (
     <div style={{ minWidth: '800px', minHeight: 600 }}>
-
-
-      <h1>Home</h1>
-
-    </div>
+      <Breadcrumb
+        items={[
+          {
+            title: <HomeOutlined />,
+          },
+          {
+            title: "Home",
+          }
+        ]}
+      />
+        <h1 style={{ color: '#1677ff' }}>Home</h1>
+        </div>
   );
 };
 

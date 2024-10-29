@@ -29,7 +29,7 @@ const App: React.FC = () => {
         
         <div style={{ display: showMenu ? 'none' : 'block' }}>
 
-        <Card title="Login to Honk Kong Trade Single Window"  style={{ marginTop:100, minWidth: '600px' }} headStyle={{ backgroundColor: '#1677ff', color: '#ffffff' }}>
+        <Card title="Login to Hong Kong Trade Single Window"  style={{ marginTop:100, minWidth: '600px' }} headStyle={{ backgroundColor: '#1677ff', color: '#ffffff' }}>
           <Form.Item label="Username"
             name="username"
             rules={[{ required: true, message: 'Please input your Username!' }]}

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Row, Col, Select, Image, Flex, Menu, ConfigProvider, theme } from 'antd';
 import { AppstoreOutlined, MailOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
 
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 const App: React.FC = () => {
@@ -64,13 +64,16 @@ const App: React.FC = () => {
           }
         </Flex></Col>
         <Col span={6}><Flex gap="small" justify='flex-end'>
-          <Menu mode="horizontal" items={[{
-            key: 'sub2',
-            label: '',
-            icon: <UserOutlined />,
-            children: [
-              { key: '5', label: 'Logout' },]
-          }]} />
+          <Menu mode="horizontal">
+            <Menu.SubMenu title="" icon={<UserOutlined />}>
+
+              <Menu.Item key="login" style={{ whiteSpace: 'normal', height: 'auto', lineHeight: 'normal' }} icon={<AppstoreOutlined />}>
+                <a href="/">
+                  <h3>Logout</h3>
+                </a>
+              </Menu.Item>
+            </Menu.SubMenu>
+          </Menu>
 
         </Flex></Col>
       </Row>

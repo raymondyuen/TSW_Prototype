@@ -38,49 +38,49 @@ const items2 = [UserOutlined, VideoCameraOutlined, UploadOutlined, UserOutlined]
   }),
 );
 
-const items = [
-  {
-    key: 'home',
-    label: 'Home',
-    icon: <AppstoreOutlined />,
-  },
-  {
-    key: 'main1',
-    label: 'Common Function',
-    icon: <AppstoreOutlined />,
-    children: [{
-      key: '1',
-      label: (
-        <a href="/Cm009" >
-          Issue Query for Outstanding Manifest Advice
-        </a>
-      ),
-    },
-    {
-      key: '2',
-      label: (
-        <a href="/Cm020" >
-          Create Highlighting Critical Outstanding Manifest Cases
-        </a>
-      ),
-    },]
-  },
-  {
-    key: 'main2',
-    label: 'CA Function',
-    icon: <AppstoreOutlined />,
-    children: [{
-      key: '3',
-      label: (
-        <div><a href="/Ca003Enquiry" >
-          Enquiry of Schedules and Manifest for Probable Matching
-        </a></div>
-      ),
-    },
-    ]
-  }
+// const items = [
+//   {
+//     key: 'home',
+//     label: 'Home',
+//     icon: <AppstoreOutlined />,
+//   },
+//   {
+//     key: 'main1',
+//     label: 'Common Function',
+//     icon: <AppstoreOutlined />,
+//     children: [{
+//       key: '1',
+//       label: (
+//         <a href="/Cm009" >
+//           Issue Query for Outstanding Manifest Advice
+//         </a>
+//       ),
+//     },
+//     {
+//       key: '2',
+//       label: (
+//         <a href="/Cm020" >
+//           Create Highlighting Critical Outstanding Manifest Cases
+//         </a>
+//       ),
+//     },]
+//   },
+//   {
+//     key: 'main2',
+//     label: 'CA Function',
+//     icon: <AppstoreOutlined />,
+//     children: [{
+//       key: '3',
+//       label: (
+//         <div><a href="/Ca003Enquiry" >
+//           Enquiry of Schedules and Manifest for Probable Matching
+//         </a></div>
+//       ),
+//     },
+//     ]
+//   }
 
-];
+// ];
 const root = createRoot(
   document.getElementById('root') as HTMLElement
 );
@@ -104,7 +104,7 @@ root.render(
           <Menu theme="dark" mode="inline" defaultOpenKeys={['home']} defaultSelectedKeys={['home']} style={{ whiteSpace: 'normal', height: 'auto', lineHeight: 'normal' }} disabledOverflow>
             <Menu.Item key="login" style={{ whiteSpace: 'normal', height: 'auto', lineHeight: 'normal' }} icon={<AppstoreOutlined />}>
               <Link to="/Home">
-                <h1>Home</h1>
+                <h3>Home</h3>
               </Link>
             </Menu.Item>
             <Menu.SubMenu title="Common function" icon={<VideoCameraOutlined />}>
@@ -156,6 +156,7 @@ root.render(
             style={{
               minHeight: 360,
               background: "white",
+              paddingBottom: 50
             }}
           >
             <Routes>

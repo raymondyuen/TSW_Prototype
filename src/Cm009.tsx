@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Select, Button, Space, DatePicker, version, Flex } from 'antd';
+import { Select, Button, Space, DatePicker, version, Flex, Breadcrumb } from 'antd';
 import { Typography, Form } from 'antd';
 import { Col, Row } from 'antd';
 import { Input } from 'antd';
@@ -7,6 +7,8 @@ import { getDefaultFormatCodeSettings } from 'typescript';
 import { message, Popconfirm } from 'antd';
 import type { PopconfirmProps } from 'antd';
 import {  useNavigate } from 'react-router-dom';
+import { HomeOutlined } from '@ant-design/icons';
+
 const { Title } = Typography
 const { TextArea } = Input
 
@@ -84,6 +86,19 @@ Interpretation and General Clauses Ordinance (Cap.1).
   return (
 
     <div style={{ padding: '0 24px' }}>
+      <Breadcrumb
+        items={[
+          {
+            title: <HomeOutlined />,
+          },
+          {
+            title: "Common Function",
+          },
+          {
+            title: <a href="/Cm009">Outstanding Manifest Advice</a>,
+          }
+        ]}
+      />
       <Form
         {...layout}
         form={form}

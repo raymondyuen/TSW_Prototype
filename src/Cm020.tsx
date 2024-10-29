@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Flex } from 'antd';
+import { Breadcrumb, Flex } from 'antd';
 import { Input } from 'antd';
 import { message, Popconfirm } from 'antd';
 import type { PopconfirmProps } from 'antd';
@@ -18,6 +18,7 @@ import { Divider, Table } from 'antd';
 import type { TableColumnsType, TableProps } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import type { UploadProps } from 'antd';
+import { HomeOutlined } from '@ant-design/icons';
 
 
 
@@ -220,6 +221,20 @@ const App: React.FC = () => {
   return (
 
     <div style={{ padding: '0 24px' }}>
+      <Breadcrumb
+        items={[
+          {
+            title: <HomeOutlined />,
+          },
+          {
+            title: "Common Function",
+          },
+          {
+            title: <a href="/Cm020">Create Highlighting Critical Outstanding Manifest Cases
+</a>,
+          }
+        ]}
+      />
       <h1 style={{ color: '#1677ff' }}>Create Highlighting Critical Outstanding Manifest Cases</h1>
 
       <Row>
