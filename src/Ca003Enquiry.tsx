@@ -85,17 +85,22 @@ function retrievalKeysFor(title: DisplayTitle, followSchedule: String, currentMo
   var disable = title === 'Manifest' && followSchedule === 'Y'
   return (
     <div style={{ minWidth: '500px' }}>
-      <Title level={3} style={{ color: '#1677ff' }}>Retrieval keys for {title}</Title>
-      <Space wrap>
-        <Form.Item label="Arrival / Departure Date" labelCol={{ span: 10 }}>
-          <RangePicker disabled={disable} />
-        </Form.Item>
-        {title === 'Schedule' ?
-          <Form.Item label="Arrival / Departure Time" labelCol={{ span: 10 }} >
-            <TimePicker.RangePicker allowClear format={'HH:mm'} />
+      <Title level={3} >Retrieval keys for {title}</Title>
+      <Row gutter={24}>
+        <Col span={12}>
+          <Form.Item label="Arrival / Departure Date" labelCol={{ span: 10 }}>
+            <RangePicker disabled={disable} placeholder={["YYYY-MM-DD","YYYY-MM-DD"]}/>
           </Form.Item>
-          : ''}
-      </Space>
+        </Col>
+        <Col span={12}>
+          {title === 'Schedule' ?
+            <Form.Item label="Arrival / Departure Time" labelCol={{ span: 10 }} >
+              <TimePicker.RangePicker allowClear format={'HH:mm'} placeholder={["00:00","00:00"]}/>
+            </Form.Item>
+            : ''}
+        </Col>
+      </Row>
+
       {currentMode === 'air' ?
         <Row gutter={24}>
           <Col span={12}>
@@ -326,11 +331,11 @@ function App() {
             title: "CA Function",
           },
           {
-            title: <a href="/Ca003Enquiry">Enquiry of Schedules and Manifest for Probable Matching</a>,
+            title: <a href="/Ca003Enquiry">Enquire of Schedules and Manifest for Probable Matching</a>,
           }
         ]}
       />
-      <Title style={{ color: '#1677ff' }}>Enquiry of Schedules and Manifest for Probable Matching</Title>
+      <Title>Enquire of Schedules and Manifest for Probable Matching</Title>
       <Form
         form={mainForm}
         labelAlign='left'
@@ -436,25 +441,11 @@ function App() {
         </Flex>
         <Divider></Divider>
       </Form>
-      <Title level={3} style={{ color: '#1677ff' }}>Probable Matching Result</Title>
+      <Title level={3}>Probable Matching Result</Title>
 
-      <Space >
-        <Space.Compact  >
-          <SearchResult displayTitle='Schedule' columns={scheduleColumns} data={scheduleData} rowSelection={scheduleSelection} />
-        </Space.Compact>
-        <Space.Compact>
-          <SearchResult displayTitle='Manifest' columns={manifestColumns} data={manifestData} rowSelection={manifestSelection} />
-        </Space.Compact>
-      </Space>
+
       <Col span={24}>
-          <div>OS : Outstanding Manifest Advice Issued, O1 : O/S 1st reminder, O2 : O/S 2nd reminder, CL : Closed by TCB, NE : Non-exist, SE : Exist, RF : Referred to TCB, UI : Under Legal Action</div>
-          <div>NC : Nil Cargo, CS : Cancel Shipment, OH : Off-hired, AM : Auto-matched, PM : Probable Matched, UM, Umatch, QI Query Issued, VD : Void, PD : Pending, NV : Not Voided</div>
-        </Col>
-      <Divider />
-      <Row>
-        
-        <Col span={24}>
-          <Row justify='end' style={{ marginBottom: 10 }}>
+        <Row justify='end' style={{ marginBottom: 10 }}>
             <Space>
               <Button color="primary" variant="outlined" >Revert Dummy Schedule</Button>
               <Button color="primary" variant="outlined">Nil Cargo</Button>
@@ -476,6 +467,25 @@ function App() {
               <Button color="primary" variant="outlined">Void Manifest</Button>
             </Flex>
           </Row>
+        </Col>
+      <Space >
+        
+        <Space.Compact  >
+          <SearchResult displayTitle='Schedule' columns={scheduleColumns} data={scheduleData} rowSelection={scheduleSelection} />
+        </Space.Compact>
+        <Space.Compact>
+          <SearchResult displayTitle='Manifest' columns={manifestColumns} data={manifestData} rowSelection={manifestSelection} />
+        </Space.Compact>
+      </Space>
+      <Col span={24}>
+          <div>OS : Outstanding Manifest Advice Issued, O1 : O/S 1st reminder, O2 : O/S 2nd reminder, CL : Closed by TCB, NE : Non-exist, SE : Exist, RF : Referred to TCB, UI : Under Legal Action</div>
+          <div>NC : Nil Cargo, CS : Cancel Shipment, OH : Off-hired, AM : Auto-matched, PM : Probable Matched, UM, Umatch, QI Query Issued, VD : Void, PD : Pending, NV : Not Voided</div>
+        </Col>
+      <Divider />
+      <Row>
+        
+        <Col span={24}>
+          
           <Flex gap="small" justify='flex-end'>
             <Button color="primary" variant="solid">Print Details</Button>
             <Button color="primary" variant="solid">Print Summary</Button>

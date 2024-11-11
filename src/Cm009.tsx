@@ -107,7 +107,7 @@ Interpretation and General Clauses Ordinance (Cap.1).
         style={{ maxWidth: 1200 }}
         validateMessages={validateMessages}
       >
-        <h1 style={{ color: '#1677ff' }}>Outstanding Manifest Advice</h1>
+        <h1>Outstanding Manifest Advice</h1>
         {attrRow('Shipment Type', 'Inbound')}
         {attrRow('Date of Arrival / Departure', '01/01/2024 11:11')}
         {attrRow('Transport Mode', 'AIR')}
@@ -124,7 +124,7 @@ Interpretation and General Clauses Ordinance (Cap.1).
         {attrRow('Carrier Address 2', '41 - 200 ADCEG STREET', 'Officer Contact No.', '27655556')}
         {attrRow('Carrier Address 3', 'CENTRAL AND WESTERN DISTRICT', 'Office Name', 'Office 123')}
         {attrRow('Carrier Address 4', 'HONG KONG', 'Department Name', 'C&SD')}
-        <h3 style={{ color: '#1677ff' }}>Remarks</h3>
+        <h3>Remarks</h3>
         <Form.Item name="remark" label="Remarks" rules={[{ required: true }]}>
           <Input.TextArea autoSize={{ minRows: 8 }} />
         </Form.Item>

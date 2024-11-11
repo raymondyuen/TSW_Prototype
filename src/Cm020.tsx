@@ -235,7 +235,7 @@ const App: React.FC = () => {
           }
         ]}
       />
-      <h1 style={{ color: '#1677ff' }}>Create Highlighting Critical Outstanding Manifest Cases</h1>
+      <h1>Create Highlighting Critical Outstanding Manifest Cases</h1>
 
       <Row>
         <Col span={8}>
@@ -303,7 +303,7 @@ const App: React.FC = () => {
       </Row>
 
       <Divider />
-      <h3 style={{ color: '#1677ff' }}>List of Companies With Critical Outstanding Manifest Advice Cases</h3>
+      <h3>List of Companies With Critical Outstanding Manifest Advice Cases</h3>
       <h5>Period: From {dateFrom} To {dateTo}</h5>
 
       <Table<DataType>
@@ -335,7 +335,7 @@ const App: React.FC = () => {
       </Row>
 
 
-      <h3 style={{ color: '#1677ff' }}>List of Targeted Companies</h3>
+      <h3>List of Targeted Companies</h3>
       <Table<DataType>
         rowSelection={{ ...rowSelection }}
         columns={columns.slice(0, -1)}

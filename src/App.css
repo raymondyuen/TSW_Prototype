@@ -28,6 +28,14 @@
   color: #61dafb;
 }
 
+h1, h1.ant-typography, 
+h2, h2.ant-typography, 
+h3, h3.ant-typography,
+h4, h4.ant-typography,
+h5, h5.ant-typography,
+h6, h6.ant-typography{
+  color: #3169BE;
+}
 
 @keyframes App-logo-spin {
   from {
