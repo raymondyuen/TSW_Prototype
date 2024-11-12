@@ -1,23 +1,7 @@
-import React, { } from 'react';
-import { Flex } from 'antd';
-
-import { message, Popconfirm } from 'antd';
-import type { PopconfirmProps } from 'antd';
-import { useNavigate } from 'react-router-dom';
-import {
-  Button,
-
-  Col,
-
-  Form,
-
-  Row,
-
-} from 'antd';
-import { Divider, Table } from 'antd';
-import type { TableColumnsType } from 'antd';
-
-import { useEffect } from "react";
+import React, {useEffect} from 'react';
+import type {PopconfirmProps, TableColumnsType} from 'antd';
+import {Button, Col, Divider, Flex, Form, message, Popconfirm, Row, Table} from 'antd';
+import {useNavigate} from 'react-router-dom';
 
 
 const attrRow = (field1: String, value1: String, field2?: String, value2?: String) => {

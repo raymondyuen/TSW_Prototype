@@ -1,25 +1,23 @@
-import React, { useState } from 'react';
-import { Breadcrumb, Flex } from 'antd';
-import { Input } from 'antd';
-import { message, Popconfirm, DatePicker } from 'antd';
-import type { PopconfirmProps } from 'antd';
-import { useNavigate } from 'react-router-dom';
+import React, {useState} from 'react';
+import type {PopconfirmProps, TableColumnsType, TableProps, UploadProps} from 'antd';
 import {
+  Breadcrumb,
   Button,
   Checkbox,
   Col,
+  DatePicker,
+  Divider,
+  Flex,
   Form,
-  Radio,
+  Input,
+  message,
+  Popconfirm,
   Row,
-
-  Upload,
+  Table,
+  Upload
 } from 'antd';
-import { Divider, Table } from 'antd';
-import type { TableColumnsType, TableProps } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
-import type { UploadProps } from 'antd';
-import { HomeOutlined } from '@ant-design/icons';
-
+import {useNavigate} from 'react-router-dom';
+import {HomeOutlined, UploadOutlined} from '@ant-design/icons';
 
 
 const attrField = (field1: String, value1: String, field2?: String, value2?: String) => {

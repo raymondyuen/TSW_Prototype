@@ -84,17 +84,19 @@ interface ManifestDataType {
 function retrievalKeysFor(title: DisplayTitle, followSchedule: String, currentMode: String) {
   var disable = title === 'Manifest' && followSchedule === 'Y'
   return (
-    <div style={{ minWidth: '500px' }}>
-      <h1>Retrieval keys for {title}</h1>
+    <div style={{ minWidth: '800px', maxWidth:'1200px'}}>
+      {disable ? "":<div>
+      <h3>Retrieval keys for {title}</h3>
+
       <Row gutter={24}>
         <Col span={12}>
-          <Form.Item label="Arrival / Departure Date" labelCol={{ span: 10 }}>
+          <Form.Item label="Arrival / Departure Date" labelCol={{ span: 8 }}>
             <RangePicker disabled={disable} placeholder={["YYYY-MM-DD","YYYY-MM-DD"]}/>
           </Form.Item>
         </Col>
         <Col span={12}>
           {title === 'Schedule' ?
-            <Form.Item label="Arrival / Departure Time" labelCol={{ span: 10 }} >
+            <Form.Item label="Arrival / Departure Time" labelCol={{ span: 8 }} >
               <TimePicker.RangePicker allowClear format={'HH:mm'} placeholder={["00:00","00:00"]}/>
             </Form.Item>
             : ''}
@@ -197,7 +199,7 @@ function retrievalKeysFor(title: DisplayTitle, followSchedule: String, currentMo
             : ''}
         </Col>
       </Row>
-
+      </div>}
     </div>
   )
 }
@@ -211,7 +213,7 @@ function App() {
 
   const [currentMode, setCurrentMode] = useState("air")
 
-  const [followSchedule, setFollowSchedule] = useState("N")
+  const [followSchedule, setFollowSchedule] = useState("Y")
   const onFollowScheduleChange = (e: RadioChangeEvent) => {
     setFollowSchedule(e.target.value)
   }
@@ -226,7 +228,7 @@ function App() {
     }, {
       title: currentMode === 'water' ? 'Vessel Name, Vessel Chinese Name (Vessel ID:Call Sign)' : currentMode === 'air' ? 'Flight ID (Matching)' : 'Train No.',
       dataIndex: 'vessel',
-      width: 300
+      width: 150
     }, {
       title: 'Carrier Name (Carrier ID:ID Type)',
       dataIndex: 'carrier'
@@ -249,7 +251,7 @@ function App() {
     }, {
       title: currentMode === 'water' ? 'Vessel Name (Vessel ID:Call Sign)' : currentMode === 'air' ? 'Flight ID' : 'Train No.',
       dataIndex: 'vessel',
-      width: 300
+      width: 150
     }, {
       title: 'Carrier Name (Carrier ID:ID Type)',
       dataIndex: 'carrier'
@@ -360,7 +362,6 @@ function App() {
             </Form.Item>
           </Space.Compact>
           <Space.Compact block >
-
             <Form.Item label="Manifest retrieval to follow that of schedule? " labelCol={{ span: 16 }} style={{ width: '500px' }} >
               <Radio.Group onChange={onFollowScheduleChange} value={followSchedule}>
                 <Radio value="Y">Yes</Radio>
@@ -369,15 +370,16 @@ function App() {
             </Form.Item>
           </Space.Compact>
         </Space>
-        <Space >
-          <Space.Compact  >
+        <Row>
+          <Col span={24}>
             {retrievalKeysFor('Schedule', followSchedule, currentMode)}
-          </Space.Compact>
-
-          <Space.Compact>
+          </Col>
+        </Row>
+        <Row>
+          <Col span={24}>
             {retrievalKeysFor('Manifest', followSchedule, currentMode)}
-          </Space.Compact>
-        </Space>
+          </Col>
+        </Row>
         <Row style={{ width: 1600 }}>
           <Col span={24}>
             <Form.Item label="Schedule Match Status" labelCol={{ span: 3 }} wrapperCol={{ span: 20 }}>
@@ -470,6 +472,7 @@ function App() {
       <Space >
         
         <Space.Compact  >
+
           <SearchResult displayTitle='Schedule' columns={scheduleColumns} data={scheduleData} rowSelection={scheduleSelection} />
         </Space.Compact>
         <Space.Compact>
@@ -503,6 +506,7 @@ function App() {
 
 const SearchResult = ({ displayTitle, columns, data, rowSelection }: { displayTitle: DisplayTitle, columns: TableColumnsType, data: object[], rowSelection: TableRowSelection }) => (
   <Card title={displayTitle}>
+    Total No. of Records: 50
     <Table
       columns={columns}
       dataSource={data}

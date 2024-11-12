@@ -1,8 +1,7 @@
-import React, { useState } from "react";
-import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Checkbox, Form, Input, Flex, Image, Card, Space, Col, Row, Divider } from 'antd';
-import Menu from './Menu';
-import { useNavigate } from 'react-router-dom';
+import React, {useState} from "react";
+import {LockOutlined, UserOutlined} from '@ant-design/icons';
+import {Button, Card, Col, Divider, Flex, Form, Input, Row} from 'antd';
+import {useNavigate} from 'react-router-dom';
 
 const App: React.FC = () => {
   const onFinish = (values: any) => {

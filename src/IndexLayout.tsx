@@ -1,13 +1,12 @@
-import { Link, Route, BrowserRouter as Routers, Routes } from 'react-router-dom';
+import {BrowserRouter as Routers, Link, Route, Routes} from 'react-router-dom';
 import {
-  AppstoreOutlined,
-  ContainerOutlined,
-  DesktopOutlined,
-  MailOutlined,
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  PieChartOutlined,
-  SettingOutlined
+    AppstoreOutlined,
+    HomeOutlined,
+    MenuFoldOutlined,
+    MenuUnfoldOutlined,
+    UploadOutlined,
+    UserOutlined,
+    VideoCameraOutlined
 } from '@ant-design/icons';
 import './index.css';
 import CM009 from './Cm009';
@@ -16,14 +15,11 @@ import CM020S3 from './Cm020S3';
 import Home from './Home';
 import Login from './Login';
 import HeaderNavs from './Menu';
-import reportWebVitals from './reportWebVitals';
-import React, { useState } from 'react';
-import { createRoot } from 'react-dom/client';
+import React, {useState} from 'react';
 import Ca003Enquiry from './Ca003Enquiry';
 import CA003Amend from './Ca003Amend';
-import { UploadOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/icons';
-import { Divider, Layout, Menu, theme, Image, Col, Flex, Row, Button } from 'antd';
-import { wrap } from 'module';
+import {Button, Col, Divider, Flex, Image, Layout, Menu, Row} from 'antd';
+
 const { Header, Content, Footer, Sider } = Layout;
 const items2 = [UserOutlined, VideoCameraOutlined, UploadOutlined, UserOutlined].map(
   (icon, index) => ({
@@ -55,12 +51,12 @@ const App: React.FC = () => {
             >
               <div className="demo-logo-vertical" />
               <Menu theme="dark" mode="inline" defaultOpenKeys={['home']} defaultSelectedKeys={['home']} style={{ whiteSpace: 'normal', height: 'auto', lineHeight: 'normal' }} disabledOverflow>
-                <Menu.Item key="login" style={{ whiteSpace: 'normal', height: 'auto', lineHeight: 'normal' }} icon={<AppstoreOutlined />} >
+                <Menu.Item key="login" style={{ whiteSpace: 'normal', height: 'auto', lineHeight: 'normal' }} icon={<HomeOutlined />} >
                   <Link to="/Home">
                     <h3>Home</h3>
                   </Link>
                 </Menu.Item>
-                <Menu.SubMenu title="Common function" icon={<VideoCameraOutlined />}>
+                <Menu.SubMenu title="Common" icon={<AppstoreOutlined />}>
                   {/* <Menu.Item key="Cm009" style={{ whiteSpace: 'normal', height: 'auto', lineHeight: 'normal' }}>
                     <Link to="/Cm009">
                       <div>Issue Query for Outstanding Manifest Advice</div>
@@ -72,7 +68,7 @@ const App: React.FC = () => {
                     </Link>
                   </Menu.Item>
                 </Menu.SubMenu>
-                <Menu.SubMenu title="CA function" icon={<VideoCameraOutlined />}>
+                <Menu.SubMenu title="Central Administration" icon={<AppstoreOutlined />}>
                   <Menu.Item key="Ca003Enquiry" style={{ whiteSpace: 'normal', height: 'auto', lineHeight: 'normal' }}>
                     <Link to="/Ca003Enquiry">
                       <div>Enquiry of Schedules and Manifest for Probable Matching</div>
@@ -83,7 +79,7 @@ const App: React.FC = () => {
   
               <div className="SideMenu_last-login-title__3sFDd" style={{ color: 'white', padding: 10 }}>
                 <small>Last successful login:<br /></small>
-                <small>2024-10-18 10:24:57</small>
+                <small>{ new Date().toLocaleString()}</small>
               </div>
   
             </Sider>

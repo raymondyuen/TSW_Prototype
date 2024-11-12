@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { Row, Col, Select, Image, Flex, Menu, ConfigProvider, theme } from 'antd';
-import { AppstoreOutlined, MailOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
+import React, {useState} from 'react';
+import {Col, ConfigProvider, Flex, Image, Menu, Row, Select} from 'antd';
+import {AppstoreOutlined, UserOutlined} from '@ant-design/icons';
 
-import { Link, useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 
 
 const App: React.FC = () => {
