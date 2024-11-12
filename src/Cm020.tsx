@@ -250,8 +250,72 @@ const App: React.FC = () => {
             style={{ maxWidth: formLayout === 'inline' ? 'none' : 1200 }}
             validateMessages={validateMessages}
           >
-            {attrField('Carrier ID', 'text')}
-            <Form.Item name="checkbox-group" label="OMA Status">
+            {attrField('Carrier ID:', 'text')}
+            <Form.Item name="checkbox-group" label="Transport Mode:">
+              <Checkbox.Group>
+                <Row>
+                  <Col span={8}>
+                    <Checkbox value="A" style={{ lineHeight: '32px' }}>
+                      Air
+                    </Checkbox>
+                  </Col>
+                  <Col span={8}>
+                    <Checkbox value="B" style={{ lineHeight: '32px' }}>
+                      Ocean
+                    </Checkbox>
+                  </Col>
+                  <Col span={8}>
+                    <Checkbox value="C" style={{ lineHeight: '32px' }}>
+                      River
+                    </Checkbox>
+                  </Col>
+                  <Col span={8}>
+                    <Checkbox value="C" style={{ lineHeight: '32px' }}>
+                      River(Ferry)
+                    </Checkbox>
+                  </Col>
+                </Row>
+              </Checkbox.Group>
+            </Form.Item>
+
+            <Form.Item name="checkbox-group" label="Matching Status:">
+              <Checkbox.Group>
+                <Row>
+                  <Col span={8}>
+                    <Checkbox value="A" style={{ lineHeight: '32px' }}>
+                      AM
+                    </Checkbox>
+                  </Col>
+                  <Col span={8}>
+                    <Checkbox value="B" style={{ lineHeight: '32px' }}>
+                      PM
+                    </Checkbox>
+                  </Col>
+                  <Col span={8}>
+                    <Checkbox value="C" style={{ lineHeight: '32px' }}>
+                      CS
+                    </Checkbox>
+                  </Col>
+                  <Col span={8}>
+                    <Checkbox value="C" style={{ lineHeight: '32px' }}>
+                      NC
+                    </Checkbox>
+                  </Col>
+                  <Col span={8}>
+                    <Checkbox value="C" style={{ lineHeight: '32px' }}>
+                      OH
+                    </Checkbox>
+                  </Col>
+                  <Col span={8}>
+                    <Checkbox value="C" style={{ lineHeight: '32px' }}>
+                      UM
+                    </Checkbox>
+                  </Col>
+                </Row>
+              </Checkbox.Group>
+            </Form.Item>
+
+            <Form.Item name="checkbox-group" label="OMA Status:">
               <Checkbox.Group>
                 <Row>
                   <Col span={8}>
@@ -273,7 +337,7 @@ const App: React.FC = () => {
                 </Row>
               </Checkbox.Group>
             </Form.Item>
-            <Form.Item name="period" label="Period" rules={[{ required: true }]}>
+            <Form.Item name="period" label="Period:" rules={[{ required: true }]}>
               <Radio.Group>
                 <Radio value="1"> Monthly </Radio>
                 <Radio value="2"> Annually </Radio>

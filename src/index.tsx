@@ -108,11 +108,11 @@ root.render(
               </Link>
             </Menu.Item>
             <Menu.SubMenu title="Common function" icon={<VideoCameraOutlined />}>
-              <Menu.Item key="Cm009" style={{ whiteSpace: 'normal', height: 'auto', lineHeight: 'normal' }}>
+              {/* <Menu.Item key="Cm009" style={{ whiteSpace: 'normal', height: 'auto', lineHeight: 'normal' }}>
                 <Link to="/Cm009">
                   <div>Issue Query for Outstanding Manifest Advice</div>
                 </Link>
-              </Menu.Item>
+              </Menu.Item> */}
               <Menu.Item key="Cm020" style={{ whiteSpace: 'normal', height: 'auto', lineHeight: 'normal' }}>
                 <Link to="/Cm020">
                   <div>Create Highlighting Critical Outstanding Manifest Cases</div>
