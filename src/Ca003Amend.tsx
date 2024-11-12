@@ -110,9 +110,9 @@ const App: React.FC = () => {
                 }}
             >
 
-                <Title level={1} style={{ color: '#1677ff' }}>
+                <h1>
                     {(true) ? 'Amend Schedule' : 'Create Schedule'}
-                </Title>
+                </h1>
                 <Card title='Schedule Infomartion' headStyle={{ backgroundColor: '#1677ff', color: '#ffffff' }}>
                     <Row>
                         <Col span={12}>

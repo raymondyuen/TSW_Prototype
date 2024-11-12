@@ -85,7 +85,7 @@ function retrievalKeysFor(title: DisplayTitle, followSchedule: String, currentMo
   var disable = title === 'Manifest' && followSchedule === 'Y'
   return (
     <div style={{ minWidth: '500px' }}>
-      <Title level={3} >Retrieval keys for {title}</Title>
+      <h1>Retrieval keys for {title}</h1>
       <Row gutter={24}>
         <Col span={12}>
           <Form.Item label="Arrival / Departure Date" labelCol={{ span: 10 }}>
@@ -335,7 +335,7 @@ function App() {
           }
         ]}
       />
-      <Title>Enquire of Schedules and Manifest for Probable Matching</Title>
+      <h1>Enquire of Schedules and Manifest for Probable Matching</h1>
       <Form
         form={mainForm}
         labelAlign='left'
@@ -343,7 +343,6 @@ function App() {
       >
         <Space wrap>
           <Space.Compact block>
-
             <Form.Item label="Transport Mode" labelCol={{ span: 12 }} style={{ width: '250px' }}  >
               <Select onChange={setCurrentMode} defaultValue={"air"}>
                 <Select.Option value="air">Air</Select.Option>
@@ -441,7 +440,7 @@ function App() {
         </Flex>
         <Divider></Divider>
       </Form>
-      <Title level={3}>Probable Matching Result</Title>
+      <h3>Probable Matching Result</h3>
 
 
       <Col span={24}>

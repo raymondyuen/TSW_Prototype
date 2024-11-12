@@ -62,7 +62,7 @@ const App: React.FC = () => {
   const [targetDataSource, setTargetDataSource] = useState<Array<DataType> | null>(null);
   const [dateFrom, setDateFrom] = useState("May 2024");
   const [dateTo, setDateTo] = useState("Jun 2024");
-  const [tcp, setTcp] = useState<boolean>(false);
+  const [tsp, setTsp] = useState<boolean>(false);
   form.setFieldsValue({ remark: `` });
 
   const onClickSearch = async () => {
@@ -120,10 +120,10 @@ const App: React.FC = () => {
   }
 
   const onClickChangeUser = () => {
-    if(tcp){
-      setTcp(false);
+    if (tsp) {
+      setTsp(false);
     } else {
-      setTcp(true);
+      setTsp(true);
     }
   }
 
@@ -348,7 +348,7 @@ const App: React.FC = () => {
               </Checkbox.Group>
             </Form.Item>
             <Form.Item name="period" label="Period:" rules={[{ required: true }]}>
-              <RangePicker placeholder={["YYYY-MM-DD","YYYY-MM-DD"]}/>
+              <RangePicker placeholder={["YYYY-MM-DD", "YYYY-MM-DD"]} />
             </Form.Item>
             <Col span={24}>
               <Flex gap="small" justify='flex-end'>
@@ -371,10 +371,10 @@ const App: React.FC = () => {
         </Col>
 
         <Col span={8}>
-          <Row> Switch User: {(tcp) ? "Is TCP User" : "General User"}</Row>
-            <Flex gap="small" justify='flex-end'>
-              <Button type="primary" htmlType="submit" onClick={onClickChangeUser}>        Switch      </Button>
-            </Flex>
+          <Row> Switch User: {(tsp) ? "Is TSP User" : "ETCS/C&SD User"}</Row>
+          <Flex gap="small" justify='flex-end'>
+            <Button type="primary" htmlType="submit" onClick={onClickChangeUser}>        Switch      </Button>
+          </Flex>
         </Col>
       </Row>
       <Divider />
@@ -382,44 +382,14 @@ const App: React.FC = () => {
 
       <h3>List of Companies With Critical Outstanding Manifest Advice Cases</h3>
       <h5>Period: From {dateFrom} To {dateTo}</h5>
-      {tcp ? <React.Fragment>
+      {tsp ? <React.Fragment>
         <Table<DataType>
-        rowSelection={{ ...rowSelection }}
-        columns={columns}
-        dataSource={dataSource != null ? dataSource : []}
-        pagination={{ pageSize: 10 }}
-        scroll={{ y: 100 * 5 }}
-        onChange={handleChange}
-        />
-        <Divider />
-        <Row gutter={16}>
-          <Col span={12}></Col>
-          <Col span={12}><Flex gap="small" justify='flex-end'>
-            <Popconfirm
-              title="Select As Target "
-              description="Are you sure to select As Target ?"
-              onConfirm={onClickSelectTarget}
-              onCancel={cancel}
-              okText="Yes"
-              cancelText="No"
-            >
-              <Button color="primary" variant="outlined" onClick={onClickDownload}>        Generate Report #382      </Button>
-            </Popconfirm>
-            <Button color="primary" variant="outlined" onClick={onClickDownload}>Generate Report #383</Button>
-
-
-          </Flex></Col>
-        </Row>
-      </React.Fragment> 
-      : 
-      <React.Fragment>
-        <Table<DataType>
-        rowSelection={{ ...rowSelection }}
-        columns={columns}
-        dataSource={dataSource != null ? dataSource : []}
-        pagination={{ pageSize: 10 }}
-        scroll={{ y: 100 * 5 }}
-        onChange={handleChange}
+          rowSelection={{ ...rowSelection }}
+          columns={columns}
+          dataSource={dataSource != null ? dataSource : []}
+          pagination={{ pageSize: 10 }}
+          scroll={{ y: 100 * 5 }}
+          onChange={handleChange}
         />
         <Divider />
         <Row gutter={16}>
@@ -471,6 +441,35 @@ const App: React.FC = () => {
 
           </Flex></Col>
         </Row>
+      </React.Fragment>
+        : <React.Fragment>
+          <Table<DataType>
+            rowSelection={{ ...rowSelection }}
+            columns={columns}
+            dataSource={dataSource != null ? dataSource : []}
+            pagination={{ pageSize: 10 }}
+            scroll={{ y: 100 * 5 }}
+            onChange={handleChange}
+          />
+          <Divider />
+          <Row gutter={16}>
+            <Col span={12}></Col>
+            <Col span={12}><Flex gap="small" justify='flex-end'>
+              <Popconfirm
+                title="Select As Target "
+                description="Are you sure to select As Target ?"
+                onConfirm={onClickSelectTarget}
+                onCancel={cancel}
+                okText="Yes"
+                cancelText="No"
+              >
+                <Button color="primary" variant="outlined" onClick={onClickDownload}>        Generate Report #382      </Button>
+              </Popconfirm>
+              <Button color="primary" variant="outlined" onClick={onClickDownload}>Generate Report #383</Button>
+
+
+            </Flex></Col>
+          </Row>
         </React.Fragment>
       }
     </div>
