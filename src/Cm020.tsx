@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Breadcrumb, Flex } from 'antd';
 import { Input } from 'antd';
-import { message, Popconfirm } from 'antd';
+import { message, Popconfirm, DatePicker } from 'antd';
 import type { PopconfirmProps } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -52,6 +52,8 @@ const cancel: PopconfirmProps['onCancel'] = (e) => {
   //message.error('The Outstanding Manifest Advice is saved.');
 };
 
+const { RangePicker } = DatePicker;
+
 const App: React.FC = () => {
   const [form] = Form.useForm();
 
@@ -60,6 +62,7 @@ const App: React.FC = () => {
   const [targetDataSource, setTargetDataSource] = useState<Array<DataType> | null>(null);
   const [dateFrom, setDateFrom] = useState("May 2024");
   const [dateTo, setDateTo] = useState("Jun 2024");
+  const [tcp, setTcp] = useState<boolean>(false);
   form.setFieldsValue({ remark: `` });
 
   const onClickSearch = async () => {
@@ -114,6 +117,14 @@ const App: React.FC = () => {
       noOfCase: 2 + parseInt(i + "")
     }));
     setDataSource(data);
+  }
+
+  const onClickChangeUser = () => {
+    if(tcp){
+      setTcp(false);
+    } else {
+      setTcp(true);
+    }
   }
 
   const onClickPrint = () => {
@@ -230,12 +241,11 @@ const App: React.FC = () => {
             title: "Common Function",
           },
           {
-            title: <a href="/Cm020">Create Highlighting Critical Outstanding Manifest Cases
-</a>,
+            title: <a href="/Cm020">Select Companies with Critical Outstanding Manifest Advice Cases</a>,
           }
         ]}
       />
-      <h1>Create Highlighting Critical Outstanding Manifest Cases</h1>
+      <h1>Select Companies with Critical Outstanding Manifest Advice Cases</h1>
 
       <Row>
         <Col span={8}>
@@ -270,7 +280,7 @@ const App: React.FC = () => {
                     </Checkbox>
                   </Col>
                   <Col span={8}>
-                    <Checkbox value="C" style={{ lineHeight: '32px' }}>
+                    <Checkbox value="D" style={{ lineHeight: '32px' }}>
                       River(Ferry)
                     </Checkbox>
                   </Col>
@@ -282,32 +292,32 @@ const App: React.FC = () => {
               <Checkbox.Group>
                 <Row>
                   <Col span={8}>
-                    <Checkbox value="A" style={{ lineHeight: '32px' }}>
+                    <Checkbox value="AM" style={{ lineHeight: '32px' }}>
                       AM
                     </Checkbox>
                   </Col>
                   <Col span={8}>
-                    <Checkbox value="B" style={{ lineHeight: '32px' }}>
+                    <Checkbox value="PM" style={{ lineHeight: '32px' }}>
                       PM
                     </Checkbox>
                   </Col>
                   <Col span={8}>
-                    <Checkbox value="C" style={{ lineHeight: '32px' }}>
+                    <Checkbox value="CS" style={{ lineHeight: '32px' }}>
                       CS
                     </Checkbox>
                   </Col>
                   <Col span={8}>
-                    <Checkbox value="C" style={{ lineHeight: '32px' }}>
+                    <Checkbox value="NC" style={{ lineHeight: '32px' }}>
                       NC
                     </Checkbox>
                   </Col>
                   <Col span={8}>
-                    <Checkbox value="C" style={{ lineHeight: '32px' }}>
+                    <Checkbox value="OH" style={{ lineHeight: '32px' }}>
                       OH
                     </Checkbox>
                   </Col>
                   <Col span={8}>
-                    <Checkbox value="C" style={{ lineHeight: '32px' }}>
+                    <Checkbox value="UM" style={{ lineHeight: '32px' }}>
                       UM
                     </Checkbox>
                   </Col>
@@ -319,17 +329,17 @@ const App: React.FC = () => {
               <Checkbox.Group>
                 <Row>
                   <Col span={8}>
-                    <Checkbox value="A" style={{ lineHeight: '32px' }}>
+                    <Checkbox value="OMA" style={{ lineHeight: '32px' }}>
                       OMA
                     </Checkbox>
                   </Col>
                   <Col span={8}>
-                    <Checkbox value="B" style={{ lineHeight: '32px' }}>
+                    <Checkbox value="OS1" style={{ lineHeight: '32px' }}>
                       OS1
                     </Checkbox>
                   </Col>
                   <Col span={8}>
-                    <Checkbox value="C" style={{ lineHeight: '32px' }}>
+                    <Checkbox value="OS2" style={{ lineHeight: '32px' }}>
                       OS2
                     </Checkbox>
                   </Col>
@@ -338,10 +348,7 @@ const App: React.FC = () => {
               </Checkbox.Group>
             </Form.Item>
             <Form.Item name="period" label="Period:" rules={[{ required: true }]}>
-              <Radio.Group>
-                <Radio value="1"> Monthly </Radio>
-                <Radio value="2"> Annually </Radio>
-              </Radio.Group>
+              <RangePicker placeholder={["YYYY-MM-DD","YYYY-MM-DD"]}/>
             </Form.Item>
             <Col span={24}>
               <Flex gap="small" justify='flex-end'>
@@ -363,72 +370,109 @@ const App: React.FC = () => {
           </Col>
         </Col>
 
-
+        <Col span={8}>
+          <Row> Switch User: {(tcp) ? "Is TCP User" : "General User"}</Row>
+            <Flex gap="small" justify='flex-end'>
+              <Button type="primary" htmlType="submit" onClick={onClickChangeUser}>        Switch      </Button>
+            </Flex>
+        </Col>
       </Row>
-
       <Divider />
+
+
       <h3>List of Companies With Critical Outstanding Manifest Advice Cases</h3>
       <h5>Period: From {dateFrom} To {dateTo}</h5>
-
-      <Table<DataType>
+      {tcp ? <React.Fragment>
+        <Table<DataType>
         rowSelection={{ ...rowSelection }}
         columns={columns}
         dataSource={dataSource != null ? dataSource : []}
         pagination={{ pageSize: 10 }}
         scroll={{ y: 100 * 5 }}
         onChange={handleChange}
-      />
-      <Divider />
-      <Row gutter={16}>
-        <Col span={12}></Col>
-        <Col span={12}><Flex gap="small" justify='flex-end'>
-          <Popconfirm
-            title="Select As Target "
-            description="Are you sure to select As Target ?"
-            onConfirm={onClickSelectTarget}
-            onCancel={cancel}
-            okText="Yes"
-            cancelText="No"
-          >
-            <Button type="primary" htmlType="submit">        Select As Target      </Button>
-          </Popconfirm>
-          <Button color="primary" variant="outlined" onClick={onClickDownload}>Download Selected Companies List</Button>
+        />
+        <Divider />
+        <Row gutter={16}>
+          <Col span={12}></Col>
+          <Col span={12}><Flex gap="small" justify='flex-end'>
+            <Popconfirm
+              title="Select As Target "
+              description="Are you sure to select As Target ?"
+              onConfirm={onClickSelectTarget}
+              onCancel={cancel}
+              okText="Yes"
+              cancelText="No"
+            >
+              <Button color="primary" variant="outlined" onClick={onClickDownload}>        Generate Report #382      </Button>
+            </Popconfirm>
+            <Button color="primary" variant="outlined" onClick={onClickDownload}>Generate Report #383</Button>
 
 
-        </Flex></Col>
-      </Row>
-
-
-      <h3>List of Targeted Companies</h3>
-      <Table<DataType>
+          </Flex></Col>
+        </Row>
+      </React.Fragment> 
+      : 
+      <React.Fragment>
+        <Table<DataType>
         rowSelection={{ ...rowSelection }}
-        columns={columns.slice(0, -1)}
-        dataSource={targetDataSource != null ? targetDataSource : []}
+        columns={columns}
+        dataSource={dataSource != null ? dataSource : []}
         pagination={{ pageSize: 10 }}
         scroll={{ y: 100 * 5 }}
         onChange={handleChange}
-      />
-      <Divider />
-      <Row gutter={16}>
-        <Col span={12}></Col>
-        <Col span={12}><Flex gap="small" justify='flex-end'>
-          <Button type="primary" htmlType="submit" onClick={onClickUnSelect}> Un-select As Target   </Button>
-          <Popconfirm
-            title="Select As Target "
-            description="Are you sure to select As Target ?"
-            onConfirm={() => { message.success('The companied you selected have been successfully saved into thetargeted list'); }}
-            onCancel={cancel}
-            okText="Yes"
-            cancelText="No"
-          >
+        />
+        <Divider />
+        <Row gutter={16}>
+          <Col span={12}></Col>
+          <Col span={12}><Flex gap="small" justify='flex-end'>
+            <Popconfirm
+              title="Select As Target "
+              description="Are you sure to select As Target ?"
+              onConfirm={onClickSelectTarget}
+              onCancel={cancel}
+              okText="Yes"
+              cancelText="No"
+            >
+              <Button type="primary" htmlType="submit">        Select As Target      </Button>
+            </Popconfirm>
+            <Button color="primary" variant="outlined" onClick={onClickDownload}>Download Selected Companies List</Button>
 
-            <Button type="primary" htmlType="submit"> Save   </Button>
-          </Popconfirm>
+
+          </Flex></Col>
+        </Row>
 
 
-        </Flex></Col>
-      </Row>
+        <h3>List of Targeted Companies</h3>
+        <Table<DataType>
+          rowSelection={{ ...rowSelection }}
+          columns={columns.slice(0, -1)}
+          dataSource={targetDataSource != null ? targetDataSource : []}
+          pagination={{ pageSize: 10 }}
+          scroll={{ y: 100 * 5 }}
+          onChange={handleChange}
+        />
+        <Divider />
+        <Row gutter={16}>
+          <Col span={12}></Col>
+          <Col span={12}><Flex gap="small" justify='flex-end'>
+            <Button type="primary" htmlType="submit" onClick={onClickUnSelect}> Un-select As Target   </Button>
+            <Popconfirm
+              title="Select As Target "
+              description="Are you sure to select As Target ?"
+              onConfirm={() => { message.success('The companied you selected have been successfully saved into thetargeted list'); }}
+              onCancel={cancel}
+              okText="Yes"
+              cancelText="No"
+            >
 
+              <Button type="primary" htmlType="submit"> Save   </Button>
+            </Popconfirm>
+
+
+          </Flex></Col>
+        </Row>
+        </React.Fragment>
+      }
     </div>
   );
 }
