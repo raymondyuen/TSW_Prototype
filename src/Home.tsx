@@ -21,7 +21,7 @@ const App: React.FC = () => {
             title: <HomeOutlined />,
           },
           {
-            title: <span style={{ color: '#3169BE' }}>Home</span>,
+            title: "Home",
           }
         ]}
       />
