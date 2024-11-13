@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, createContext, useContext, useReducer } from "react";
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input, Flex, Image, Card, Breadcrumb } from 'antd';
 import Menu from './Menu';
@@ -11,6 +11,7 @@ const App: React.FC = () => {
     setShowMenu(true);
 
   };
+
   const [showMenu, setShowMenu] = useState(false);
 
   return (

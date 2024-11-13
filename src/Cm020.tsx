@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import type {PopconfirmProps, TableColumnsType, TableProps, UploadProps} from 'antd';
 import {
   Breadcrumb,
@@ -8,7 +8,7 @@ import {
   DatePicker,
   Divider,
   Flex,
-  Form,
+  Form, 
   Input,
   message,
   Popconfirm,
@@ -17,6 +17,7 @@ import {
   Upload
 } from 'antd';
 import {useNavigate} from 'react-router-dom';
+import {UserContext} from './IndexLayout';
 import {HomeOutlined, UploadOutlined} from '@ant-design/icons';
 
 
@@ -50,17 +51,23 @@ const cancel: PopconfirmProps['onCancel'] = (e) => {
   //message.error('The Outstanding Manifest Advice is saved.');
 };
 
+
 const { RangePicker } = DatePicker;
 
 const App: React.FC = () => {
   const [form] = Form.useForm();
 
+  const userContextdetail = useContext(UserContext);
+
+  if(!userContextdetail) {
+    throw new Error("userContext is null or empty")
+  }
   const navigate = useNavigate();
   const [dataSource, setDataSource] = useState<Array<DataType> | null>(null);
   const [targetDataSource, setTargetDataSource] = useState<Array<DataType> | null>(null);
   const [dateFrom, setDateFrom] = useState("May 2024");
   const [dateTo, setDateTo] = useState("Jun 2024");
-  const [tsp, setTsp] = useState<boolean>(false);
+  const {isTsp, setIsTsp} = userContextdetail;
   form.setFieldsValue({ remark: `` });
 
   const onClickSearch = async () => {
@@ -115,14 +122,6 @@ const App: React.FC = () => {
       noOfCase: 2 + parseInt(i + "")
     }));
     setDataSource(data);
-  }
-
-  const onClickChangeUser = () => {
-    if (tsp) {
-      setTsp(false);
-    } else {
-      setTsp(true);
-    }
   }
 
   const onClickPrint = () => {
@@ -368,19 +367,14 @@ const App: React.FC = () => {
           </Col>
         </Col>
 
-        <Col span={8}>
-          <Row> Switch User: {(tsp) ? "Is TSP User" : "ETCS/C&SD User"}</Row>
-          <Flex gap="small" justify='flex-end'>
-            <Button type="primary" htmlType="submit" onClick={onClickChangeUser}>        Switch      </Button>
-          </Flex>
-        </Col>
+        
       </Row>
       <Divider />
 
 
       <h3>List of Companies With Critical Outstanding Manifest Advice Cases</h3>
       <h5>Period: From {dateFrom} To {dateTo}</h5>
-      {tsp ? <React.Fragment>
+      {(isTsp === "TSP") ? <React.Fragment>
         <Table<DataType>
           rowSelection={{ ...rowSelection }}
           columns={columns}
@@ -432,11 +426,8 @@ const App: React.FC = () => {
               okText="Yes"
               cancelText="No"
             >
-
               <Button type="primary" htmlType="submit"> Save   </Button>
             </Popconfirm>
-
-
           </Flex></Col>
         </Row>
       </React.Fragment>

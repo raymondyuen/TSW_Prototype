@@ -1,12 +1,12 @@
-import {BrowserRouter as Routers, Link, Route, Routes} from 'react-router-dom';
+import { BrowserRouter as Routers, Link, Route, Routes } from 'react-router-dom';
 import {
-    AppstoreOutlined,
-    HomeOutlined,
-    MenuFoldOutlined,
-    MenuUnfoldOutlined,
-    UploadOutlined,
-    UserOutlined,
-    VideoCameraOutlined
+  AppstoreOutlined,
+  HomeOutlined,
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+  UploadOutlined,
+  UserOutlined,
+  VideoCameraOutlined
 } from '@ant-design/icons';
 import './index.css';
 import CM009 from './Cm009';
@@ -15,10 +15,15 @@ import CM020S3 from './Cm020S3';
 import Home from './Home';
 import Login from './Login';
 import HeaderNavs from './Menu';
-import React, {useState} from 'react';
+import React, { createContext, useState } from 'react';
 import Ca003Enquiry from './Ca003Enquiry';
 import CA003Amend from './Ca003Amend';
-import {Button, Col, Divider, Flex, Image, Layout, Menu, Row} from 'antd';
+import { Button, Col, Divider, Flex, Image, Layout, Menu, Row } from 'antd';
+
+interface UserContextType {
+  isTsp: String;
+  setIsTsp: React.Dispatch<React.SetStateAction<String>>;
+}
 
 const { Header, Content, Footer, Sider } = Layout;
 const items2 = [UserOutlined, VideoCameraOutlined, UploadOutlined, UserOutlined].map(
@@ -29,15 +34,25 @@ const items2 = [UserOutlined, VideoCameraOutlined, UploadOutlined, UserOutlined]
   }),
 );
 
+export const UserContext = createContext<UserContextType | null>(null);
+
+const onClickChangeUser = (isTcp: String, setIsTcp: React.Dispatch<React.SetStateAction<String>>) => {
+  if (isTcp === "C&SD") {
+    setIsTcp("TSP");
+  } else {
+    setIsTcp("C&SD");
+  }
+}
 
 const App: React.FC = () => {
-    const [collapsed, setCollapsed] = useState(false)
-  
-    return (
-      <Routers>
+  const [collapsed, setCollapsed] = useState(false)
+  const [isTsp, setIsTsp] = useState<String>("C&SD");
+
+  return (
+    <Routers>
         <Layout>
           {(window.location.pathname === '/') ? "" :
-  
+
             <Sider width="230"
               breakpoint="lg"
               // collapsedWidth="0"
@@ -45,7 +60,7 @@ const App: React.FC = () => {
                 console.log(broken);
               }}
               onCollapse={(collapsed, type) => {
-                console.log(collapsed+' '+type);
+                console.log(collapsed + ' ' + type);
               }}
               collapsed={collapsed}
             >
@@ -76,12 +91,20 @@ const App: React.FC = () => {
                   </Menu.Item>
                 </Menu.SubMenu>
               </Menu>
-  
+
               <div className="SideMenu_last-login-title__3sFDd" style={{ color: 'white', padding: 10 }}>
                 <small>Last successful login:<br /></small>
-                <small>{ new Date().toLocaleString()}</small>
+                <small>{new Date().toLocaleString()}</small>
               </div>
-  
+
+              <div className="SideMenu_last-login-title__3sFDd" style={{ color: 'white', padding: 10 }}>
+                <small>Switch User: {(isTsp)}<br /></small>
+              </div>
+              <Col span={8}>
+                <Flex gap="small" justify='flex-end'>
+                  <Button type="primary" onClick={() => onClickChangeUser(isTsp, setIsTsp)}>        Switch      </Button>
+                </Flex>
+              </Col>
             </Sider>
           }
           <Layout>
@@ -94,17 +117,17 @@ const App: React.FC = () => {
             >
               <Row>
                 <Col span={1}>
-                  <Button onClick={()=>{setCollapsed(!collapsed)}}>
-                    {collapsed?<MenuUnfoldOutlined/> : <MenuFoldOutlined/>}
+                  <Button onClick={() => { setCollapsed(!collapsed) }}>
+                    {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
                   </Button>
                 </Col>
                 <Col span={23}>
                   {(window.location.pathname === '/') ? <HeaderNavs /> : <HeaderNavs />}
                 </Col>
               </Row>
-              
-              
-              
+
+
+
             </Header>
             <Content
               style={{
@@ -119,17 +142,19 @@ const App: React.FC = () => {
                   paddingBottom: 50
                 }}
               >
-                <Routes>
-                  <Route path="/" element={<Login />} />
-                  <Route path="/Home" element={<Home />} />
-                  <Route path="/CM009" element={<CM009 />} />
-                  <Route path="/CM020" element={<CM020 />} />
-                  <Route path="/CM020S3" element={<CM020S3 />} />
-                  <Route path="/CA003Amend" element={<CA003Amend />} />
-                  <Route path="/Ca003Enquiry" element={<Ca003Enquiry />} />
-                  <Route path="*" element={<Login />} />
-                </Routes>
-  
+                <UserContext.Provider value={{ isTsp, setIsTsp }}>
+                  <Routes>
+                    <Route path="/" element={<Login />} />
+                    <Route path="/Home" element={<Home />} />
+                    <Route path="/CM009" element={<CM009 />} />
+                    <Route path="/CM020" element={<CM020 />} />
+                    <Route path="/CM020S3" element={<CM020S3 />} />
+                    <Route path="/CA003Amend" element={<CA003Amend />} />
+                    <Route path="/Ca003Enquiry" element={<Ca003Enquiry />} />
+                    <Route path="*" element={<Login />} />
+                  </Routes>
+                </UserContext.Provider>
+
               </div>
             </Content>
             <Footer
@@ -146,8 +171,8 @@ const App: React.FC = () => {
             </Footer>
           </Layout>
         </Layout>
-      </Routers>
-    )
-  }
+    </Routers>
+  )
+}
 
 export default App
