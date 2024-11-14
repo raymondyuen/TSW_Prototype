@@ -12,6 +12,7 @@ import './index.css';
 import CM009 from './Cm009';
 import CM020 from './Cm020';
 import CM020S3 from './Cm020S3';
+import CA003New from './Ca003New';
 import Home from './Home';
 import Login from './Login';
 import HeaderNavs from './Menu';
@@ -151,6 +152,7 @@ const App: React.FC = () => {
                     <Route path="/CM020S3" element={<CM020S3 />} />
                     <Route path="/CA003Amend" element={<CA003Amend />} />
                     <Route path="/Ca003Enquiry" element={<Ca003Enquiry />} />
+                    <Route path="/Ca003New" element={<CA003New />} />
                     <Route path="*" element={<Login />} />
                   </Routes>
                 </UserContext.Provider>

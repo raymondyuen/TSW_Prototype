@@ -115,13 +115,16 @@ const App: React.FC = () => {
                     <Row>
                         <Col span={12}>
                             <Form.Item label="Transport Mode:" labelCol={{ span: 12 }} style={{ width: '500px' }} >
-                                <Select disabled defaultValue="Air">
+                                <Select>
+                                    <Select.Option value="Air">Air</Select.Option>
+                                    <Select.Option value="Ocean">Ocean</Select.Option>
+                                    <Select.Option value="Rail">Rail</Select.Option>
                                 </Select>
                             </Form.Item>
                         </Col>
                         <Col span={12}>
                             <Form.Item label="Shipment Type:" labelCol={{ span: 8 }} style={{ width: '500px' }}>
-                                <Select disabled defaultValue="Inbound">
+                                <Select>
                                     <Select.Option value="Inbound">Inbound</Select.Option>
                                     <Select.Option value="Outbound">Outbound</Select.Option>
                                 </Select>
@@ -131,7 +134,7 @@ const App: React.FC = () => {
                         <Col span={12}>
                             <Form.Item label="Estimated Date of Arrival / Departure" labelCol={{ span: 12 }} style={{ width: '500px' }}>
                                 <Space direction="vertical">
-                                    <DatePicker defaultValue={dayjs('2024-09-06', 'YYYY-MM-DD')} disabled onChange={onChangeDate} />
+                                    <DatePicker onChange={onChangeDate} />
                                 </Space>
                             </Form.Item>
                         </Col>
@@ -143,14 +146,14 @@ const App: React.FC = () => {
                         <Col span={17}>
                             <Form.Item label="Estimated time of Arrival / Departure" labelCol={{ span: 12 }} style={{ width: '500px' }}>
                                 <Space direction="vertical">
-                                    <TimePicker onChange={onChangeTime} defaultOpenValue={dayjs('00:05:00', 'HH:mm:ss')} disabled />
+                                    <TimePicker onChange={onChangeTime} defaultOpenValue={dayjs('00:00:00', 'HH:mm:ss')} />
                                 </Space>
                             </Form.Item>
                         </Col>
                         <Col span={12}>
                             <Form.Item label="Actual Date of Arrival / Departure" labelCol={{ span: 12 }} style={{ width: '500px' }}>
                                 <Space direction="vertical">
-                                    <DatePicker defaultValue={dayjs('2024-09-06', 'YYYY-MM-DD')} disabled onChange={onChangeDate} />
+                                    <DatePicker onChange={onChangeDate} />
                                 </Space>
                             </Form.Item>
                         </Col>
@@ -162,14 +165,14 @@ const App: React.FC = () => {
                         <Col span={17}>
                             <Form.Item label="Actual Time of Arrival / Departure" labelCol={{ span: 12 }} style={{ width: '500px' }}>
                                 <Space direction="vertical">
-                                    <TimePicker onChange={onChangeTime} defaultOpenValue={dayjs('00:06:00', 'HH:mm:ss')} disabled />
+                                    <TimePicker onChange={onChangeTime} defaultOpenValue={dayjs('00:00:00', 'HH:mm:ss')} />
                                 </Space>
                             </Form.Item>
                         </Col>
                         <Col span={12}>
                             <Form.Item label="Scheduled Date of Arrival / Departure" labelCol={{ span: 12 }} style={{ width: '500px' }}>
                                 <Space direction="vertical">
-                                    <DatePicker defaultValue={dayjs('2024-09-06', 'YYYY-MM-DD')} disabled onChange={onChangeDate} />
+                                    <DatePicker onChange={onChangeDate} />
                                 </Space>
                             </Form.Item>
                         </Col>
@@ -181,18 +184,18 @@ const App: React.FC = () => {
                         <Col span={17}>
                             <Form.Item label="Scheduled Time of Arrival / Departure" labelCol={{ span: 12 }} style={{ width: '500px' }}>
                                 <Space direction="vertical">
-                                    <TimePicker onChange={onChangeTime} defaultOpenValue={dayjs('00:50:00', 'HH:mm:ss')} disabled />
+                                    <TimePicker onChange={onChangeTime} defaultOpenValue={dayjs('00:00:00', 'HH:mm:ss')} />
                                 </Space>
                             </Form.Item>
                         </Col>
                         <Col span={12}>
                             <Form.Item label="Schedule Pending" labelCol={{ span: 12 }} style={{ width: '500px' }}>
-                                <Input disabled />
+                                <Input />
                             </Form.Item>
                         </Col>
                         <Col span={12}>
                             <Form.Item label="OS Manifest Ref No." labelCol={{ span: 8 }} style={{ width: '500px' }}>
-                                <Input.TextArea allowClear disabled/>
+                                <Input.TextArea allowClear />
                             </Form.Item>
                         </Col>
                     </Row>
@@ -202,46 +205,45 @@ const App: React.FC = () => {
                     <Row gutter={[16, 16]}>
                         <Col span={12}>
                             <Form.Item label="Carrier ID" labelCol={{ span: 12 }} style={{ width: '500px' }}>
-                                <Input defaultValue="A342341fdv123" disabled />
+                                <Input />
                             </Form.Item>
                         </Col>
                         <Col span={9}>
                             <Form.Item label="Carrier ID Type" labelCol={{ span: 8 }} style={{ width: '500px' }}>
-                                <Select defaultValue="HK Business Reg" disabled 
-                                options={[
+                                <Select options={[
                                     { value: "HK Business Reg", label: "HK Business Reg" },
                                 ]} />
                             </Form.Item>
                         </Col>
                         <Col span={12}>
                             <Form.Item label="Carrier Number" labelCol={{ span: 12 }} style={{ width: '500px' }}>
-                                <Input defaultValue="Chan Tai Ming" disabled/>
+                                <Input />
                             </Form.Item>
                         </Col>
                         <Col span={12}>
                             <Form.Item label="Carrier Address" labelCol={{ span: 8 }} style={{ width: '500px' }}>
-                                <Input.TextArea defaultValue="Hong Kong Island" disabled allowClear />
+                                <Input.TextArea allowClear />
                             </Form.Item>
                         </Col>
                     </Row>
                     <Col span={12}>
                         <Form.Item label="Carrier Phone Number" labelCol={{ span: 12 }} style={{ width: '500px' }}>
-                            <Input defaultValue="12341234" disabled></Input>
+                            <Input></Input>
                         </Form.Item>
                     </Col>
                     <Col span={12}>
                         <Form.Item label="Carrier Code (MD)" labelCol={{ span: 12 }} style={{ width: '500px' }}>
-                            <Input disabled/>
+                            <Input />
                         </Form.Item>
                     </Col>
                     <Col span={12}>
                         <Form.Item label="Carrier Code (AA)" labelCol={{ span: 12 }} style={{ width: '500px' }}>
-                            <Input disabled/>
+                            <Input />
                         </Form.Item>
                     </Col>
                     <Col span={12}>
                         <Form.Item label="Carrier Code (KCRC)" labelCol={{ span: 12 }} style={{ width: '500px' }}>
-                            <Input disabled/>
+                            <Input />
                         </Form.Item>
                     </Col>
                 </Card>
@@ -250,19 +252,19 @@ const App: React.FC = () => {
 
                     <Row gutter={[16, 16]}>
                         <Col span={12}>
-                            <Form.Item label="Vessel ID"  labelCol={{ span: 12 }} style={{ width: '500px' }}>
-                                <Input disabled />
+                            <Form.Item label="Vessel ID" labelCol={{ span: 12 }} style={{ width: '500px' }}>
+                                <Input />
                             </Form.Item>
                         </Col>
                         <Col span={12}>
                             <Form.Item label="Call Sign" labelCol={{ span: 8 }} style={{ width: '500px' }}>
-                                <Input disabled={true} value=""></Input>
+                                <Input disabled={true} value="CY8CS81"></Input>
                             </Form.Item>
                         </Col>
                     </Row>
                     <Col span={12}>
                         <Form.Item label="Vessel Name" labelCol={{ span: 12 }} style={{ width: '500px' }}>
-                            <Input disabled={true} value=''></Input>
+                            <Input disabled={true} value='UHIHIJ'></Input>
                         </Form.Item>
                     </Col>
                 </Card>
@@ -283,7 +285,7 @@ const App: React.FC = () => {
                     </Row>
                     <Col span={12}>
                         <Form.Item label="Service Type" labelCol={{ span: 12 }} style={{ width: '500px' }}>
-                            <Select defaultValue="HK Business Reg" disabled options={[
+                            <Select options={[
                                 { value: "HK Business Reg", label: "HK Business Reg" },
                             ]} />
                         </Form.Item>
@@ -295,24 +297,22 @@ const App: React.FC = () => {
                     <Row gutter={[16, 16]}>
                         <Col span={12}>
                             <Form.Item label="Train No." labelCol={{ span: 12 }} style={{ width: '500px' }}>
-                                <Input value="" disabled={true} />
+                                <Input value="Train No. 535" disabled={true} />
                             </Form.Item>
                         </Col>
                         <Col span={9}>
                             <Form.Item label="Wagon No." labelCol={{ span: 8 }} style={{ width: '500px' }}>
-                                <Select disabled  />
-                                {/* <Select {...sharedProps} {...selectProps} disabled  /> */}
+                                <Select {...sharedProps} {...selectProps} />
                             </Form.Item>
                         </Col>
                         <Col span={12}>
                             <Form.Item label="Mainland Train No." labelCol={{ span: 8 }} style={{ width: '500px' }}>
-                                <Input disabled />
+                                <Input />
                             </Form.Item>
                         </Col>
                         <Col span={12}>
                             <Form.Item label="New Wagon No." labelCol={{ span: 8 }} style={{ width: '500px' }}>
-                                <Select disabled  />
-                                {/* <Select {...sharedProps} {...selectProps} /> */}
+                                <Select {...sharedProps} {...selectProps} />
                             </Form.Item>
                         </Col>
                     </Row>
@@ -323,16 +323,15 @@ const App: React.FC = () => {
                     <Row gutter={[16, 16]}>
                         <Col span={12}>
                             <Form.Item label="Vehicle Reference No." labelCol={{ span: 12 }} style={{ width: '500px' }}>
-                                <Input value="" disabled={true} />
+                                <Input value="Vehicle No. 535" disabled={true} />
                             </Form.Item>
                         </Col>
                         <Col span={12}>
                             <Form.Item label="Remarks" labelCol={{ span: 8 }} style={{ width: '500px' }}>
                                 <div style={{ margin: '24px 0' }} />
-                                <TextArea 
+                                <TextArea
                                     placeholder="Controlled autosize"
                                     autoSize={{ minRows: 3, maxRows: 5 }}
-                                    disabled
                                 />
                             </Form.Item>
                         </Col>

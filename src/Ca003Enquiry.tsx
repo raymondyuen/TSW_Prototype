@@ -321,6 +321,10 @@ function App() {
   function clickIssueOMA(event: React.MouseEvent<HTMLElement>): void {
     navigate("/CM009");
   }
+  
+  function clickNewSchedule(event: React.MouseEvent<HTMLElement>): void {
+    navigate("/CM003NewSchedule");
+  }
 
   return (
     <div style={{ padding: '0 24px' }}>
@@ -463,7 +467,7 @@ function App() {
               <Button color="primary" variant="outlined">Revert Pending</Button>
               <Button color="primary" variant="outlined">Pending</Button>
               <Button color="primary" variant="outlined">Unmatch</Button>
-              <Button color="primary" variant="outlined">New Sch</Button>
+              <Button color="primary" variant="outlined" onClick={clickNewSchedule}>New Sch</Button>
               <Button color="primary" variant="outlined" onClick={clickAmend}>Amend</Button>
               <Button color="primary" variant="outlined">Void Manifest</Button>
             </Flex>
