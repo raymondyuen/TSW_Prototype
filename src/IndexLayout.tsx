@@ -152,7 +152,7 @@ const App: React.FC = () => {
                     <Route path="/CM020S3" element={<CM020S3 />} />
                     <Route path="/CA003Amend" element={<CA003Amend />} />
                     <Route path="/Ca003Enquiry" element={<Ca003Enquiry />} />
-                    <Route path="/Ca003New" element={<CA003New />} />
+                    <Route path="/CA003New" element={<CA003New />} />
                     <Route path="*" element={<Login />} />
                   </Routes>
                 </UserContext.Provider>

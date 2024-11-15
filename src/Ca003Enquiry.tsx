@@ -323,7 +323,7 @@ function App() {
   }
   
   function clickNewSchedule(event: React.MouseEvent<HTMLElement>): void {
-    navigate("/CM003NewSchedule");
+    navigate("/Ca003New");
   }
 
   return (
