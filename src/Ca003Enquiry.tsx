@@ -13,7 +13,8 @@ import {
   Select,
   Table,
   TableColumnsType,
-  TimePicker
+  TimePicker,
+  Alert
 } from 'antd';
 import { TableRowSelection } from 'antd/es/table/interface';
 import Title from 'antd/es/typography/Title';
@@ -187,8 +188,6 @@ function App() {
   const onManifestSelectedChange = (newKeys: React.Key[]) => {
     setSelectedManifestKeys(newKeys)
   }
-
-
   const manifestSelection: TableRowSelection = {
     selectedRowKeys: selectedManifestKeys,
     onChange: onManifestSelectedChange
@@ -237,9 +236,19 @@ function App() {
     }
 
   }
+  const onClickMatchResultAction = () => {
+    console.log(selectedScheduleKeys)
+    console.log(selectedManifestKeys)
+    if(selectedScheduleKeys.length == 0 && selectedManifestKeys.length == 0){
+      setAlertMsg("At least one record must be selected")
+    }
+  }
+
+
   const [isShow, setIsShow] = useState("block")
   const [sData, setSData] = useState<Array<ScheduleDataType> | null>(null);
   const [mData, setMData] = useState<Array<ManifestDataType> | null>(null);
+  const [alertMsg, setAlertMsg] = useState("")
   const validateMessages = {
     required: '${label} is required!',
     types: {
@@ -497,30 +506,30 @@ function App() {
       </Form>
       <h3>Probable Matching Result</h3>
 
-
+        {alertMsg == "" ? "" : <Alert type='error' closable message={alertMsg} onClose={()=>setAlertMsg("")}/>}
       <Col span={24}>
         <fieldset disabled={false} style={{ border: '0px' }}>
           <Row justify='center' style={{marginBottom: 10}}>
 
             <Space>
-              <Button color="primary" variant="outlined">Revert Dummy Schedule</Button>
-              <Button color="primary" variant="outlined">Nil Cargo</Button>
-              <Button color="primary" variant="outlined">Off Hired</Button>
-              <Button color="primary" variant="outlined">Cancel Shipment</Button>
-              <Button color="primary" variant="outlined">Non Exist</Button>
-              <Button color="primary" variant="outlined">Match</Button>
+              <Button color="primary" variant="outlined" onClick={onClickMatchResultAction}>Revert Dummy Schedule</Button>
+              <Button color="primary" variant="outlined" onClick={onClickMatchResultAction}>Nil Cargo</Button>
+              <Button color="primary" variant="outlined" onClick={onClickMatchResultAction}>Off Hired</Button>
+              <Button color="primary" variant="outlined" onClick={onClickMatchResultAction}>Cancel Shipment</Button>
+              <Button color="primary" variant="outlined" onClick={onClickMatchResultAction}>Non Exist</Button>
+              <Button color="primary" variant="outlined" onClick={onClickMatchResultAction}>Match</Button>
               <Button color="primary" variant="outlined" onClick={clickIssueOMA}>Issue OS Manifest Advice</Button>
             </Space>
           </Row>
           <Row justify='center' style={{marginBottom: 10}}>
             <Flex gap="small" justify='flex-end'>
-              <Button color="primary" variant="outlined">Mark off Dummy Schedule</Button>
-              <Button color="primary" variant="outlined">Revert Pending</Button>
-              <Button color="primary" variant="outlined">Pending</Button>
-              <Button color="primary" variant="outlined">Unmatch</Button>
+              <Button color="primary" variant="outlined" onClick={onClickMatchResultAction}>Mark off Dummy Schedule</Button>
+              <Button color="primary" variant="outlined" onClick={onClickMatchResultAction}>Revert Pending</Button>
+              <Button color="primary" variant="outlined" onClick={onClickMatchResultAction}>Pending</Button>
+              <Button color="primary" variant="outlined" onClick={onClickMatchResultAction}>Unmatch</Button>
               <Button color="primary" variant="outlined" onClick={clickNew}>New Sch</Button>
               <Button color="primary" variant="outlined" onClick={clickAmend}>Amend</Button>
-              <Button color="primary" variant="outlined">Void Manifest</Button>
+              <Button color="primary" variant="outlined" onClick={onClickMatchResultAction}>Void Manifest</Button>
             </Flex>
           </Row>
         </fieldset>
