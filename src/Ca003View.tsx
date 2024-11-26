@@ -126,23 +126,23 @@ const App: React.FC = () => {
                 </h1>
                 <Card title='Schedule Infomartion' headStyle={{ backgroundColor: '#1677ff', color: '#ffffff' }}>
                     {attrRow('Transport Mode:', 'Air','Shipment Type:', 'Inbound')}
-                    {attrRow('Estimated Date of Arrival / Departure', '2024-05-20','Matching Status', 'Schedule Probable-Match')}
-                    {attrRow('Estimated time of Arrival / Departure', '01:00')}
-                    {attrRow('Actual Date of Arrival / Departure', '2024-05-20', 'Matched UMR' , '-')}
-                    {attrRow('Actual Time of Arrival / Departure', '01:00')}
-                    {attrRow('Scheduled Date of Arrival / Departure ', '2024-05-20', 'Mark Deny By' , '-' )}
-                    {attrRow('Scheduled Time of Arrival / Departure ', '01:00')}
-                    {attrRow('Schedule Pending', '-', 'OS Manifest Ref No.' , '-')}
+                    {attrRow('Estimated Date of Arrival / Departure:', '2024-05-20','Matching Status', 'Schedule Probable-Match')}
+                    {attrRow('Estimated time of Arrival / Departure:', '01:00')}
+                    {attrRow('Actual Date of Arrival / Departure:', '2024-05-20', 'Matched UMR:' , '-')}
+                    {attrRow('Actual Time of Arrival / Departure:', '01:00')}
+                    {attrRow('Scheduled Date of Arrival / Departure:', '2024-05-20', 'Mark Deny By:' , '-' )}
+                    {attrRow('Scheduled Time of Arrival / Departure:', '01:00')}
+                    {attrRow('Schedule Status:', 'Schedule Pending', 'OS Manifest Ref No.' , '-')}
 
 
                 </Card>
                 <Card title='Carrier Infomartion' style={{ minWidth: '800px' }} headStyle={{ backgroundColor: '#1677ff', color: '#ffffff' }}>
                     {attrRow('Carrier Name:', 'CRT-Carrier','', '')}
                     {attrRow('Carrier ID:', '333333','Carrier ID Type:', 'BR')}
-                    {attrRow('Carrier Phone', '2256 2258','Carrier Address', 'Yau Tsim Mong District, Island Harbourview')}
-                    {attrRow('Carrier Code (MD)', '-','', '')}
-                    {attrRow('Carrier Code (AA)', '-','', '')}
-                    {attrRow('Carrier (KCRC)', '-','', '')}
+                    {attrRow('Carrier Phone:', '2256 2258','Carrier Address', 'Yau Tsim Mong District, Island Harbourview')}
+                    {attrRow('Carrier Code (MD):', '-','', '')}
+                    {attrRow('Carrier Code (AA):', '-','', '')}
+                    {attrRow('Carrier (KCRC):', '-','', '')}
 
                 </Card>
 

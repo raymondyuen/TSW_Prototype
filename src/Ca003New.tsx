@@ -140,7 +140,7 @@ const App: React.FC = () => {
                         </Col>
                         <Col span={12}>
                             <Form.Item label="Matching Status" labelCol={{ span: 8 }} style={{ width: '500px' }}>
-                                <Input value="Schedule Probable-Match" disabled={true}></Input>
+                                <Input value="Schedule Un-Match" disabled={true}></Input>
                             </Form.Item>
                         </Col>
                         <Col span={17}>
@@ -189,8 +189,8 @@ const App: React.FC = () => {
                             </Form.Item>
                         </Col>
                         <Col span={12}>
-                            <Form.Item label="Schedule Pending" labelCol={{ span: 12 }} style={{ width: '500px' }}>
-                                <Input />
+                            <Form.Item label="Schedule Status" labelCol={{ span: 12 }} style={{ width: '500px' }}>
+                                <Input value="Schedule Pending" disabled={true}/>
                             </Form.Item>
                         </Col>
                         <Col span={12}>
@@ -258,13 +258,13 @@ const App: React.FC = () => {
                         </Col>
                         <Col span={12}>
                             <Form.Item label="Call Sign" labelCol={{ span: 8 }} style={{ width: '500px' }}>
-                                <Input disabled={true} value="CY8CS81"></Input>
+                                <Input></Input>
                             </Form.Item>
                         </Col>
                     </Row>
                     <Col span={12}>
                         <Form.Item label="Vessel Name" labelCol={{ span: 12 }} style={{ width: '500px' }}>
-                            <Input disabled={true} value='UHIHIJ'></Input>
+                            <Input></Input>
                         </Form.Item>
                     </Col>
                 </Card>
@@ -274,12 +274,12 @@ const App: React.FC = () => {
                     <Row gutter={[16, 16]}>
                         <Col span={12}>
                             <Form.Item label="Flight ID" labelCol={{ span: 12 }} style={{ width: '500px' }}>
-                                <Input value="Flight 545" disabled={true} />
+                                <Input />
                             </Form.Item>
                         </Col>
                         <Col span={12}>
                             <Form.Item label="Flight ID (Matching)" labelCol={{ span: 8 }} style={{ width: '500px' }}>
-                                <Input value="Flight 545" disabled={true}></Input>
+                                <Input ></Input>
                             </Form.Item>
                         </Col>
                     </Row>
@@ -297,12 +297,13 @@ const App: React.FC = () => {
                     <Row gutter={[16, 16]}>
                         <Col span={12}>
                             <Form.Item label="Train No." labelCol={{ span: 12 }} style={{ width: '500px' }}>
-                                <Input value="Train No. 535" disabled={true} />
+                                <Input />
                             </Form.Item>
                         </Col>
                         <Col span={9}>
                             <Form.Item label="Wagon No." labelCol={{ span: 8 }} style={{ width: '500px' }}>
-                                <Select {...sharedProps} {...selectProps} />
+                                {/* <Select {...sharedProps} {...selectProps} /> */}
+                                <Select  />
                             </Form.Item>
                         </Col>
                         <Col span={12}>
@@ -312,7 +313,8 @@ const App: React.FC = () => {
                         </Col>
                         <Col span={12}>
                             <Form.Item label="New Wagon No." labelCol={{ span: 8 }} style={{ width: '500px' }}>
-                                <Select {...sharedProps} {...selectProps} />
+                                {/* <Select {...sharedProps} {...selectProps} /> */}
+                                <Select  />
                             </Form.Item>
                         </Col>
                     </Row>
@@ -323,7 +325,7 @@ const App: React.FC = () => {
                     <Row gutter={[16, 16]}>
                         <Col span={12}>
                             <Form.Item label="Vehicle Reference No." labelCol={{ span: 12 }} style={{ width: '500px' }}>
-                                <Input value="Vehicle No. 535" disabled={true} />
+                                <Input />
                             </Form.Item>
                         </Col>
                         <Col span={12}>
