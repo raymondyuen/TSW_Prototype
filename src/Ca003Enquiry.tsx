@@ -39,27 +39,7 @@ interface ScheduleDataType {
   matchedUMR: String
 }
 
-const scheduleData: ScheduleDataType[] = [
-  {
-    key: '1',
-    details: 'Details',
-    actualArrivalDate: '20/05/2024 00:00',
-    vessel: 'Vessel E3 , - (VE3 :VE3)',
-    carrier: 'CRT - Carrier (20000000 : BR)',
-    ms: 'UM',
-    schd: 'SE',
-    matchedUMR: '-'
-  }, {
-    key: '2',
-    details: 'Details',
-    actualArrivalDate: '20/05/2024 00:00',
-    vessel: 'Vessel E3 , - (VE3 :VE3)',
-    carrier: 'CRT - Carrier (20000000 : BR)',
-    ms: 'UM',
-    schd: 'SE',
-    matchedUMR: '-'
-  }
-]
+
 
 
 
@@ -81,128 +61,6 @@ interface ManifestDataType {
 
 
 
-function retrievalKeysFor(title: DisplayTitle, followSchedule: String, currentMode: String) {
-  var disable = title === 'Manifest' && followSchedule === 'Y'
-  return (
-    <div style={{ minWidth: '800px', maxWidth:'1200px'}}>
-      {disable ? "":<div>
-      <h3>Retrieval keys for {title}</h3>
-
-      <Row gutter={24}>
-        <Col span={12}>
-          <Form.Item label="Arrival / Departure Date" labelCol={{ span: 8 }}>
-            <RangePicker disabled={disable} placeholder={["YYYY-MM-DD","YYYY-MM-DD"]}/>
-          </Form.Item>
-        </Col>
-        <Col span={12}>
-          {title === 'Schedule' ?
-            <Form.Item label="Arrival / Departure Time" labelCol={{ span: 8 }} >
-              <TimePicker.RangePicker allowClear format={'HH:mm'} placeholder={["00:00","00:00"]}/>
-            </Form.Item>
-            : ''}
-        </Col>
-      </Row>
-
-      {currentMode === 'air' ?
-        <Row gutter={24}>
-          <Col span={12}>
-            <Form.Item label="Flight ID" labelCol={{ span: 8 }}>
-              <Input disabled={disable} />
-            </Form.Item>
-          </Col>
-          {title === 'Schedule' ?
-            <Col span={12}>
-              <Form.Item label="Flight ID (Matching)" labelCol={{ span: 8 }}>
-                <Input disabled={disable} />
-              </Form.Item>
-            </Col>
-            : ''}
-        </Row>
-        : ''}
-
-      {currentMode === 'water' ?
-        <div>
-          <Row gutter={24}>
-            <Col span={12}>
-              <Form.Item label="Last Port" labelCol={{ span: 8 }}>
-                <Input disabled={disable} />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item label="Next Port" labelCol={{ span: 8 }}>
-                <Input disabled={disable} />
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row gutter={24}>
-            <Col span={12}>
-              <Form.Item label="Vessel ID" labelCol={{ span: 8 }}>
-                <Input disabled={disable} />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item label="Vessel Name" labelCol={{ span: 8 }}>
-                <Input disabled={disable} />
-              </Form.Item>
-            </Col>
-          </Row>
-        </div>
-        : ''}
-
-
-      {currentMode === 'rail' ?
-        <Row gutter={24}>
-          <Col span={12}>
-            <Form.Item label="Train No." labelCol={{ span: 8 }}>
-              <Input disabled={disable} />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item label="Wagon No." labelCol={{ span: 8 }}>
-              <Input disabled={disable} />
-            </Form.Item>
-          </Col>
-        </Row>
-        : ''}
-
-
-      <Row gutter={24}>
-        <Col span={12}>
-          <Form.Item label="Carrier ID" labelCol={{ span: 8 }}>
-            <Input disabled={disable} />
-          </Form.Item>
-        </Col>
-        <Col span={12}>
-          <Form.Item label="ID Type" labelCol={{ span: 8 }}>
-            <Select disabled={disable}>
-              <Select.Option value="br">Business Registration Number</Select.Option>
-              <Select.Option value="hk">Hong Kong ID</Select.Option>
-              <Select.Option value="ps">Passport</Select.Option>
-              <Select.Option value="td">Travel Document</Select.Option>
-              <Select.Option value="ot">Other Official Ref No.</Select.Option>
-              <Select.Option value="un">Unclassified</Select.Option>
-            </Select>
-          </Form.Item>
-        </Col>
-      </Row>
-      <Row gutter={24}>
-        <Col span={12}>
-          <Form.Item label="Carrier Name" labelCol={{ span: 8 }}>
-            <Input disabled={disable} />
-          </Form.Item>
-        </Col>
-        <Col span={12}>
-          {title === 'Manifest' ?
-            <Form.Item label="UMR" labelCol={{ span: 8 }}>
-              <Input disabled={disable} />
-            </Form.Item>
-            : ''}
-        </Col>
-      </Row>
-      </div>}
-    </div>
-  )
-}
 
 
 
@@ -210,9 +68,9 @@ function retrievalKeysFor(title: DisplayTitle, followSchedule: String, currentMo
 
 function App() {
   const navigate = useNavigate();
-
+  const [totalNum, setTotalNum] = useState("0");
+  const [mainForm] = Form.useForm();
   const [currentMode, setCurrentMode] = useState("air")
-
   const [followSchedule, setFollowSchedule] = useState("Y")
   const onFollowScheduleChange = (e: RadioChangeEvent) => {
     setFollowSchedule(e.target.value)
@@ -221,17 +79,18 @@ function App() {
     {
       title: 'Details',
       dataIndex: 'details',
-      render: (text: String) => <a href='/Ca003Amend'>{text}</a>
+      render: (text: String) => <a href='/Ca003View'>{text}</a>
     }, {
       title: 'Actual Arrival Date',
       dataIndex: 'actualArrivalDate'
     }, {
-      title: currentMode === 'water' ? 'Vessel Name, Vessel Chinese Name (Vessel ID:Call Sign)' : currentMode === 'air' ? 'Flight ID (Matching)' : 'Train No.',
+      title: currentMode === 'water' ? 'Vessel Name, Vessel Chinese Name (Vessel ID:Call Sign)   ' : currentMode === 'air' ? 'Flight ID (Matching)' : 'Train No.',
       dataIndex: 'vessel',
       width: 150
     }, {
       title: 'Carrier Name (Carrier ID:ID Type)',
-      dataIndex: 'carrier'
+      dataIndex: 'carrier',
+      width: 150
     }, {
       title: 'MS',
       dataIndex: 'ms'
@@ -254,7 +113,8 @@ function App() {
       width: 150
     }, {
       title: 'Carrier Name (Carrier ID:ID Type)',
-      dataIndex: 'carrier'
+      dataIndex: 'carrier',
+      width: 150
     }, {
       title: 'Tel No.',
       dataIndex: 'telNo'
@@ -270,27 +130,47 @@ function App() {
       render: (text: String) => <a>{text}</a>
     }
   ]
-
+  const scheduleData: ScheduleDataType[] = [
+    {
+      key: '1',
+      details: 'Details',
+      actualArrivalDate: '2024-05-20 00:00',
+      vessel: currentMode === 'water' ? 'Vessel E3 , - (VE3 :VE3)' : currentMode === 'air' ? 'AE886' : 'T123456',
+      carrier: 'CRT - Carrier (333333 : BR)',
+      ms: 'UM',
+      schd: 'SE',
+      matchedUMR: '-'
+    }, {
+      key: '2',
+      details: 'Details',
+      actualArrivalDate: '2024-05-20 00:00',
+      vessel: currentMode === 'water' ? 'Vessel E6 , - (VE6 :VE6)' : currentMode === 'air' ? 'CX886' : 'T123456',
+      carrier: 'CRT - Carrier (444444 : BR)',
+      ms: 'UM',
+      schd: 'SE',
+      matchedUMR: '-'
+    }
+  ]
   const manifestData: ManifestDataType[] = [
     {
       key: '1',
-      actualArrivalDate: '20/05/2024',
+      actualArrivalDate: '2024-05-20',
       //vessel: 'Vessel E3 , - (VE3 :VE3)',
-      vessel: currentMode === 'water' ? 'Vessel E3 , - (VE3 :VE3)' : currentMode === 'air' ? 'AE886' : 'T123456',
-      carrier: 'CRT - Carrier (20000000 : BR)',
+      vessel: currentMode === 'water' ? 'Vessel E3 (VE3 :VE3)' : currentMode === 'air' ? 'AE886' : 'T123456',
+      carrier: 'CRT - Carrier1 (198747 : BR)',
       telNo: '2258 2258',
       ms: 'UM',
       mfest: 'QI',
       umrVer: '2M0CGDR100A1 (2)'
     }, {
       key: '2',
-      actualArrivalDate: '20/05/2024',
-      vessel: 'Vessel E3 , - (VE3 :VE3)',
-      carrier: 'CRT - Carrier (20000000 : BR)',
-      telNo: '2258 2258',
+      actualArrivalDate: '2024-05-20',
+      vessel: currentMode === 'water' ? 'Vessel E6 (VE6 :VE6)' : currentMode === 'air' ? 'CX886' : 'A123456',
+      carrier: 'CRT - Carrier2 (777887 : BR)',
+      telNo: '2257 2258',
       ms: 'UM',
       mfest: 'QI',
-      umrVer: '2M0CGDR100A3 (1)'
+      umrVer: '2M0CGDR100A3 (2)'
     }
   ]
 
@@ -307,13 +187,16 @@ function App() {
   const onManifestSelectedChange = (newKeys: React.Key[]) => {
     setSelectedManifestKeys(newKeys)
   }
+
+
   const manifestSelection: TableRowSelection = {
     selectedRowKeys: selectedManifestKeys,
     onChange: onManifestSelectedChange
   }
 
-  const [mainForm] = Form.useForm()
-
+  function clickNew(): void {
+    navigate("/Ca003New");
+  }
   function clickAmend(): void {
     navigate("/Ca003Amend");
   }
@@ -321,11 +204,175 @@ function App() {
   function clickIssueOMA(event: React.MouseEvent<HTMLElement>): void {
     navigate("/CM009");
   }
-  
-  function clickNewSchedule(event: React.MouseEvent<HTMLElement>): void {
-    navigate("/Ca003New");
-  }
 
+  const onClickSearch = async () => {
+    try {
+      const values = await mainForm.validateFields();
+      console.log('Success:', values);
+    } catch (errorInfo) {
+      console.log('Failed:', errorInfo);
+      return;
+    }
+    setTotalNum("2")
+    setSData(scheduleData);
+    setMData(manifestData);
+    setIsShow("none");
+  }
+  const onClickRest = async () => {
+    setTotalNum("0")
+    setSData(null);
+    setMData(null);
+  }
+  const onClickPreviewDetail = () => {
+    window.open("./schPrintDetails.html")
+  }
+  const onClickPreviewSummay = () => {
+    window.open("./schPrintSummary.html")
+  }
+  const onClickEnquire  = () => {
+    if (isShow==="none"){
+      setIsShow("block");
+    }else{
+      setIsShow("none");
+    }
+
+  }
+  const [isShow, setIsShow] = useState("block")
+  const [sData, setSData] = useState<Array<ScheduleDataType> | null>(null);
+  const [mData, setMData] = useState<Array<ManifestDataType> | null>(null);
+  const validateMessages = {
+    required: '${label} is required!',
+    types: {
+      email: '${label} is not a valid email!',
+      number: '${label} is not a valid number!',
+    },
+    number: {
+      range: '${label} must be between ${min} and ${max}',
+    },
+  };
+
+  function retrievalKeysFor(title: DisplayTitle, followSchedule: String, currentMode: String) {
+    var disable = title === 'Manifest' && followSchedule === 'Y'
+    return (
+        <div style={{ minWidth: '800px', maxWidth:'1200px'}}>
+          {disable ? "":<div>
+            <h3>Retrieval keys for {title}</h3>
+
+            <Row gutter={24}>
+              <Col span={12}>
+                <Form.Item label="Arrival / Departure Date" labelCol={{ span: 8 }} rules={[{ required: true }]}>
+                  <RangePicker disabled={disable} placeholder={["YYYY-MM-DD","YYYY-MM-DD"]}/>
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                {title === 'Schedule' ?
+                    <Form.Item label="Arrival / Departure Time" labelCol={{ span: 8 }} >
+                      <TimePicker.RangePicker allowClear format={'HH:mm'} placeholder={["00:00","00:00"]}/>
+                    </Form.Item>
+                    : ''}
+              </Col>
+            </Row>
+
+            {currentMode === 'air' ?
+                <Row gutter={24}>
+                  <Col span={12}>
+                    <Form.Item label="Flight ID" labelCol={{ span: 8 }} rules={[{ required: true }]}>
+                      <Input disabled={disable} />
+                    </Form.Item>
+                  </Col>
+                  {title === 'Schedule' ?
+                      <Col span={12}>
+                        <Form.Item label="Flight ID (Matching)" labelCol={{ span: 8 }}>
+                          <Input disabled={disable} />
+                        </Form.Item>
+                      </Col>
+                      : ''}
+                </Row>
+                : ''}
+
+            {currentMode === 'water' ?
+                <div>
+                  <Row gutter={24}>
+                    <Col span={12}>
+                      <Form.Item label="Last Port" labelCol={{ span: 8 }}>
+                        <Input disabled={disable} />
+                      </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                      <Form.Item label="Next Port" labelCol={{ span: 8 }}>
+                        <Input disabled={disable} />
+                      </Form.Item>
+                    </Col>
+                  </Row>
+                  <Row gutter={24}>
+                    <Col span={12}>
+                      <Form.Item label="Vessel ID" labelCol={{ span: 8 }}>
+                        <Input disabled={disable} />
+                      </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                      <Form.Item label="Vessel Name" labelCol={{ span: 8 }}>
+                        <Input disabled={disable} />
+                      </Form.Item>
+                    </Col>
+                  </Row>
+                </div>
+                : ''}
+
+
+            {currentMode === 'rail' ?
+                <Row gutter={24}>
+                  <Col span={12}>
+                    <Form.Item label="Train No." labelCol={{ span: 8 }}>
+                      <Input disabled={disable} />
+                    </Form.Item>
+                  </Col>
+                  <Col span={12}>
+                    <Form.Item label="Wagon No." labelCol={{ span: 8 }}>
+                      <Input disabled={disable} />
+                    </Form.Item>
+                  </Col>
+                </Row>
+                : ''}
+
+
+            <Row gutter={24}>
+              <Col span={12}>
+                <Form.Item label="Carrier ID" labelCol={{ span: 8 }}>
+                  <Input disabled={disable} />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item label="ID Type" labelCol={{ span: 8 }}>
+                  <Select disabled={disable}>
+                    <Select.Option value="br">Business Registration Number</Select.Option>
+                    <Select.Option value="hk">Hong Kong ID</Select.Option>
+                    <Select.Option value="ps">Passport</Select.Option>
+                    <Select.Option value="td">Travel Document</Select.Option>
+                    <Select.Option value="ot">Other Official Ref No.</Select.Option>
+                    <Select.Option value="un">Unclassified</Select.Option>
+                  </Select>
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row gutter={24}>
+              <Col span={12}>
+                <Form.Item label="Carrier Name" labelCol={{ span: 8 }}>
+                  <Input disabled={disable} />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                {title === 'Manifest' ?
+                    <Form.Item label="UMR" labelCol={{ span: 8 }}>
+                      <Input disabled={disable} />
+                    </Form.Item>
+                    : ''}
+              </Col>
+            </Row>
+          </div>}
+        </div>
+    )
+  }
   return (
     <div style={{ padding: '0 24px' }}>
       <Breadcrumb
@@ -337,15 +384,17 @@ function App() {
             title: "CA Function",
           },
           {
-            title: <a href="/Ca003Enquiry">Enquire of Schedules and Manifest for Probable Matching</a>,
+            title: <a href="/Ca003Enquiry">Enquire Schedules and Manifest for Probable Matching</a>,
           }
         ]}
       />
-      <h1>Enquire of Schedules and Manifest for Probable Matching</h1>
+      <h1>Enquire Schedules and Manifest for Probable Matching</h1>
       <Form
         form={mainForm}
         labelAlign='left'
         layout="horizontal"
+        style={{display:isShow}}
+        validateMessages={validateMessages}
       >
         <Space wrap>
           <Space.Compact block>
@@ -393,7 +442,7 @@ function App() {
                 <Radio value="unmatched"> Unmatched </Radio>
                 <Radio value="cancelShipment"> Cancel Shipment </Radio>
                 <Radio value="nilCargo"> Nil Cargo </Radio>
-                <Radio value="offHired"> OffHired </Radio>
+                <Radio value="offHired"> Off Hired </Radio>
               </Radio.Group>
             </Form.Item>
           </Col>
@@ -441,8 +490,8 @@ function App() {
           </Col>
         </Row>
         <Flex justify='right' gap='small'>
-          <Button color='primary' variant='outlined'>Reset</Button>
-          <Button color='primary' variant='solid'>Search</Button>
+          <Button color='primary' variant='outlined' onClick={onClickRest}>Reset</Button>
+          <Button color='primary' variant='solid' htmlType="submit" onClick={onClickSearch}>Search</Button>
         </Flex>
         <Divider></Divider>
       </Form>
@@ -450,9 +499,11 @@ function App() {
 
 
       <Col span={24}>
-        <Row justify='end' style={{ marginBottom: 10 }}>
+        <fieldset disabled={false} style={{ border: '0px' }}>
+          <Row justify='center' style={{marginBottom: 10}}>
+
             <Space>
-              <Button color="primary" variant="outlined" >Revert Dummy Schedule</Button>
+              <Button color="primary" variant="outlined">Revert Dummy Schedule</Button>
               <Button color="primary" variant="outlined">Nil Cargo</Button>
               <Button color="primary" variant="outlined">Off Hired</Button>
               <Button color="primary" variant="outlined">Cancel Shipment</Button>
@@ -461,26 +512,27 @@ function App() {
               <Button color="primary" variant="outlined" onClick={clickIssueOMA}>Issue OS Manifest Advice</Button>
             </Space>
           </Row>
-          <Row justify='end' style={{ marginBottom: 10 }}>
+          <Row justify='center' style={{marginBottom: 10}}>
             <Flex gap="small" justify='flex-end'>
               <Button color="primary" variant="outlined">Mark off Dummy Schedule</Button>
               <Button color="primary" variant="outlined">Revert Pending</Button>
               <Button color="primary" variant="outlined">Pending</Button>
               <Button color="primary" variant="outlined">Unmatch</Button>
-              <Button color="primary" variant="outlined" onClick={clickNewSchedule}>New Sch</Button>
+              <Button color="primary" variant="outlined" onClick={clickNew}>New Sch</Button>
               <Button color="primary" variant="outlined" onClick={clickAmend}>Amend</Button>
               <Button color="primary" variant="outlined">Void Manifest</Button>
             </Flex>
           </Row>
-        </Col>
+        </fieldset>
+      </Col>
       <Space >
         
         <Space.Compact  >
 
-          <SearchResult displayTitle='Schedule' columns={scheduleColumns} data={scheduleData} rowSelection={scheduleSelection} />
+          <SearchResult totalNum={totalNum} displayTitle='Schedule' columns={scheduleColumns} data={sData != null ? sData : []} rowSelection={scheduleSelection} />
         </Space.Compact>
         <Space.Compact>
-          <SearchResult displayTitle='Manifest' columns={manifestColumns} data={manifestData} rowSelection={manifestSelection} />
+          <SearchResult totalNum={totalNum} displayTitle='Manifest' columns={manifestColumns} data={mData != null ? mData : []} rowSelection={manifestSelection} />
         </Space.Compact>
       </Space>
       <Col span={24}>
@@ -493,8 +545,9 @@ function App() {
         <Col span={24}>
           
           <Flex gap="small" justify='flex-end'>
-            <Button color="primary" variant="solid">Print Details</Button>
-            <Button color="primary" variant="solid">Print Summary</Button>
+            <Button color="primary" variant="outlined" onClick={onClickEnquire}>Enquire</Button>
+            <Button color="primary" variant="solid" onClick={onClickPreviewDetail}>Export Details</Button>
+            <Button color="primary" variant="solid" onClick={onClickPreviewSummay}>Export Summary</Button>
           </Flex>
 
         </Col>
@@ -508,9 +561,9 @@ function App() {
 }
 
 
-const SearchResult = ({ displayTitle, columns, data, rowSelection }: { displayTitle: DisplayTitle, columns: TableColumnsType, data: object[], rowSelection: TableRowSelection }) => (
+const SearchResult = ({ totalNum, displayTitle, columns, data, rowSelection }: { totalNum:String, displayTitle: DisplayTitle, columns: TableColumnsType, data: object[], rowSelection: TableRowSelection }) => (
   <Card title={displayTitle}>
-    Total No. of Records: 50
+    Total No. of Records:  {totalNum}
     <Table
       columns={columns}
       dataSource={data}

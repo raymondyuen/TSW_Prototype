@@ -55,7 +55,7 @@ const App: React.FC = () => {
                   label: <span>CA Function</span>,
                   title: 'CA Function',
                   options: [
-                    { label: <span>UF-EM-CA-003 Enquiry of Schedules and Manifest for Probable Matching</span>, value: 'Ca003Enquiry' },
+                    { label: <span>UF-EM-CA-003 Enquiry Schedules and Manifest for Probable Matching</span>, value: 'Ca003Enquiry' },
                   ],
                 },
               ]}

@@ -91,7 +91,7 @@ const App: React.FC = () => {
                         title: <a href="/Ca003Enquiry">Enquiry of Schedules and Manifest for Probable Matching</a>,
                     },
                     {
-                        title: (true) ? 'Amend Schedule' : 'Create Schedule',
+                        title: 'Create Schedule'
                     },
                 ]}
             />
@@ -109,7 +109,7 @@ const App: React.FC = () => {
             >
 
                 <h1>
-                    {(true) ? 'Amend Schedule' : 'Create Schedule'}
+                    {'Create Schedule'}
                 </h1>
                 <Card title='Schedule Infomartion' headStyle={{ backgroundColor: '#1677ff', color: '#ffffff' }}>
                     <Row>
@@ -352,7 +352,6 @@ const App: React.FC = () => {
                         >
                         </Popconfirm>
                         <Button color="primary" variant="outlined" >Reset</Button>
-                        <Button color="primary" variant="outlined" >Print</Button>
                         <Button type="primary" htmlType="submit">Save</Button>
 
 

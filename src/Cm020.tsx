@@ -105,7 +105,12 @@ const App: React.FC = () => {
     }));
     setTargetDataSource(data);
   }
-
+  const onClickDownload382 = () => {
+    window.open("./Report_382.xlsx")
+  }
+  const onClickDownload383 = () => {
+    window.open("./Report_383.xlsx")
+  }
   const onClickDownload = () => {
     window.open("./download.csv")
   }
@@ -322,22 +327,42 @@ const App: React.FC = () => {
               </Checkbox.Group>
             </Form.Item>
 
-            <Form.Item name="checkbox-group" label="OMA Status:">
+            <Form.Item name="checkbox-group" label="Schedule Status:">
               <Checkbox.Group>
                 <Row>
                   <Col span={8}>
-                    <Checkbox value="OMA" style={{ lineHeight: '32px' }}>
-                      OMA
+                    <Checkbox value="SE" style={{ lineHeight: '32px' }}>
+                      SE
                     </Checkbox>
                   </Col>
                   <Col span={8}>
-                    <Checkbox value="OS1" style={{ lineHeight: '32px' }}>
-                      OS1
+                    <Checkbox value="OS" style={{ lineHeight: '32px' }}>
+                      OS
                     </Checkbox>
                   </Col>
                   <Col span={8}>
-                    <Checkbox value="OS2" style={{ lineHeight: '32px' }}>
-                      OS2
+                    <Checkbox value="O1" style={{ lineHeight: '32px' }}>
+                      O1
+                    </Checkbox>
+                  </Col>
+                  <Col span={8}>
+                    <Checkbox value="O2" style={{ lineHeight: '32px' }}>
+                      O2
+                    </Checkbox>
+                  </Col>
+                  <Col span={8}>
+                    <Checkbox value="PD" style={{ lineHeight: '32px' }}>
+                      PD
+                    </Checkbox>
+                  </Col>
+                  <Col span={8}>
+                    <Checkbox value="RF" style={{ lineHeight: '32px' }}>
+                      RF
+                    </Checkbox>
+                  </Col>
+                  <Col span={8}>
+                    <Checkbox value="CL" style={{ lineHeight: '32px' }}>
+                      CL
                     </Checkbox>
                   </Col>
 
@@ -444,17 +469,9 @@ const App: React.FC = () => {
           <Row gutter={16}>
             <Col span={12}></Col>
             <Col span={12}><Flex gap="small" justify='flex-end'>
-              <Popconfirm
-                title="Select As Target "
-                description="Are you sure to select As Target ?"
-                onConfirm={onClickSelectTarget}
-                onCancel={cancel}
-                okText="Yes"
-                cancelText="No"
-              >
-                <Button color="primary" variant="outlined" onClick={onClickDownload}>        Generate Report #382      </Button>
-              </Popconfirm>
-              <Button color="primary" variant="outlined" onClick={onClickDownload}>Generate Report #383</Button>
+
+              <Button color="primary" variant="outlined" onClick={onClickDownload382}>Generate Report #382</Button>
+              <Button color="primary" variant="outlined" onClick={onClickDownload383}>Generate Report #383</Button>
 
 
             </Flex></Col>

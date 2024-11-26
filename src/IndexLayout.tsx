@@ -13,6 +13,7 @@ import CM009 from './Cm009';
 import CM020 from './Cm020';
 import CM020S3 from './Cm020S3';
 import CA003New from './Ca003New';
+import CA003View from './Ca003View'
 import Home from './Home';
 import Login from './Login';
 import HeaderNavs from './Menu';
@@ -37,11 +38,11 @@ const items2 = [UserOutlined, VideoCameraOutlined, UploadOutlined, UserOutlined]
 
 export const UserContext = createContext<UserContextType | null>(null);
 
-const onClickChangeUser = (isTcp: String, setIsTcp: React.Dispatch<React.SetStateAction<String>>) => {
-  if (isTcp === "C&SD") {
-    setIsTcp("TSP");
+const onClickChangeUser = (isTsp: String, setIsTcp: React.Dispatch<React.SetStateAction<String>>) => {
+  if (isTsp === "TSP") {
+    setIsTcp("ETCS");
   } else {
-    setIsTcp("C&SD");
+    setIsTcp("TSP");
   }
 }
 
@@ -87,7 +88,7 @@ const App: React.FC = () => {
                 <Menu.SubMenu title="Central Administration" icon={<AppstoreOutlined />}>
                   <Menu.Item key="Ca003Enquiry" style={{ whiteSpace: 'normal', height: 'auto', lineHeight: 'normal' }}>
                     <Link to="/Ca003Enquiry">
-                      <div>Enquiry of Schedules and Manifest for Probable Matching</div>
+                      <div>Enquiry Schedules and Manifest for Probable Matching</div>
                     </Link>
                   </Menu.Item>
                 </Menu.SubMenu>
@@ -153,6 +154,7 @@ const App: React.FC = () => {
                     <Route path="/CA003Amend" element={<CA003Amend />} />
                     <Route path="/Ca003Enquiry" element={<Ca003Enquiry />} />
                     <Route path="/CA003New" element={<CA003New />} />
+                    <Route path="/CA003View" element={<CA003View />} />
                     <Route path="*" element={<Login />} />
                   </Routes>
                 </UserContext.Provider>

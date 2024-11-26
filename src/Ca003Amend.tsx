@@ -73,7 +73,9 @@ const App: React.FC = () => {
         onChange: setValue,
     };
     // remarks value
-
+    const onClickPreviewDetail = () => {
+        window.open("./schPrintDetails.html")
+    }
     // button
     const navigate = useNavigate()
     const toPreviousPage = () => {
@@ -353,8 +355,8 @@ const App: React.FC = () => {
                         >
                         </Popconfirm>
                         <Button color="primary" variant="outlined" >Reset</Button>
-                        <Button color="primary" variant="outlined" >Print</Button>
-                        <Button type="primary" htmlType="submit">Save</Button>
+                        <Button color="primary" variant="outlined" onClick={onClickPreviewDetail}>Export</Button>
+                        <Button type="primary" htmlType="submit" disabled={false}>Save</Button>
 
 
                     </Flex></Col>
