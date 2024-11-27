@@ -223,10 +223,10 @@ function App() {
     setMData(null);
   }
   const onClickPreviewDetail = () => {
-    window.open("./schPrintDetails.html")
+    window.open("./Detail of Schedule Information.xlsx")
   }
   const onClickPreviewSummay = () => {
-    window.open("./schPrintSummary.html")
+    window.open("./Summary of Manifest Information.xlsx")
   }
   const onClickEnquire  = () => {
     if (isShow==="none"){
