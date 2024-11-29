@@ -19,6 +19,7 @@ import Login from './Login';
 import HeaderNavs from './Menu';
 import React, { createContext, useState } from 'react';
 import Ca003Enquiry from './Ca003Enquiry';
+import Ca003EnquiryCED from './Ca003EnquiryCED';
 import CA003Amend from './Ca003Amend';
 import { Button, Col, Divider, Flex, Image, Layout, Menu, Row } from 'antd';
 
@@ -90,7 +91,15 @@ const App: React.FC = () => {
                     <Link to="/Ca003Enquiry">
                       <div>Enquiry Schedules and Manifest for Probable Matching</div>
                     </Link>
+
                   </Menu.Item>
+                  <Menu.Item key="Ca003EnquiryCED" style={{ whiteSpace: 'normal', height: 'auto', lineHeight: 'normal' }}>
+                    <Link to="/Ca003EnquiryCED">
+                      <div>Enquiry Schedules and Manifest for Probable Matching C&ED</div>
+                    </Link>
+
+                  </Menu.Item>
+
                 </Menu.SubMenu>
               </Menu>
 
@@ -99,7 +108,7 @@ const App: React.FC = () => {
                 <small>{new Date().toLocaleString()}</small>
               </div>
 
-              <div className="SideMenu_last-login-title__3sFDd" style={{ color: 'white', padding: 10 }}>
+              <div className="SideMenu_last-login-title__3sFDd" style={{ display:'none', color: 'white', padding: 10 }}>
                 <small>Switch User: {(isTsp)}<br /></small>
               </div>
               <Col span={8}>
@@ -153,6 +162,7 @@ const App: React.FC = () => {
                     <Route path="/CM020S3" element={<CM020S3 />} />
                     <Route path="/CA003Amend" element={<CA003Amend />} />
                     <Route path="/Ca003Enquiry" element={<Ca003Enquiry />} />
+                    <Route path="/Ca003EnquiryCED" element={<Ca003EnquiryCED />} />
                     <Route path="/CA003New" element={<CA003New />} />
                     <Route path="/CA003View" element={<CA003View />} />
                     <Route path="*" element={<Login />} />

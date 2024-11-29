@@ -24,7 +24,6 @@ const layout = {
   wrapperCol: { span: 24 },
 };
 const onFinish = (values: any) => {
-  message.success('The Outstanding Manifest Advice is saved.');
 };
 const validateMessages = {
   required: '${label} is required!',
@@ -38,6 +37,7 @@ const validateMessages = {
 };
 const confirm: PopconfirmProps['onConfirm'] = (e) => {
   onFinish("");
+  message.success('The Outstanding Manifest Advice is saved.');
   console.log(e);
 };
 
@@ -128,7 +128,7 @@ Interpretation and General Clauses Ordinance (Cap.1).
           <Col span={12}><Flex gap="small" justify='flex-end'>
             <Button color="primary" variant="outlined" disabled>Convent to Simplified Chinese</Button>
             <Button color="primary" variant="outlined" onClick={onClickPrint}>Print</Button>
-            <Button color="primary" variant="outlined" onClick={onClickPrint}>Reset</Button>
+            <Button color="primary" variant="outlined" >Reset</Button>
 
             <Popconfirm
               title="Outstanding Manifest Advice"

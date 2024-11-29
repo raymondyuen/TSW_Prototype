@@ -74,7 +74,8 @@ const App: React.FC = () => {
     };
     // remarks value
     const onClickPreviewDetail = () => {
-        window.open("./schPrintDetails.html")
+        //window.open("./schPrintDetails.html")
+        window.open("./Schedule Details.xlsx")
     }
     // button
     const navigate = useNavigate()
@@ -211,15 +212,7 @@ const App: React.FC = () => {
                 <Row gutter={16}>
                     <Col span={12}><Flex gap="small" justify='flex-start'><Button color="primary" variant="outlined" onClick={() => navigate(-1)}>Back</Button></Flex></Col>
                     <Col span={12}><Flex gap="small" justify='flex-end'>
-                        <Popconfirm
-                            title="Select As Target "
-                            description="Are you sure?"
-                            //  onConfirm={confirm}
-                            // onCancel={cancel}
-                            okText="Yes"
-                            cancelText="No"
-                        >
-                        </Popconfirm>
+
                         <Button color="primary" variant="outlined" onClick={onClickPreviewDetail}>Export Details</Button>
 
 

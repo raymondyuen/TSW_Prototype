@@ -131,7 +131,7 @@ function App() {
       render: (text: String) => <a>{text}</a>
     }
   ]
-  const scheduleData: ScheduleDataType[] = [
+  var scheduleData: ScheduleDataType[] = [
     {
       key: '1',
       details: 'Details',
@@ -152,7 +152,7 @@ function App() {
       matchedUMR: '-'
     }
   ]
-  const manifestData: ManifestDataType[] = [
+  var manifestData: ManifestDataType[] = [
     {
       key: '1',
       actualArrivalDate: '2024-05-20',
@@ -197,10 +197,20 @@ function App() {
     navigate("/Ca003New");
   }
   function clickAmend(): void {
+    if(selectedScheduleKeys.length == 0 && selectedManifestKeys.length == 0){
+      setAlertMsg("Please select at least 1 record must be selected.")
+      setAlertSuccessMsg("");
+      return;
+    }
     navigate("/Ca003Amend");
   }
 
   function clickIssueOMA(event: React.MouseEvent<HTMLElement>): void {
+    if(selectedScheduleKeys.length == 0 && selectedManifestKeys.length == 0){
+      setAlertMsg("Please select at least 1 record must be selected.")
+      setAlertSuccessMsg("");
+      return;
+    }
     navigate("/CM009");
   }
 
@@ -226,7 +236,7 @@ function App() {
     window.open("./Detail of Schedule Information.xlsx")
   }
   const onClickPreviewSummay = () => {
-    window.open("./Summary of Manifest Information.xlsx")
+    window.open("./Summary of Schedule Information.xlsx")
   }
   const onClickEnquire  = () => {
     if (isShow==="none"){
@@ -236,19 +246,83 @@ function App() {
     }
 
   }
+
   const onClickMatchResultAction = () => {
     console.log(selectedScheduleKeys)
     console.log(selectedManifestKeys)
-    if(selectedScheduleKeys.length == 0 && selectedManifestKeys.length == 0){
-      setAlertMsg("At least one record must be selected")
+    if(selectedScheduleKeys.length != 1 || selectedManifestKeys.length != 1){
+      setAlertMsg("Please select 1 schedule and 1 manifest for matching.")
+      setAlertSuccessMsg("");
+      return;
     }
+      setAlertMsg("")
+      scheduleData[0].ms="PM";
+      setSData(scheduleData);
+      manifestData[0].ms="PM";
+      setMData(manifestData);
+      setAlertSuccessMsg("1 schedule and 1 manifest record updated.");
   }
+  const onClickUnMatchResultAction = () => {
+    console.log(selectedScheduleKeys)
+    console.log(selectedManifestKeys)
+    if(selectedScheduleKeys.length != 1 || selectedManifestKeys.length != 1){
+      setAlertMsg("Please select 1 schedule and 1 manifest for un-match.")
+      setAlertSuccessMsg("");
+      return;
+    }
+    setAlertMsg("")
+    scheduleData[0].ms="UM";
+    setSData(scheduleData);
+    manifestData[0].ms="UM";
+    setMData(manifestData);
+    setAlertSuccessMsg("1 schedule and 1 manifest record updated.");
+  }
+  //const onClickScheduleAction = function(ms_st:String){
+  function onClickScheduleMSAction( ms_st:String): void {
+    if(selectedScheduleKeys.length <= 0){
+      setAlertMsg("Please select at least 1 schedule.")
+      setAlertSuccessMsg("");
+      return;
+    }
+    setAlertMsg("")
+    scheduleData[0].ms=ms_st;
+    debugger;
+    setSData(scheduleData);
+    setAlertSuccessMsg(selectedScheduleKeys.length+ " Schedule Record updated.");
+  }
+
+  function onClickScheduleAction( ms_st:String): void {
+    if(selectedScheduleKeys.length <= 0){
+      setAlertMsg("Please select at least 1 schedule.")
+      setAlertSuccessMsg("");
+      return;
+    }
+    setAlertMsg("")
+    scheduleData[0].schd=ms_st;
+    debugger;
+    setSData(scheduleData);
+    setAlertSuccessMsg(selectedScheduleKeys.length+ " Schedule Record updated.");
+  }
+  function onClickManifestAction( ms_st:String): void {
+    if(selectedScheduleKeys.length == 0 && selectedManifestKeys.length == 0){
+      setAlertMsg("Please select at least 1 record.")
+      setAlertSuccessMsg("");
+      return;
+    }
+    setAlertMsg("")
+    manifestData[0].ms=ms_st;
+    setMData(manifestData);
+    setAlertSuccessMsg(selectedScheduleKeys.length+ " Manifest Record updated.");
+  }
+
+
 
 
   const [isShow, setIsShow] = useState("block")
   const [sData, setSData] = useState<Array<ScheduleDataType> | null>(null);
   const [mData, setMData] = useState<Array<ManifestDataType> | null>(null);
   const [alertMsg, setAlertMsg] = useState("")
+  const [alertSuccessMsg, setAlertSuccessMsg] = useState("")
   const validateMessages = {
     required: '${label} is required!',
     types: {
@@ -505,6 +579,7 @@ function App() {
         <Divider></Divider>
       </Form>
       <h3>Probable Matching Result</h3>
+      {alertSuccessMsg == "" ? "" : <Alert type={"success"} closable message={alertSuccessMsg} onClose={()=>setAlertSuccessMsg("")}/>}
 
         {alertMsg == "" ? "" : <Alert type='error' closable message={alertMsg} onClose={()=>setAlertMsg("")}/>}
       <Col span={24}>
@@ -513,10 +588,10 @@ function App() {
 
             <Space>
               <Button color="primary" variant="outlined" onClick={onClickMatchResultAction}>Revert Dummy Schedule</Button>
-              <Button color="primary" variant="outlined" onClick={onClickMatchResultAction}>Nil Cargo</Button>
-              <Button color="primary" variant="outlined" onClick={onClickMatchResultAction}>Off Hired</Button>
-              <Button color="primary" variant="outlined" onClick={onClickMatchResultAction}>Cancel Shipment</Button>
-              <Button color="primary" variant="outlined" onClick={onClickMatchResultAction}>Non Exist</Button>
+              <Button color="primary" variant="outlined" onClick={()=>onClickScheduleMSAction("NC")}>Nil Cargo</Button>
+              <Button color="primary" variant="outlined" onClick={()=>onClickScheduleMSAction("OH")}>Off Hired</Button>
+              <Button color="primary" variant="outlined" onClick={()=>onClickScheduleMSAction("CS")}>Cancel Shipment</Button>
+              <Button color="primary" variant="outlined" onClick={()=>onClickScheduleAction("NE")}>Non Exist</Button>
               <Button color="primary" variant="outlined" onClick={onClickMatchResultAction}>Match</Button>
               <Button color="primary" variant="outlined" onClick={clickIssueOMA}>Issue OS Manifest Advice</Button>
             </Space>
@@ -524,12 +599,12 @@ function App() {
           <Row justify='center' style={{marginBottom: 10}}>
             <Flex gap="small" justify='flex-end'>
               <Button color="primary" variant="outlined" onClick={onClickMatchResultAction}>Mark off Dummy Schedule</Button>
-              <Button color="primary" variant="outlined" onClick={onClickMatchResultAction}>Revert Pending</Button>
-              <Button color="primary" variant="outlined" onClick={onClickMatchResultAction}>Pending</Button>
-              <Button color="primary" variant="outlined" onClick={onClickMatchResultAction}>Unmatch</Button>
+              <Button color="primary" variant="outlined" onClick={()=>onClickScheduleAction("SE")}>Revert Pending</Button>
+              <Button color="primary" variant="outlined" onClick={()=>onClickScheduleAction("PD")}>Pending</Button>
+              <Button color="primary" variant="outlined" onClick={onClickUnMatchResultAction}>Unmatch</Button>
               <Button color="primary" variant="outlined" onClick={clickNew}>New Sch</Button>
               <Button color="primary" variant="outlined" onClick={clickAmend}>Amend</Button>
-              <Button color="primary" variant="outlined" onClick={onClickMatchResultAction}>Void Manifest</Button>
+              <Button color="primary" variant="outlined" onClick={()=>onClickManifestAction("VD")}>Void Manifest</Button>
             </Flex>
           </Row>
         </fieldset>

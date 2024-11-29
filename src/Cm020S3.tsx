@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react';
-import type {PopconfirmProps, TableColumnsType} from 'antd';
+import React, {useEffect, useState} from 'react';
+import {Input, PopconfirmProps, TableColumnsType} from 'antd';
 import {Button, Col, Divider, Flex, Form, message, Popconfirm, Row, Table} from 'antd';
 import {useNavigate} from 'react-router-dom';
 
@@ -16,7 +16,6 @@ const attrRow = (field1: String, value1: String, field2?: String, value2?: Strin
     <Col span={6} className='value'>{value2}</Col>
   </Row>
 }
-
 
 const onClickPreview = (values: any) => {
   window.open("./Sample of OMA by Fax.pdf")
@@ -35,6 +34,9 @@ const cancel: PopconfirmProps['onCancel'] = (e) => {
 const App: React.FC = () => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
+  type LayoutType = Parameters<typeof Form>[0]['layout'];
+
+  const [formLayout, setFormLayout] = useState<LayoutType>('horizontal');
 
   form.setFieldsValue({ remark: `` });
 
@@ -58,6 +60,8 @@ const App: React.FC = () => {
     shipmentDt: string;
     omaType: string;
     omaStatus: string;
+    sendDate:string;
+    sendMethod:string;
 
   }
   //Carrier ID	Company Name	ID Type	Company Phone No	No. of Cases	Action
@@ -66,28 +70,44 @@ const App: React.FC = () => {
     {
       title: 'OMA Refer No.',
       dataIndex: 'omaRefNo',
+      width:"150px"
       // render: (text: string) => <a>{text}</a>,
     },
     {
       title: 'Transport Mode',
       dataIndex: 'tranMode', sorter: true,
+      width:"150px"
     },
     {
-      title: 'Voyage / Flight / Train / Vehicle No.',
+      title: 'Voyage ID / Flight ID',
       dataIndex: 'vid', sorter: true,
+      width:"150px"
     },
     {
       title: 'Shipment Date',
       dataIndex: 'shipmentDt',
       sorter: true,
+      width:"150px"
     },
     {
       title: 'OMA Type',
       dataIndex: 'omaType',
+      width:"150px"
     },
     {
       title: 'OMA Status',
       dataIndex: 'omaStatus',
+      width:"150px"
+    },
+    {
+      title: 'Issue Date',
+      dataIndex: 'sendDate',
+      width:"150px"
+    },
+    {
+      title: 'Issue Channel',
+      dataIndex: 'sendMethod',
+      width:"150px"
 
     },
   ];
@@ -105,7 +125,9 @@ const App: React.FC = () => {
       vid: "20231233897 (HEI BANG EA 776/98443)",
       shipmentDt: '15/05/2024',
       omaType: "OS1",
-      omaStatus: "New"
+      omaStatus: "New",
+      sendDate: "2024-11-27",
+      sendMethod: "Email"
     },
     {
       key: 2,
@@ -114,7 +136,9 @@ const App: React.FC = () => {
       vid: "20231233896 (HEI BANG EA 776/98776)",
       shipmentDt: '13/05/2024',
       omaType: "OS2",
-      omaStatus: "Response Submitted"
+      omaStatus: "Response Submitted",
+      sendDate: "2024-11-27",
+      sendMethod: "Fax"
     },
 
   ]
@@ -127,10 +151,41 @@ const App: React.FC = () => {
       {attrRow('Contact Email', 'carrier_001@email.com')}
       {attrRow('Contact Fax', '12324354')}
 
+      <h3>Issue Notice</h3>
+      <Form
+          form={form}
+          labelCol={{ flex: '110px' }}
+          labelAlign="left"
+          labelWrap
+          wrapperCol={{ flex: 1 }}
+          colon={false}
+          style={{ maxWidth: formLayout === 'inline' ? 'none' : 1200 }}
+      >
+        <Row>
+          <Col span={8}>
+            <Form.Item label="Email Address:" labelCol={{ span: 8 }}>
+              <Input  />
+            </Form.Item>
+          </Col>
+          <Col  style={{paddingLeft:'10px'}}>
+            <Button color="primary" variant="solid" onClick={onClickIssueEmail}>Issue Email</Button>
+          </Col>
+          <Col span={8} style={{paddingLeft:'10px'}}>
+            <Form.Item label="Fax No." labelCol={{ span: 8 }}>
+              <Input  />
+            </Form.Item>
+          </Col>
+          <Col  style={{paddingLeft:'10px'}}>
+            <Button color="primary" variant="solid" onClick={onClickIssueFax}>Issue Fax</Button>
+          </Col>
+        </Row>
+      </Form>
+
+
 
 
       <Divider />
-
+      <h3>Outstanding Manifest Advice List</h3>
       <Table<DataType>
         columns={columns}
         dataSource={data != null ? data : []}
@@ -152,8 +207,7 @@ const App: React.FC = () => {
           >
           </Popconfirm>
           <Button type="primary" htmlType="submit" onClick={onClickPreview}>Preview Notice</Button>
-          <Button color="primary" variant="outlined" onClick={onClickIssueEmail}>Issue via Email</Button>
-          <Button color="primary" variant="outlined" onClick={onClickIssueFax}>Issue via Fax</Button>
+
 
 
         </Flex></Col>
